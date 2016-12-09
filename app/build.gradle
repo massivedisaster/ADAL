@@ -18,13 +18,22 @@ android {
 }
 
 def supportVersion = '25.0.1'
+def retrofitVersion = '2.1.0'
+def okHttpVersion = '3.4.2'
 
 dependencies {
+
     /* SUPPORT */
     compile "com.android.support:appcompat-v7:$supportVersion"
     compile "com.android.support:design:$supportVersion"
 
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    /* RETROFIT */
+    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+    /* OKHTTP */
+    compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
+    compile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
 }
 
 apply from: rootProject.file('gradle/deploy.gradle')
