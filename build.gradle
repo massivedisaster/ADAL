@@ -16,6 +16,12 @@ allprojects {
     repositories {
         jcenter()
     }
+
+    // Is Release Build?
+    version = getProperty('VERSION_NAME');
+    ext {
+        versionCodeInt = getProperty('VERSION_CODE').toInteger()
+    }
 }
 
 task clean(type: Delete) {
