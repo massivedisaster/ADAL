@@ -16,6 +16,7 @@ class AccountAuthenticator extends AbstractAccountAuthenticator {
 
     private static final int ERROR_CODE_ONE_ACCOUNT_ALLOWED = 1001;
 
+    private final Handler mHandler = new Handler();
     private Context mContext;
 
     AccountAuthenticator(Context context) {
@@ -33,8 +34,7 @@ class AccountAuthenticator extends AbstractAccountAuthenticator {
             result.putInt(AccountManager.KEY_ERROR_CODE, ERROR_CODE_ONE_ACCOUNT_ALLOWED);
             result.putString(AccountManager.KEY_ERROR_MESSAGE, mContext.getString(R.string.one_account_allowed));
 
-            final Handler handler = new Handler();
-            handler.post(new Runnable() {
+            mHandler.post(new Runnable() {
 
                 @Override
                 public void run() {
