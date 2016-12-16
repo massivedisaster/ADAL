@@ -1,5 +1,24 @@
 apply plugin: 'com.android.library'
 
+ext{
+    bintrayRepo='maven'
+    bintrayName='adal'
+    publishedGroupId='com.massivedisaster'
+    libraryName='Android Development Accelaration Library'
+    artifact='adal'
+    libraryDescription='Android Development Accelaration Library'
+    siteUrl='https://github.com/massivedisaster/ADAL'
+    gitUrl='https://github.com/massivedisaster/ADAL.git'
+    libraryVersion='0.0.1'
+    developerId='jmspt'
+    developerName='Jorge Costa'
+    developerEmail='j.costa90@gmail.com'
+    licenseName='The Apache Software License, Version 2.0'
+    licenseUrl='http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses=["Apache-2.0"]
+
+}
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
@@ -36,4 +55,5 @@ dependencies {
     compile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
 }
 
-apply from: rootProject.file('gradle/deploy.gradle')
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
