@@ -31,6 +31,10 @@ public abstract class APICallback<T extends APIErrorListener> implements Callbac
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
 
+        if (call.isCanceled()) {
+            return;
+        }
+
         if (response == null) {
             processError(new APIError(mContext.getString(R.string.error_network_general)), true);
             return;
