@@ -7,7 +7,7 @@ import android.view.View;
  * Created by Jorge Costa on 13/01/17.
  */
 
-public class ToolbarUtil {
+public class ToolbarUtils {
 
     public static void centerTitle(final Activity a, final View v) {
         v.post(new Runnable() {
