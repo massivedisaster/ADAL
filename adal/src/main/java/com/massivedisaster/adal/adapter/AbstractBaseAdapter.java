@@ -25,20 +25,19 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
 
     private List<T> mLstItems;
-    private int mResLayout;
+    private int mResLayout, mResLoading;
     private boolean isLoading = false, isMoreDataAvailable = true, isLoadingError = false;
-    private View mViewLoading;
 
     public AbstractBaseAdapter(int resLayout, List<T> lstItems) {
-        init(resLayout, null, lstItems);
+        init(resLayout, -1, lstItems);
     }
 
-    public AbstractBaseAdapter(int resLayout, View viewLoading, List<T> lstItems) {
-        init(resLayout, viewLoading, lstItems);
+    public AbstractBaseAdapter(int resLayout, int resLoading, List<T> lstItems) {
+        init(resLayout, resLoading, lstItems);
     }
 
-    private void init(int resLayout, View viewLoading, List<T> lstItems) {
-        mViewLoading = viewLoading;
+    private void init(int resLayout, int resLoading, List<T> lstItems) {
+        mResLoading = resLoading;
         mResLayout = resLayout;
         mLstItems = lstItems;
     }
@@ -46,8 +45,11 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        if (viewType == sViewTypeLoad && mViewLoading != null) {
-            return new BaseViewHolder(mViewLoading);
+        if (viewType == sViewTypeLoad && mResLoading != -1) {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(mResLoading, parent, false);
+
+            return new BaseViewHolder(v);
         } else {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(mResLayout, parent, false);
@@ -75,7 +77,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
         if (getItemViewType(position) == sViewTypeItem) {
             bindItem(holder, getItem(position));
-        } else if (getItemViewType(position) == sViewTypeLoad && mViewLoading != null) {
+        } else if (getItemViewType(position) == sViewTypeLoad && mResLoading != -1) {
             bindError(holder, isLoadingError);
         }
     }
@@ -87,7 +89,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     @Override
     public int getItemCount() {
-        return (isLoading && mViewLoading != null) ? mLstItems.size() + 1 : mLstItems.size();
+        return (isLoading && mResLoading != -1) ? mLstItems.size() + 1 : mLstItems.size();
     }
 
     public T getItem(int position) {
