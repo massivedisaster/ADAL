@@ -100,6 +100,9 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     protected abstract void bindError(BaseViewHolder holder, boolean loadingError);
 
+    public OnLoadMoreListener getOnLoadMoreListener() {
+        return mOnLoadMoreListener;
+    }
 
     public void setOnChildClickListener(OnChildClickListener<T> listener) {
         this.mListener = listener;
