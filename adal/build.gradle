@@ -1,21 +1,21 @@
 apply plugin: 'com.android.library'
 
-ext{
-    bintrayRepo='maven'
-    bintrayName='adal'
-    publishedGroupId='com.massivedisaster'
-    libraryName='Android Development Accelaration Library'
-    artifact='adal'
-    libraryDescription='Android Development Accelaration Library'
-    siteUrl='https://github.com/massivedisaster/ADAL'
-    gitUrl='https://github.com/massivedisaster/ADAL.git'
-    libraryVersion='0.0.7'
-    developerId='jmspt'
-    developerName='Jorge Costa'
-    developerEmail='j.costa90@gmail.com'
-    licenseName='The Apache Software License, Version 2.0'
-    licenseUrl='http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses=["Apache-2.0"]
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'adal'
+    publishedGroupId = 'com.massivedisaster'
+    libraryName = 'Android Development Accelaration Library'
+    artifact = 'adal'
+    libraryDescription = 'Android Development Accelaration Library'
+    siteUrl = 'https://github.com/massivedisaster/ADAL'
+    gitUrl = 'https://github.com/massivedisaster/ADAL.git'
+    libraryVersion = '0.0.8'
+    developerId = 'jmspt'
+    developerName = 'Jorge Costa'
+    developerEmail = 'j.costa90@gmail.com'
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
 
 }
 
