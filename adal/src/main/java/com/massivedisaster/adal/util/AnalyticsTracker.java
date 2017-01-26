@@ -9,8 +9,6 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.massivedisaster.adal.BuildConfig;
 
-import java.io.FileNotFoundException;
-
 /**
  * Created by Jorge Costa on 26/01/17.
  */
@@ -37,6 +35,7 @@ public class AnalyticsTracker {
 
     private AnalyticsTracker(@NonNull Context context) {
         mContext = context.getApplicationContext();
+        getTracker();
     }
 
     private synchronized Tracker getTracker() {
@@ -45,7 +44,7 @@ public class AnalyticsTracker {
             int checkExistence = mContext.getResources().getIdentifier("global_tracker", "xml", mContext.getPackageName());
 
             if (checkExistence == 0) {
-                new FileNotFoundException("Please check if you have global-services.json");
+                Log.e(AnalyticsTracker.class.getCanonicalName(), "Please check if you have global-services.json");
             } else {
                 mTracker = GoogleAnalytics.getInstance(mContext).newTracker(checkExistence);
                 mTracker.enableAutoActivityTracking(false);
@@ -76,7 +75,7 @@ public class AnalyticsTracker {
      *
      * @param screenName
      */
-    private synchronized void sendScreen(@NonNull String screenName) {
+    public synchronized void sendScreen(@NonNull String screenName) {
         if (getTracker() == null) return;
 
         if (BuildConfig.DEBUG) {
