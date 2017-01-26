@@ -25,7 +25,7 @@ public class AnalyticsTracker {
      * @param context
      * @return
      */
-    public static synchronized AnalyticsTracker initialize(@NonNull Context context) {
+    public static synchronized AnalyticsTracker with(@NonNull Context context) {
         if (sInstance == null) {
             sInstance = new AnalyticsTracker(context);
         }
