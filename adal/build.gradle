@@ -9,7 +9,7 @@ ext{
     libraryDescription='Android Development Accelaration Library'
     siteUrl='https://github.com/massivedisaster/ADAL'
     gitUrl='https://github.com/massivedisaster/ADAL.git'
-    libraryVersion='0.0.6'
+    libraryVersion='0.0.7'
     developerId='jmspt'
     developerName='Jorge Costa'
     developerEmail='j.costa90@gmail.com'
@@ -39,6 +39,7 @@ android {
 def supportVersion = '25.0.1'
 def retrofitVersion = '2.1.0'
 def okHttpVersion = '3.4.2'
+def googlePlayServicesVersion = '10.0.1'
 
 dependencies {
 
@@ -53,6 +54,9 @@ dependencies {
     /* OKHTTP */
     compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
     compile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+
+    /* ANALYTICS */
+    compile "com.google.android.gms:play-services-analytics:$googlePlayServicesVersion"
 }
 
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'

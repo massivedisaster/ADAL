@@ -23,7 +23,6 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
         void onLoadMore();
     }
 
-
     private List<T> mLstItems;
     private int mResLayout, mResLoading;
     private boolean isLoading = false, isMoreDataAvailable = true, isLoadingError = false;
