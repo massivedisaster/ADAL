@@ -87,6 +87,17 @@ public class AnalyticsTracker {
     }
 
     /**
+     * Send a screen with screenName
+     *
+     * @param resScreenName
+     */
+    public synchronized void sendScreen(@NonNull int resScreenName) {
+        if (getTracker() == null) return;
+
+        sendScreen(mContext.getString(resScreenName));
+    }
+
+    /**
      * Send an event with categoryId and actionId
      *
      * @param categoryId from strings resources
