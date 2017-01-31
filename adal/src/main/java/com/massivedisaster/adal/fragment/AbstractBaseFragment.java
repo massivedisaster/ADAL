@@ -1,5 +1,7 @@
 package com.massivedisaster.adal.fragment;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -10,9 +12,13 @@ import com.massivedisaster.adal.util.KeyboardUtils;
 public abstract class AbstractBaseFragment extends Fragment {
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public void onPause() {
         KeyboardUtils.hide(getActivity(), getView());
-
         super.onPause();
     }
 
