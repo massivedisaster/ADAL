@@ -63,7 +63,7 @@ public abstract class APICallback<T extends APIErrorListener> implements Callbac
             return;
         }
 
-        if (response.body() == null) {
+        if (response.body() == null && !response.isSuccessful()) {
             processError(new APIError(mContext.getString(R.string.error_network_general)), true);
             return;
         }
