@@ -45,6 +45,19 @@ public class BangBus {
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
+    public static void bang(Context context, String name) {
+        Intent intent = new Intent(name);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
+
+    public static void bang(Context context, String name, Serializable serializable) {
+        Intent intent = new Intent(name);
+
+        intent.putExtra(sArgumentData, serializable);
+
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    }
+
     public BangBus subscribe() {
         mLstBroadcastReceivers = new ArrayList<>();
 
@@ -66,12 +79,35 @@ public class BangBus {
                         } catch (InvocationTargetException e) {
                             e.printStackTrace();
                         }
+                    } else {
+                        try {
+                            m.setAccessible(true);
+                            m.invoke(mClazz);
+                            m.setAccessible(false);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             };
 
             mLstBroadcastReceivers.add(mBroadcastReceiver);
-            LocalBroadcastManager.getInstance(mContext).registerReceiver(mBroadcastReceiver, new IntentFilter(m.getParameterTypes()[0].getCanonicalName()));
+
+            String filter = null;
+
+            Annotation annotation = m.getAnnotation(SubscribeBang.class);
+            SubscribeBang subscribeBang = (SubscribeBang) annotation;
+
+            if (!subscribeBang.name().isEmpty()) {
+                filter = subscribeBang.name();
+            } else {
+                filter = m.getParameterTypes()[0].getCanonicalName();
+            }
+
+            if (filter != null)
+                LocalBroadcastManager.getInstance(mContext).registerReceiver(mBroadcastReceiver, new IntentFilter(filter));
         }
 
         return this;
@@ -90,8 +126,7 @@ public class BangBus {
             final List<Method> allMethods = new ArrayList<>(Arrays.asList(klass.getDeclaredMethods()));
             for (final Method method : allMethods) {
                 if (method.isAnnotationPresent(annotation)) {
-                    if (method.getParameterTypes().length == 1)
-                        methods.add(method);
+                    methods.add(method);
                 }
             }
             klass = klass.getSuperclass();
@@ -99,8 +134,11 @@ public class BangBus {
         return methods;
     }
 
+
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
     public @interface SubscribeBang {
+
+        String name() default "";
     }
 }
