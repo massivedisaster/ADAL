@@ -91,6 +91,10 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
         return (isLoading && mResLoading != -1) ? mLstItems.size() + 1 : mLstItems.size();
     }
 
+    public List<T> getItems() {
+        return mLstItems;
+    }
+
     public T getItem(int position) {
         return mLstItems.get(position);
     }
@@ -119,6 +123,11 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
         mLstItems.addAll(data);
         notifyDataChanged();
+    }
+
+    public void setIsMoreDataAvailable(boolean moreDataAvailable) {
+        isMoreDataAvailable = moreDataAvailable;
+        isLoading = moreDataAvailable;
     }
 
     public void clearData() {

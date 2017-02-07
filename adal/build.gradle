@@ -9,7 +9,7 @@ ext {
     libraryDescription = 'Android Development Accelaration Library'
     siteUrl = 'https://github.com/massivedisaster/ADAL'
     gitUrl = 'https://github.com/massivedisaster/ADAL.git'
-    libraryVersion = '0.0.13'
+    libraryVersion = '0.0.21'
     developerId = 'jmspt'
     developerName = 'Jorge Costa'
     developerEmail = 'j.costa90@gmail.com'
