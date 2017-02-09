@@ -1,7 +1,9 @@
 package com.massivedisaster.adal.util;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -77,6 +79,13 @@ public class PermissionsUtils {
         mOnGrantedPermissions = onGrantedPermissions;
         mOnDeniedPermissions = onDeniedPermissions;
 
+        //Verify if permissions are added in manifest
+        for (String s : permissions) {
+            if (!hasPermissionInManifest((mFragment != null ? mFragment.getContext() : mActivity), s)) {
+                Log.e(PermissionsUtils.class.getCanonicalName(), "Please add permission to manifest: " + s);
+            }
+        }
+
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || hasPermissions()) {
             if (mOnGrantedPermissions != null) {
                 mOnGrantedPermissions.onGranted();
@@ -147,6 +156,22 @@ public class PermissionsUtils {
             logInfo("hasPermission to " + permission + ": " + result);
         }
         return result;
+    }
+
+    private boolean hasPermissionInManifest(Context context, String permission) {
+        try {
+            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_PERMISSIONS);
+            if (info.requestedPermissions != null) {
+                for (String p : info.requestedPermissions) {
+                    if (p.equals(permission)) {
+                        return true;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     private void logInfo(String message) {
