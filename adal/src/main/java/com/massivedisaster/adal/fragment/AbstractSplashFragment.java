@@ -61,7 +61,7 @@ public abstract class AbstractSplashFragment extends AbstractRequestFragment {
         long diff = System.currentTimeMillis() - mStartTime;
 
         if (diff > getSplashTimeOut()) {
-            return getSplashTimeOut();
+            return 0;
         }
 
         return getSplashTimeOut() - diff;
