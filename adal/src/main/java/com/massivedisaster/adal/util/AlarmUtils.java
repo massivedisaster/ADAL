@@ -14,7 +14,7 @@ import java.util.Calendar;
 
 public class AlarmUtils {
 
-    public static void setAlarm(Context context, Intent intent, int notificationId, Calendar calendar) {
+    public static void addAlarm(Context context, Intent intent, int notificationId, Calendar calendar) {
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
