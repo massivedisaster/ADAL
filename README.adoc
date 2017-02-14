@@ -1,7 +1,8 @@
 :libVersion: 0.0.26
 
 # ADAL
- image::https://api.bintray.com/packages/jmspt/maven/adal/images/download.svg?version=0.0.26[link="https://bintray.com/jmspt/maven/adal/0.0.26/link"]
+
+image:https://api.bintray.com/packages/jmspt/maven/adal/images/download.svg[Build Status,link=https://bintray.com/jmspt/maven/adal/_latestVersion]
 
 Android Development Accelaration Library
 
