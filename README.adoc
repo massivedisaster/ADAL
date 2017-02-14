@@ -8,8 +8,6 @@ Android Development Accelaration Library
 
 Add the dependency in the form:
 [source, groovy, subs='attributes']
-----
 dependencies {
   compile 'com.massivedisaster:adal:{libVersion}'
 }
----
