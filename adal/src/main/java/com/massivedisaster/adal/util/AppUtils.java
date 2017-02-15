@@ -26,11 +26,11 @@ public class AppUtils {
         }
     }
 
-    public static void openEmail(Context context, String title, String... email) {
+    public static void openEmail(Context context, String intentTitle, String... email) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
         intent.putExtra(android.content.Intent.EXTRA_EMAIL, email);
-        context.startActivity(Intent.createChooser(intent, title));
+        context.startActivity(Intent.createChooser(intent, intentTitle));
     }
 
 }
