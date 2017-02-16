@@ -19,25 +19,43 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-
 public class BangBus {
+
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    public @interface SubscribeBang {
+
+        String name() default "";
+    }
 
     private final static String sArgumentData = "argument_bang_data";
 
     private Context mContext;
     private List<BroadcastReceiver> mLstBroadcastReceivers;
-    private Object mClazz;
+    private Object mObject;
 
-    public BangBus(Context context, final Object clazz) {
+    public BangBus(Context context) {
         mLstBroadcastReceivers = new LinkedList<>();
         mContext = context;
-        mClazz = clazz;
     }
 
+    /**
+     * Sends an object to another part of the application
+     * All the methods subscribed with this data type will receive the object
+     *
+     * @param serializable the object to send
+     */
     public void bang(Serializable serializable) {
         bang(mContext, serializable);
     }
 
+    /**
+     * Sends an object to another part of the application
+     * All the methods subscribed with this data type will receive the object
+     *
+     * @param context      the application context
+     * @param serializable the object to send
+     */
     public static void bang(Context context, Serializable serializable) {
         Intent intent = new Intent(serializable.getClass().getCanonicalName());
         intent.putExtra(sArgumentData, serializable);
@@ -45,11 +63,26 @@ public class BangBus {
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
+    /**
+     * Sends an object to another part of the application
+     * All the methods subscribed with this name
+     *
+     * @param context the application context
+     * @param name    the @anotation name
+     */
     public static void bang(Context context, String name) {
         Intent intent = new Intent(name);
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
+    /**
+     * Sends an object to another part of the application
+     * All the methods subscribed with this name
+     *
+     * @param context      the application context
+     * @param name         the anotation name
+     * @param serializable the object to send
+     */
     public static void bang(Context context, String name, Serializable serializable) {
         Intent intent = new Intent(name);
 
@@ -58,10 +91,18 @@ public class BangBus {
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
-    public BangBus subscribe() {
+    /**
+     * Subscribes all methods in the object passed.
+     *
+     * @param object the object to find methods to subscribe
+     * @return BangBus instance
+     */
+    public BangBus subscribe(Object object) {
+        mObject = object;
+
         mLstBroadcastReceivers = new ArrayList<>();
 
-        List<Method> lstMethods = getMethodsAnnotatedWith(mClazz.getClass(), SubscribeBang.class);
+        List<Method> lstMethods = getMethodsAnnotatedWith(mObject.getClass(), SubscribeBang.class);
 
         for (final Method m : lstMethods) {
             BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
@@ -72,7 +113,7 @@ public class BangBus {
 
                         try {
                             m.setAccessible(true);
-                            m.invoke(mClazz, object);
+                            m.invoke(mObject, object);
                             m.setAccessible(false);
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();
@@ -82,7 +123,7 @@ public class BangBus {
                     } else {
                         try {
                             m.setAccessible(true);
-                            m.invoke(mClazz);
+                            m.invoke(mObject);
                             m.setAccessible(false);
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();
@@ -113,6 +154,9 @@ public class BangBus {
         return this;
     }
 
+    /**
+     * Removes all methods subscribed in this instance
+     */
     public void unsubscribe() {
         for (BroadcastReceiver broadcastReceiver : mLstBroadcastReceivers) {
             LocalBroadcastManager.getInstance(mContext).unregisterReceiver(broadcastReceiver);
@@ -132,13 +176,5 @@ public class BangBus {
             klass = klass.getSuperclass();
         }
         return methods;
-    }
-
-
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.METHOD)
-    public @interface SubscribeBang {
-
-        String name() default "";
     }
 }

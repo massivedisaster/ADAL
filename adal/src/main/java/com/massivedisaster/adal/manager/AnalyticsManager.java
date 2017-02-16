@@ -1,4 +1,4 @@
-package com.massivedisaster.adal.util;
+package com.massivedisaster.adal.manager;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -13,19 +13,19 @@ import com.massivedisaster.adal.BuildConfig;
  * Created by Jorge Costa on 26/01/17.
  */
 
-public class AnalyticsTracker {
+public class AnalyticsManager {
 
-    private static AnalyticsTracker sInstance;
+    private static AnalyticsManager sInstance;
 
     /**
-     * Initialize AnalyticsTracker in your Application class
+     * Initialize AnalyticsManager in your Application class
      *
      * @param context
      * @return
      */
-    public static synchronized AnalyticsTracker with(@NonNull Context context) {
+    public static synchronized AnalyticsManager with(@NonNull Context context) {
         if (sInstance == null) {
-            sInstance = new AnalyticsTracker(context);
+            sInstance = new AnalyticsManager(context);
         }
         return sInstance;
     }
@@ -33,7 +33,7 @@ public class AnalyticsTracker {
     private Tracker mTracker;
     private final Context mContext;
 
-    private AnalyticsTracker(@NonNull Context context) {
+    private AnalyticsManager(@NonNull Context context) {
         mContext = context.getApplicationContext();
         getTracker();
     }
@@ -44,7 +44,7 @@ public class AnalyticsTracker {
             int checkExistence = mContext.getResources().getIdentifier("global_tracker", "xml", mContext.getPackageName());
 
             if (checkExistence == 0) {
-                Log.e(AnalyticsTracker.class.getCanonicalName(), "Please check if you have global-services.json");
+                Log.e(AnalyticsManager.class.getCanonicalName(), "Please check if you have global-services.json");
             } else {
                 mTracker = GoogleAnalytics.getInstance(mContext).newTracker(checkExistence);
                 mTracker.enableAutoActivityTracking(false);

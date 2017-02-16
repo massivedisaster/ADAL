@@ -7,14 +7,25 @@ import android.view.inputmethod.InputMethodManager;
 
 public class KeyboardUtils {
 
-    public static void hide(Activity a) {
-        View view = a.getCurrentFocus();
+    /**
+     * Hide keyboard
+     *
+     * @param activity
+     */
+    public static void hide(Activity activity) {
+        View view = activity.getCurrentFocus();
         if (view != null) {
-            InputMethodManager imm = (InputMethodManager) a.getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 
+    /**
+     * Hide keyboard
+     *
+     * @param activity
+     * @param view
+     */
     public static void hide(Activity activity, View view) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
 

@@ -13,7 +13,8 @@ import com.google.android.gms.common.GoogleApiAvailability;
 public class AppUtils {
 
     /**
-     * Open App Setting for a specify context and then call onActivityResult
+     * Open application settings for a specify context
+     * Call OnActivityResult when user back to the app
      *
      * @param activity    to get the result
      * @param requestCode to identify in onActivityResult
@@ -39,12 +40,24 @@ public class AppUtils {
         context.startActivity(intent);
     }
 
+    /**
+     * Verify if Google Play Services are installed
+     *
+     * @param context application context
+     * @return true if google play services exists
+     */
     public static boolean checkPlayServicesExists(Context context) {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         int resultCode = apiAvailability.isGooglePlayServicesAvailable(context);
         return resultCode == ConnectionResult.SUCCESS;
     }
 
+    /**
+     * Open to make a call to specific phone number
+     *
+     * @param context     application context
+     * @param phoneNumber the phone number
+     */
     public static void openDial(Context context, String phoneNumber) {
         try {
             Intent intent = new Intent(Intent.ACTION_DIAL);
@@ -55,6 +68,13 @@ public class AppUtils {
         }
     }
 
+    /**
+     * Open a Intent Chooser to choose a app to send a email
+     *
+     * @param context     application context
+     * @param intentTitle intent chooser title
+     * @param email       list of emails
+     */
     public static void openEmail(Context context, String intentTitle, String... email) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
