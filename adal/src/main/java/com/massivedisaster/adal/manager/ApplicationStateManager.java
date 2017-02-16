@@ -1,4 +1,4 @@
-package com.massivedisaster.adal.util;
+package com.massivedisaster.adal.manager;
 
 import android.app.Activity;
 import android.app.Application;
@@ -95,6 +95,8 @@ public class ApplicationStateManager implements Application.ActivityLifecycleCal
         if (!activity.isChangingConfigurations()) {
             mMainThreadHandler.postDelayed(mBackgroundChecker, sBackgroundCheckDelay);
         }
+
+
     }
 
     public interface BackAndForegroundListener {
