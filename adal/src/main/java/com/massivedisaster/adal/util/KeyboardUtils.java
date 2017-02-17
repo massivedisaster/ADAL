@@ -10,7 +10,7 @@ public class KeyboardUtils {
     /**
      * Hide keyboard
      *
-     * @param activity
+     * @param activity the visible activity
      */
     public static void hide(Activity activity) {
         View view = activity.getCurrentFocus();
@@ -23,8 +23,8 @@ public class KeyboardUtils {
     /**
      * Hide keyboard
      *
-     * @param activity
-     * @param view
+     * @param activity the visible activity
+     * @param view     view to get getWindowToken
      */
     public static void hide(Activity activity, View view) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);

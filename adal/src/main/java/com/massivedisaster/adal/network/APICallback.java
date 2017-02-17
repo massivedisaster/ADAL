@@ -21,12 +21,18 @@ public abstract class APICallback<T extends APIErrorListener> implements Callbac
 
     public APICallback(Context context) {
         mContext = context;
-
     }
 
+    /**
+     * @param t response
+     */
     public abstract void onSuccess(T t);
 
-    public abstract void onError(APIError e, boolean serverError);
+    /**
+     * @param error
+     * @param isServerError
+     */
+    public abstract void onError(APIError error, boolean isServerError);
 
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
