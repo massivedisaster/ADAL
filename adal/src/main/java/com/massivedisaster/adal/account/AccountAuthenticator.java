@@ -32,15 +32,16 @@ class AccountAuthenticator extends AbstractAccountAuthenticator {
         if (AccountHelper.hasAccount(mContext)) {
             final Bundle result = new Bundle();
             result.putInt(AccountManager.KEY_ERROR_CODE, ERROR_CODE_ONE_ACCOUNT_ALLOWED);
-            result.putString(AccountManager.KEY_ERROR_MESSAGE, mContext.getString(R.string.one_account_allowed));
+            result.putString(AccountManager.KEY_ERROR_MESSAGE, mContext.getString(R.string.error_account_only_one_allowed));
 
             mHandler.post(new Runnable() {
 
                 @Override
                 public void run() {
-                    Toast.makeText(mContext, R.string.one_account_allowed, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.error_account_only_one_allowed, Toast.LENGTH_SHORT).show();
                 }
             });
+
             return result;
         }
 
