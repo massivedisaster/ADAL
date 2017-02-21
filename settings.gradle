@@ -1,1 +1,1 @@
-include ':adal'
+include ':adal', ':sample'
