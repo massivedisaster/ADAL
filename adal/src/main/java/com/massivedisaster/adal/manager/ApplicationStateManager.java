@@ -23,10 +23,18 @@ public class ApplicationStateManager implements Application.ActivityLifecycleCal
     private boolean mIsForeground = true;
     private boolean mIsPaused;
 
+    /**
+     * Creates a ApplicationStateManager instance
+     */
     public ApplicationStateManager() {
         init();
     }
 
+    /**
+     * Creates a ApplicationStateManager instance
+     *
+     * @param listener the listener for application state changes.
+     */
     public ApplicationStateManager(BackAndForegroundListener listener) {
         init();
         mBackAndForegroundListener = listener;
@@ -37,10 +45,20 @@ public class ApplicationStateManager implements Application.ActivityLifecycleCal
         mBackgroundChecker = new BackAndForegroundChecker();
     }
 
+    /**
+     * Tells if application is in foreground.
+     *
+     * @return true is application is in foreground.
+     */
     public boolean isForeground() {
         return mIsForeground;
     }
 
+    /**
+     * Tells if application is in background.
+     *
+     * @return true is application is in background.
+     */
     public boolean isBackground() {
         return !mIsForeground;
     }
@@ -100,8 +118,14 @@ public class ApplicationStateManager implements Application.ActivityLifecycleCal
     }
 
     public interface BackAndForegroundListener {
+        /**
+         * Application went from background.
+         */
         void wentBackground();
 
+        /**
+         * Application went from foreground.
+         */
         void wentForeground();
     }
 
