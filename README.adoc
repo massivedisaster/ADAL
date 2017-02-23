@@ -10,4 +10,13 @@ Add the dependency in the form:
 [source, groovy, subs='attributes']
 dependencies {
   compile 'com.massivedisaster:adal:{libVersion}'
+  
+  compile 'com.massivedisaster:adal-accounts:{libVersion}'
+  compile 'com.massivedisaster:adal-adapters:{libVersion}'
+  compile 'com.massivedisaster:adal-analytics:{libVersion}'
+  compile 'com.massivedisaster:adal-bus:{libVersion}'
+  compile 'com.massivedisaster:adal-fragments:{libVersion}'
+  compile 'com.massivedisaster:adal-managers:{libVersion}'
+  compile 'com.massivedisaster:adal-network:{libVersion}'
+  compile 'com.massivedisaster:adal-utils:{libVersion}'
 }
