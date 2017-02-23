@@ -4,6 +4,7 @@ apply plugin: 'com.novoda.bintray-release'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 25
@@ -18,23 +19,20 @@ android {
     }
 }
 
+def supportVersion = '25.1.1'
+def googlePlayServicesVersion = '10.0.1'
+
 dependencies {
-    compile project(':adal-accounts')
-    compile project(':adal-adapters')
-    compile project(':adal-analytics')
-    compile project(':adal-bus')
-    compile project(':adal-fragments')
-    compile project(':adal-managers')
-    compile project(':adal-network')
-    compile project(':adal-utils')
+    compile "com.android.support:design:$supportVersion"
+    compile "com.google.android.gms:play-services-base:$googlePlayServicesVersion"
 }
 
 publish {
     userOrg = userOrgBase
     groupId = adalModuleBase
-    artifactId = 'adal'
+    artifactId = 'adal-utils'
     publishVersion = libraryVersionString()
-    desc = 'ADAL'
+    desc = 'ADAL utils module'
     website = websiteBase
     licences = licensesBase
 }

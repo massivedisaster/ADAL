@@ -1,14 +1,29 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+ext {
+    userOrgBase = 'jmspt'
+    websiteBase = 'https://github.com/massivedisaster/ADAL'
+    licensesBase = ['Apache-2.0']
+    packageBase = 'com.massivedisaster'
+    adalModuleBase = packageBase + '.adal'
+    isLibrary = true
+    libraryVersionCode = 1
+    libraryVersionName = '0.1.0'
+    librarySnaphotEnabled = false
+
+    libraryVersionString = {
+        return libraryVersionName + (librarySnaphotEnabled ? '-SNAPSHOT' : '')
+    }
+}
+
 buildscript {
     repositories {
         jcenter()
+        mavenLocal()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
-
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.novoda:bintray-release:0.3.4'
     }
 }
 
