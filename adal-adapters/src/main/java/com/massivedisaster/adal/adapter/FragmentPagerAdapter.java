@@ -21,7 +21,6 @@ public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    @SuppressLint("NewApi")
     public Fragment getItem(int position) {
         try {
 
@@ -36,7 +35,9 @@ public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
 
             return fragment;
 
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException e){
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
         return new Fragment();

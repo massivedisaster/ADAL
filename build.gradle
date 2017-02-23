@@ -1,5 +1,4 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 ext {
     userOrgBase = 'jmspt'
     websiteBase = 'https://github.com/massivedisaster/ADAL'
@@ -8,7 +7,7 @@ ext {
     adalModuleBase = packageBase + '.adal'
     isLibrary = true
     libraryVersionCode = 1
-    libraryVersionName = '0.1.0'
+    libraryVersionName = '0.1.1'
     librarySnaphotEnabled = false
 
     libraryVersionString = {
@@ -35,4 +34,12 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
+
+task version {
+    println libraryVersionString()
 }
