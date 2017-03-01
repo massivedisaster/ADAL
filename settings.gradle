@@ -1,1 +1,1 @@
-include ':adal', ':sample', ':adal-accounts', ':adal-managers', ':adal-analytics', ':adal-utils', ':adal-network', ':adal-adapters', ':adal-bus', ':adal-fragments'
+include ':adal', ':sample', ':adal-accounts', ':adal-managers', ':adal-analytics', ':adal-utils', ':adal-network', ':adal-adapters', ':adal-bus', ':adal-fragments', ':adal-location'

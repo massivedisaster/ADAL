@@ -12,7 +12,8 @@ declare -a array=(
                 "adal-bus"
                 "adal-fragments"
                 "adal-managers"
-                "adal-network")
+                "adal-network"
+                "adal-location")
 
 # get length of an array
 array_length=${#array[@]}
