@@ -1,4 +1,4 @@
-:libVersion: 0.0.26
+:libVersion: 0.1.1
 
 # ADAL
 
@@ -9,5 +9,16 @@ Android Development Accelaration Library
 Add the dependency in the form:
 [source, groovy, subs='attributes']
 dependencies {
+  /* Include all modules */
   compile 'com.massivedisaster:adal:{libVersion}'
+  /* Specific modules*/
+  compile 'com.massivedisaster:adal-accounts:{libVersion}'
+  compile 'com.massivedisaster:adal-adapters:{libVersion}'
+  compile 'com.massivedisaster:adal-analytics:{libVersion}'
+  compile 'com.massivedisaster:adal-bus:{libVersion}'
+  compile 'com.massivedisaster:adal-fragments:{libVersion}'
+  compile 'com.massivedisaster:adal-managers:{libVersion}'
+  compile 'com.massivedisaster:adal-network:{libVersion}'
+  compile 'com.massivedisaster:adal-utils:{libVersion}'
+  compile 'com.massivedisaster:adal-location:{libVersion}'
 }

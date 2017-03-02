@@ -1,0 +1,3 @@
+<resources>
+    <string name="error_account_only_one_allowed">Only one account allowed</string>
+</resources>

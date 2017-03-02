@@ -4,6 +4,7 @@ apply plugin: 'com.novoda.bintray-release'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 25
@@ -16,26 +17,33 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
 }
 
+def retrofitVersion = '2.1.0'
+def okHttpVersion = '3.4.2'
+
 dependencies {
-    compile project(':adal-location')
-    compile project(':adal-accounts')
-    compile project(':adal-adapters')
-    compile project(':adal-analytics')
-    compile project(':adal-bus')
-    compile project(':adal-fragments')
-    compile project(':adal-managers')
-    compile project(':adal-network')
-    compile project(':adal-utils')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    /* RETROFIT */
+    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+
+    /* OKHTTP */
+    compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
+    compile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
 }
 
 publish {
     userOrg = userOrgBase
     groupId = adalModuleBase
-    artifactId = 'adal'
+    artifactId = 'adal-network'
     publishVersion = libraryVersionString()
-    desc = 'ADAL'
+    desc = 'ADAL retrofit network module'
     website = websiteBase
     licences = licensesBase
 }

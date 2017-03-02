@@ -1,0 +1,74 @@
+apply plugin: 'com.android.application'
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 25
+    }
+    buildTypes {
+        prod {
+            initWith release
+            debuggable false
+            manifestPlaceholders = [
+                    appIcon: "@mipmap/ic_launcher"
+            ]
+        }
+
+        qa {
+            initWith debug
+            debuggable true
+            applicationIdSuffix ".qa"
+            versionNameSuffix "-QA"
+            manifestPlaceholders = [
+                    appIcon: "@drawable/ic_launcher"
+            ]
+        }
+
+        dev {
+            initWith debug
+            debuggable true
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-DEV"
+            manifestPlaceholders = [
+                    appIcon: "@drawable/ic_launcher"
+            ]
+        }
+    }
+
+    productFlavors {
+        main {
+
+            def appName = "sample"
+
+            defaultConfig {
+                applicationId "com.massivedisaster.adal.sample"
+                versionCode 1
+                versionName "0.0.1"
+            }
+
+            buildTypes {
+                prod {
+                    resValue("string", "app_name", appName)
+                }
+
+                dev {
+                    resValue("string", "app_name", appName + " DEV")
+                }
+
+                qa {
+                    resValue("string", "app_name", appName + " QA")
+                }
+            }
+        }
+    }
+}
+
+android.variantFilter { variant ->
+    if (variant.buildType.name.endsWith('release') || variant.buildType.name.endsWith('debug')) {
+        variant.setIgnore(true);
+    }
+}
+
+apply from: 'dependencies.gradle'
