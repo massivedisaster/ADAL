@@ -139,6 +139,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
      * @param item: Item to be added
      */
     public void add(int position, T item) {
+        validatePosition(position);
         mData.add(position, item);
         notifyItemInserted(position);
     }
