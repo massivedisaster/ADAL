@@ -46,7 +46,6 @@ public abstract class APICallback<T extends APIErrorListener> implements Callbac
 
         if (response.errorBody() != null) {
 
-
             Gson gson = new Gson();
             try {
 
@@ -58,10 +57,9 @@ public abstract class APICallback<T extends APIErrorListener> implements Callbac
                     return;
                 }
 
-            } catch (IOException e) {
+            } catch (ClassCastException | IOException e) {
                 e.printStackTrace();
             }
-
 
             processError(new APIError(mContext.getString(R.string.error_network_general)), true);
             return;
@@ -71,7 +69,6 @@ public abstract class APICallback<T extends APIErrorListener> implements Callbac
             processError(new APIError(mContext.getString(R.string.error_network_general)), true);
             return;
         }
-
 
         onSuccess(response.body());
     }
