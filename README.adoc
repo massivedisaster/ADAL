@@ -10,15 +10,15 @@ Add the dependency in the form:
 [source, groovy, subs='attributes']
 dependencies {
   /* Include all modules */
-  compile 'com.massivedisaster:adal:{libVersion}'
+  compile 'com.massivedisaster.adal:adal:{libVersion}'
   /* Specific modules*/
-  compile 'com.massivedisaster:adal-accounts:{libVersion}'
-  compile 'com.massivedisaster:adal-adapters:{libVersion}'
-  compile 'com.massivedisaster:adal-analytics:{libVersion}'
-  compile 'com.massivedisaster:adal-bus:{libVersion}'
-  compile 'com.massivedisaster:adal-fragments:{libVersion}'
-  compile 'com.massivedisaster:adal-managers:{libVersion}'
-  compile 'com.massivedisaster:adal-network:{libVersion}'
-  compile 'com.massivedisaster:adal-utils:{libVersion}'
-  compile 'com.massivedisaster:adal-location:{libVersion}'
+  compile 'com.massivedisaster.adal:adal-accounts:{libVersion}'
+  compile 'com.massivedisaster.adal:adal-adapters:{libVersion}'
+  compile 'com.massivedisaster.adal:adal-analytics:{libVersion}'
+  compile 'com.massivedisaster.adal:adal-bus:{libVersion}'
+  compile 'com.massivedisaster.adal:adal-fragments:{libVersion}'
+  compile 'com.massivedisaster.adal:adal-managers:{libVersion}'
+  compile 'com.massivedisaster.adal:adal-network:{libVersion}'
+  compile 'com.massivedisaster.adal:adal-utils:{libVersion}'
+  compile 'com.massivedisaster.adal:adal-location:{libVersion}'
 }
