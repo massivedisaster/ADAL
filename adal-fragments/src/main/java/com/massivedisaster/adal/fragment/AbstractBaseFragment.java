@@ -84,8 +84,12 @@ public abstract class AbstractBaseFragment extends Fragment {
         }
 
         restoreInstanceState(savedInstanceState);
-        doOnCreated();
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        doOnCreated();
     }
 
     @Override
