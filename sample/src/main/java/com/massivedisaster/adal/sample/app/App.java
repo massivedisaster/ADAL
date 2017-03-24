@@ -18,13 +18,13 @@ public class App extends Application implements ApplicationStateManager.BackAndF
     }
 
     @Override
-    public void wentBackground() {
-        Log.d(TAG, "wentBackground");
+    public void onBackground() {
+        Log.d(TAG, "onBackground");
     }
 
     @Override
-    public void wentForeground() {
-        Log.d(TAG, "wentForeground");
+    public void onForeground() {
+        Log.d(TAG, "onForeground");
     }
 
     public boolean isBackground() {
