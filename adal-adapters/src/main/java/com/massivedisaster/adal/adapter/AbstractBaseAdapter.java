@@ -1,5 +1,6 @@
 package com.massivedisaster.adal.adapter;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,12 @@ import android.view.ViewGroup;
 import java.util.Collection;
 import java.util.List;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
+
+    private View mEmptyView;
 
     private static final int sInvalidResourceId = -1;
     private static final int sViewTypeItem = 0;
@@ -28,6 +34,14 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
     private List<T> mData;
     private int mResLayout, mResLoading;
     private boolean isLoading = false, isMoreDataAvailable = true, isLoadingError = false;
+
+    RecyclerView.AdapterDataObserver mDataObserver = new RecyclerView.AdapterDataObserver() {
+        @Override
+        public void onChanged() {
+            super.onChanged();
+            checkIfEmpty();
+        }
+    };
 
     public AbstractBaseAdapter(int resLayout, List<T> lstItems) {
         init(resLayout, sInvalidResourceId, lstItems);
@@ -121,6 +135,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     /**
      * <p>Adds an entire data set</p>
+     *
      * @param data: Collection of data that will be added
      */
     public void addAll(Collection<T> data) {
@@ -135,8 +150,9 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     /**
      * <p>Adds an item on a specific position of the data set</p>
+     *
      * @param position: specific position to add the item
-     * @param item: Item to be added
+     * @param item:     Item to be added
      */
     public void add(int position, T item) {
         validatePosition(position);
@@ -146,6 +162,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     /**
      * <p>Adds an item into data set</p>
+     *
      * @param item: Item to be added
      */
     public void add(T item) {
@@ -155,6 +172,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     /**
      * <p>Returns the item on the given position</p>
+     *
      * @param position: Position of the retrieved item
      * @return item: The item at the specific position
      */
@@ -165,6 +183,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     /**
      * <p>Removes the item at the given position</p>
+     *
      * @param position: Position of the item that will be removed
      */
     public void remove(int position) {
@@ -175,6 +194,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     /**
      * <p>Removes the given item</p>
+     *
      * @param item: The item that will be removed
      */
     public void remove(T item) {
@@ -184,6 +204,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     /**
      * <p>Remove a collection of items</p>
+     *
      * @param ts: Collection of items that will be removed
      */
     public void removeAll(Collection<T> ts) {
@@ -193,6 +214,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     /**
      * <p>Returns the given item position</p>
+     *
      * @param item: Item to retrieve the position
      * @return position: Position of the specified item
      */
@@ -202,6 +224,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     /**
      * <p>Returns adapter data set (All items)</p>
+     *
      * @return data: All items stored on this list
      */
     public List<T> getDataSet() {
@@ -220,6 +243,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     /**
      * <p>Check if the adapter is empty</p>
+     *
      * @return true if the data is empty, otherwise false
      */
     public boolean isEmpty() {
@@ -228,15 +252,41 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     /**
      * <p>Validates an specific position according to the data set size</p>
+     *
      * @param position: Specific position to be validated
      */
     private void validatePosition(int position) {
-        if(mData.isEmpty()) {
+        if (mData.isEmpty()) {
             throw new IndexOutOfBoundsException("The adapter is empty!");
         }
 
-        if(position < 0 || position >= mData.size()) {
+        if (position < 0 || position >= mData.size()) {
             throw new IndexOutOfBoundsException("Please, specify a valid position that is equals or greater than 0 and less than " + mData.size());
+        }
+    }
+
+    /**
+     * Set a empty to br showed when the adapter is empty
+     *
+     * @param emptyView the view to be showed when the adapter is empty
+     */
+    public void setEmptyView(@Nullable View emptyView) {
+        if (emptyView == null) {
+            throw new NullPointerException("EmptyView cannot be null");
+        }
+
+        if (mEmptyView == null) {
+            registerAdapterDataObserver(mDataObserver);
+        }
+
+        this.mEmptyView = emptyView;
+
+        checkIfEmpty();
+    }
+
+    private void checkIfEmpty() {
+        if (mEmptyView != null) {
+            mEmptyView.setVisibility(getItemCount() > 0 ? GONE : VISIBLE);
         }
     }
 }
