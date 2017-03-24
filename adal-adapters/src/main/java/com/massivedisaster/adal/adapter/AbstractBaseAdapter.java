@@ -35,10 +35,19 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
     private int mResLayout, mResLoading;
     private boolean isLoading = false, isMoreDataAvailable = true, isLoadingError = false;
 
-    RecyclerView.AdapterDataObserver mDataObserver = new RecyclerView.AdapterDataObserver() {
+    private RecyclerView.AdapterDataObserver mDataObserver = new RecyclerView.AdapterDataObserver() {
         @Override
         public void onChanged() {
-            super.onChanged();
+            checkIfEmpty();
+        }
+
+        @Override
+        public void onItemRangeInserted(int positionStart, int itemCount) {
+            checkIfEmpty();
+        }
+
+        @Override
+        public void onItemRangeRemoved(int positionStart, int itemCount) {
             checkIfEmpty();
         }
     };
@@ -279,7 +288,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
             registerAdapterDataObserver(mDataObserver);
         }
 
-        this.mEmptyView = emptyView;
+        mEmptyView = emptyView;
 
         checkIfEmpty();
     }
