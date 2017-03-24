@@ -7,7 +7,7 @@ ext {
     adalModuleBase = packageBase + '.adal'
     isLibrary = true
     libraryVersionCode = 1
-    libraryVersionName = '0.1.4'
+    libraryVersionName = '0.1.5'
     librarySnaphotEnabled = false
 
     libraryVersionString = {
