@@ -93,7 +93,7 @@ public class ApplicationStateManager implements Application.ActivityLifecycleCal
 
 
             if (wasInBackground && mBackAndForegroundListener != null) {
-                mBackAndForegroundListener.wentForeground();
+                mBackAndForegroundListener.onForeground();
             }
         }
     }
@@ -115,14 +115,14 @@ public class ApplicationStateManager implements Application.ActivityLifecycleCal
 
     public interface BackAndForegroundListener {
         /**
-         * Application went from background.
-         */
-        void wentBackground();
-
-        /**
          * Application went from foreground.
          */
-        void wentForeground();
+        void onBackground();
+
+        /**
+         * Application went from background.
+         */
+        void onForeground();
     }
 
     private class BackAndForegroundChecker implements Runnable {
@@ -133,7 +133,7 @@ public class ApplicationStateManager implements Application.ActivityLifecycleCal
                 mIsForeground = false;
 
                 if (mBackAndForegroundListener != null) {
-                    mBackAndForegroundListener.wentBackground();
+                    mBackAndForegroundListener.onBackground();
                 }
             }
         }
