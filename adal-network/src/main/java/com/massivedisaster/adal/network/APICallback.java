@@ -3,14 +3,13 @@ package com.massivedisaster.adal.network;
 import android.content.Context;
 import android.util.Log;
 
-import com.google.gson.Gson;
-
-import java.io.IOException;
-import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Field;
 import java.net.UnknownHostException;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
 import retrofit2.Response;
 
 public abstract class APICallback<T extends APIErrorListener> implements Callback<T> {
@@ -45,19 +44,16 @@ public abstract class APICallback<T extends APIErrorListener> implements Callbac
         }
 
         if (response.errorBody() != null) {
-
-            Gson gson = new Gson();
             try {
+                Converter<ResponseBody, T> errorConverter = getRetrofitConverter(call);
 
-                T error = gson.fromJson(response.errorBody().string(), ((ParameterizedType) getClass()
-                        .getGenericSuperclass()).getActualTypeArguments()[0]);
+                T error = errorConverter.convert(response.errorBody());
 
                 if (error != null) {
                     processError(new APIError(error.getError()), true);
                     return;
                 }
-
-            } catch (ClassCastException | IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -71,6 +67,22 @@ public abstract class APICallback<T extends APIErrorListener> implements Callbac
         }
 
         onSuccess(response.body());
+    }
+
+    @SuppressWarnings("unchecked")
+    private Converter<ResponseBody, T> getRetrofitConverter(Call<T> call) throws Exception {
+        Field f = call.getClass().getDeclaredField("delegate");
+        f.setAccessible(true);
+        Object obj = f.get(call);
+
+        f = obj.getClass().getDeclaredField("serviceMethod");
+        f.setAccessible(true);
+        obj = f.get(obj);
+
+        f = obj.getClass().getDeclaredField("responseConverter");
+        f.setAccessible(true);
+
+        return (Converter<ResponseBody, T>) f.get(obj);
     }
 
     @Override
