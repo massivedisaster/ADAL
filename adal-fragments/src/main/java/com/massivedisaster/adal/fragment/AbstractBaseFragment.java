@@ -20,16 +20,29 @@ public abstract class AbstractBaseFragment extends Fragment {
     private static final int sInvalidResourceId = -1;
 
     /**
+     * <p>Used to get data from bundle</p>
+     *
+     * @param bundle Fragment Bundle
+     */
+    protected void getFromBundle(Bundle bundle) {
+        //In case you're gonna use this method it could be override without calling super!
+    }
+
+    /**
      * <p>Used to specify fragment layout</p>
+     *
      * @return Layout ID
      */
-    protected @LayoutRes int layoutToInflate() {
+    protected
+    @LayoutRes
+    int layoutToInflate() {
         return sInvalidResourceId;
     }
 
     /**
      * <p>Restores last instance state of the fragment, this method is always empty
      * and going to restore data only when it's override</p>
+     *
      * @param savedInstanceState: Last instance state saved from this fragment
      */
     protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
@@ -47,31 +60,33 @@ public abstract class AbstractBaseFragment extends Fragment {
     /**
      * <p>Request a view by id in case is there any root view inflated
      * otherwise throws a null pointer exception</p>
+     *
      * @param viewId: Id of the requested view (child)
-     * @param <T>: Type of the requested view
+     * @param <T>:    Type of the requested view
      * @return view requested if it exists
      */
     protected <T extends View> T findViewById(@IdRes int viewId) {
         View view = getView();
-        if(view == null) {
+        if (view == null) {
             throw new NullPointerException("You must inflate the root view before request their children!");
         }
-        return (T)view.findViewById(viewId);
+        return (T) view.findViewById(viewId);
     }
 
     /**
      * <p>Request a view by id on activity sight in case is there any activity
      * otherwise throws a null pointer exception</p>
+     *
      * @param viewId: Id of the requested view (child)
-     * @param <T>: Type of the requested view
+     * @param <T>:    Type of the requested view
      * @return view requested if it exists
      */
     protected <T extends View> T findViewByIdOnActivity(@IdRes int viewId) {
         Activity activity = getActivity();
-        if(activity == null) {
+        if (activity == null) {
             throw new NullPointerException("Fragment is not attached to the activity yet!");
         }
-        return (T)activity.findViewById(viewId);
+        return (T) activity.findViewById(viewId);
     }
 
     @Nullable
@@ -79,7 +94,7 @@ public abstract class AbstractBaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = null;
 
-        if(layoutToInflate() != sInvalidResourceId) {
+        if (layoutToInflate() != sInvalidResourceId) {
             view = inflater.inflate(layoutToInflate(), container, false);
         }
 
@@ -89,6 +104,10 @@ public abstract class AbstractBaseFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        if (getArguments() != null) {
+            getFromBundle(getArguments());
+        }
+
         doOnCreated();
     }
 
