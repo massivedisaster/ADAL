@@ -1,4 +1,4 @@
-:libVersion: 0.1.6
+:libVersion: 0.1.7
 
 # ADAL
 

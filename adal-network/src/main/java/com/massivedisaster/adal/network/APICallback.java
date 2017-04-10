@@ -50,7 +50,7 @@ public abstract class APICallback<T extends APIErrorListener> implements Callbac
                 T error = errorConverter.convert(response.errorBody());
 
                 if (error != null) {
-                    processError(new APIError(error.getError()), true);
+                    processError(new APIError(error.getErrorCode(), error.getError()), true);
                     return;
                 }
             } catch (Exception e) {
