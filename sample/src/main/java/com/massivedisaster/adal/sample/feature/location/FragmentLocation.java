@@ -64,7 +64,7 @@ public class FragmentLocation extends Fragment {
     }
 
     private void getLocation() {
-        mLocationManager.requestLocation(android.location.LocationManager.NETWORK_PROVIDER, 10000, true, new OnLocationManager() {
+        mLocationManager.requestLocation(android.location.LocationManager.NETWORK_PROVIDER, true, 10000, new OnLocationManager() {
             @Override
             public void onLocationFound(Location location, boolean isLastKnowLocation) {
                 mTxtInfo.setText("Location found: " + location.toString());
