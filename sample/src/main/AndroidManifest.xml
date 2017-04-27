@@ -1,5 +1,7 @@
-<manifest package="com.massivedisaster.adal.sample"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.massivedisaster.adal.sample">
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
 
     <application
         android:name=".app.App"
@@ -23,7 +25,6 @@
             android:name=".base.activity.ActivityToolbar"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
-
     </application>
 </manifest>
 

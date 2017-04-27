@@ -12,6 +12,7 @@ import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.sample.base.activity.ActivityFullScreen;
 import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
 import com.massivedisaster.adal.sample.feature.location.FragmentLocation;
+import com.massivedisaster.adal.sample.feature.permissions.FragmentPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,7 @@ public class FragmentHome extends AbstractBaseFragment {
     public List<Class<? extends Fragment>> getExamples() {
         return new ArrayList<Class<? extends Fragment>>() {{
             add(FragmentLocation.class);
+            add(FragmentPermissions.class);
         }};
     }
 }
