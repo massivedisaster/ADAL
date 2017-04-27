@@ -21,7 +21,7 @@ public class ExampleAdapter extends AbstractBaseAdapter<Class<? extends Fragment
 
     @Override
     protected void bindItem(BaseViewHolder holder, Class<? extends Fragment> item) {
-        holder.setText(R.id.txtName, item.getCanonicalName());
+        holder.setText(R.id.txtName, item.getSimpleName());
     }
 
     @Override
