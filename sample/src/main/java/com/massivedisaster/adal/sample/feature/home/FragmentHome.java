@@ -11,6 +11,7 @@ import com.massivedisaster.adal.fragment.AbstractBaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.sample.base.activity.ActivityFullScreen;
 import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
+import com.massivedisaster.adal.sample.feature.accounts.FragmentAccounts;
 import com.massivedisaster.adal.sample.feature.location.FragmentLocation;
 import com.massivedisaster.adal.sample.feature.permissions.FragmentPermissions;
 
@@ -55,6 +56,7 @@ public class FragmentHome extends AbstractBaseFragment {
         return new ArrayList<Class<? extends Fragment>>() {{
             add(FragmentLocation.class);
             add(FragmentPermissions.class);
+            add(FragmentAccounts.class);
         }};
     }
 }
