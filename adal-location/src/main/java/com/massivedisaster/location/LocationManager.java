@@ -181,7 +181,7 @@ public class LocationManager implements LocationListener {
 
     @Override
     public void onProviderEnabled(String provider) {
-
+        mOnLocationManager.onProviderEnabled(provider);
     }
 
     @Override

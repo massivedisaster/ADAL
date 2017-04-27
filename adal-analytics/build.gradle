@@ -1,6 +1,15 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "com.google.gms:google-services:3.0.0"
+    }
+}
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -19,7 +28,7 @@ android {
     }
 }
 
-def googlePlayServicesVersion = '10.0.1'
+def googlePlayServicesVersion = '10.2.1'
 
 dependencies {
     /* ANALYTICS */
