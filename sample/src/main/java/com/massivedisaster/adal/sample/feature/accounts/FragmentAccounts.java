@@ -3,7 +3,6 @@ package com.massivedisaster.adal.sample.feature.accounts;
 import android.accounts.Account;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.massivedisaster.adal.account.AccountHelper;
 import com.massivedisaster.adal.fragment.AbstractBaseFragment;
@@ -12,7 +11,7 @@ import com.massivedisaster.adal.utils.SnackBuilder;
 
 public class FragmentAccounts extends AbstractBaseFragment {
 
-    private Button mBtnGetAccount, mbtnAddHardCodedAccount, mbtnClearAccount;
+    private Button mBtnGetAccount, mBtnAddHardCodedAccount, mBtnClearAccount;
 
     @Override
     protected int layoutToInflate() {
@@ -22,8 +21,8 @@ public class FragmentAccounts extends AbstractBaseFragment {
     @Override
     protected void doOnCreated() {
         mBtnGetAccount = findViewById(R.id.btnGetAccount);
-        mbtnAddHardCodedAccount = findViewById(R.id.btnAddHardCodedAccount);
-        mbtnClearAccount = findViewById(R.id.btnClearAccount);
+        mBtnAddHardCodedAccount = findViewById(R.id.btnAddHardCodedAccount);
+        mBtnClearAccount = findViewById(R.id.btnClearAccount);
 
         initialize();
     }
@@ -39,14 +38,14 @@ public class FragmentAccounts extends AbstractBaseFragment {
             }
         });
 
-        mbtnAddHardCodedAccount.setOnClickListener(new View.OnClickListener() {
+        mBtnAddHardCodedAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addAccount();
             }
         });
 
-        mbtnClearAccount.setOnClickListener(new View.OnClickListener() {
+        mBtnClearAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clearAccount();
@@ -71,7 +70,7 @@ public class FragmentAccounts extends AbstractBaseFragment {
     private void getAccount() {
         if (AccountHelper.hasAccount(getContext())) {
             Account account = AccountHelper.getCurrentAccount(getContext());
-            SnackBuilder.show(mBtnGetAccount, "Name: " + account.name + " Password: " + AccountHelper.getAccountPassword(account) +" token: " + AccountHelper.getCurrentToken(getContext()), R.color.colorAccent);
+            SnackBuilder.show(mBtnGetAccount, "Name: " + account.name + " Password: " + AccountHelper.getAccountPassword(account) + " token: " + AccountHelper.getCurrentToken(getContext()), R.color.colorAccent);
 
         } else {
             SnackBuilder.show(mBtnGetAccount, "No accounts", R.color.colorAccent);
