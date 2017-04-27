@@ -1,38 +1,38 @@
 package com.massivedisaster.adal.sample.feature.permissions;
 
 import android.Manifest;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.massivedisaster.adal.fragment.AbstractBaseFragment;
 import com.massivedisaster.adal.manager.PermissionsManager;
 import com.massivedisaster.adal.sample.R;
 
 
-public class FragmentPermissions extends Fragment {
+public class FragmentPermissions extends AbstractBaseFragment {
 
     private PermissionsManager mPermissionsManager;
 
     private Button mBtnGetPermissions;
     private TextView mTxtInfo;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_permissions, container, false);
+    protected int layoutToInflate() {
+        return R.layout.fragment_permissions;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mBtnGetPermissions = (Button) view.findViewById(R.id.btnGetPermissions);
-        mTxtInfo = (TextView) view.findViewById(R.id.txtInfo);
+    protected void doOnCreated() {
+        mBtnGetPermissions = findViewById(R.id.btnGetPermissions);
+        mTxtInfo = findViewById(R.id.txtInfo);
 
+        initialize();
+    }
+
+
+    public void initialize() {
         mPermissionsManager = PermissionsManager.getInstance(this);
 
         mBtnGetPermissions.setOnClickListener(new View.OnClickListener() {

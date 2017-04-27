@@ -4,37 +4,38 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.massivedisaster.adal.fragment.AbstractBaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.location.LocationError;
 import com.massivedisaster.location.LocationManager;
 import com.massivedisaster.location.OnLocationManager;
 
 
-public class FragmentLocation extends Fragment {
+public class FragmentLocation extends AbstractBaseFragment {
 
     private LocationManager mLocationManager;
 
     private Button mBtnGetLocation;
     private TextView mTxtInfo;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_location, container, false);
+    protected int layoutToInflate() {
+        return R.layout.fragment_location;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mBtnGetLocation = (Button) view.findViewById(R.id.btnGetLocation);
-        mTxtInfo = (TextView) view.findViewById(R.id.txtInfo);
+    protected void doOnCreated() {
+        mBtnGetLocation = findViewById(R.id.btnGetLocation);
+        mTxtInfo = findViewById(R.id.txtInfo);
 
+        initialize();
+    }
+
+    public void initialize() {
         mBtnGetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
