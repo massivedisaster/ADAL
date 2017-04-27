@@ -109,8 +109,8 @@ public class LocationManager implements LocationListener {
      * @param lastKnowLocation  if you want to get last know location in case of timeout
      * @param onLocationManager callback
      */
-    public void requestLocation(final String provider, boolean lastKnowLocation, OnLocationManager onLocationManager) {
-        requestLocation(provider, lastKnowLocation, sDefaultTimeoutLocation, onLocationManager);
+    public void requestSingleLocation(final String provider, boolean lastKnowLocation, OnLocationManager onLocationManager) {
+        requestSingleLocation(provider, lastKnowLocation, sDefaultTimeoutLocation, onLocationManager);
     }
 
     /**
@@ -121,7 +121,7 @@ public class LocationManager implements LocationListener {
      * @param timeOut           to get the user location
      * @param onLocationManager callback
      */
-    public void requestLocation(final String provider, boolean lastKnowLocation, long timeOut, OnLocationManager onLocationManager) {
+    public void requestSingleLocation(final String provider, boolean lastKnowLocation, long timeOut, OnLocationManager onLocationManager) {
         mProvider = provider;
         mTimeout = timeOut;
         mLastKnowLocation = lastKnowLocation;
