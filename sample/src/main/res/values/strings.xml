@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="get_location">Get Location</string>
+    <string name="get_permissions">Get permissions</string>
 </resources>

@@ -13,6 +13,20 @@ import com.massivedisaster.adal.utils.PermissionUtils;
 public class PermissionsManager {
 
     private static final int sRequestCode = 99;
+    private Activity mActivity;
+    private Fragment mFragment;
+    private String[] mPermissions;
+    private int mRequestCode;
+    private OnPermissionsListener mOnPermissionsListener;
+
+    private PermissionsManager(Activity activity) {
+        mActivity = activity;
+    }
+
+    private PermissionsManager(Fragment fragment) {
+        mFragment = fragment;
+        mActivity = fragment.getActivity();
+    }
 
     /**
      * Initialize PermissionsManager inside a Activity
@@ -33,22 +47,6 @@ public class PermissionsManager {
     public static PermissionsManager getInstance(Fragment fragment) {
         return new PermissionsManager(fragment);
     }
-
-    private Activity mActivity;
-    private Fragment mFragment;
-    private String[] mPermissions;
-    private int mRequestCode;
-    private OnPermissionsListener mOnPermissionsListener;
-
-    private PermissionsManager(Activity activity) {
-        mActivity = activity;
-    }
-
-    private PermissionsManager(Fragment fragment) {
-        mFragment = fragment;
-        mActivity = fragment.getActivity();
-    }
-
 
     public void requestPermissions(@NonNull OnPermissionsListener onPermissionsListener,
                                    @NonNull String... permissions) {
@@ -91,19 +89,16 @@ public class PermissionsManager {
         if (PermissionUtils.hasPermissions(mActivity, mPermissions) && mOnPermissionsListener != null) {
             mOnPermissionsListener.onGranted();
         } else if (mOnPermissionsListener != null) {
-            boolean showRationale = true;
 
-            if (mFragment != null) {
-                for (String permission : mPermissions) {
-                    showRationale = showRationale && mFragment.shouldShowRequestPermissionRationale(permission);
-                }
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                for (String permission : mPermissions) {
-                    showRationale = showRationale && ActivityCompat.shouldShowRequestPermissionRationale(mActivity, permission);
-                    logInfo("showRationale to " + permission + ": " + showRationale);
+            for (String permission : mPermissions) {
+                // When shouldShowRequestPermissionRationale returns false the user checked never ask me again.
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(mActivity, permission)) {
+                    mOnPermissionsListener.onDenied(true);
+                    return;
                 }
             }
-            mOnPermissionsListener.onDenied(showRationale);
+
+            mOnPermissionsListener.onDenied(false);
         }
     }
 
@@ -118,6 +113,6 @@ public class PermissionsManager {
     public interface OnPermissionsListener {
         void onGranted();
 
-        void onDenied(boolean showRationale);
+        void onDenied(boolean neverAskMeAgain);
     }
 }
