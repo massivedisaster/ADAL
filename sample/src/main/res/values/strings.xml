@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="app_name">ADAL sample</string>
+
     <string name="get_location">Get Location</string>
     <string name="get_permissions">Get permissions</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="get_account_info">Get account info</string>
+    <string name="add_hardcoded_account">Add hardcoded account</string>
+    <string name="clear_account">Clear account</string>
 </resources>

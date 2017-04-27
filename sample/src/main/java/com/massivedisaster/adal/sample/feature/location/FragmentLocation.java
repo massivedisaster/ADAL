@@ -14,7 +14,6 @@ import com.massivedisaster.location.LocationError;
 import com.massivedisaster.location.LocationManager;
 import com.massivedisaster.location.OnLocationManager;
 
-
 public class FragmentLocation extends AbstractBaseFragment {
 
     private LocationManager mLocationManager;
