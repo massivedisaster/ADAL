@@ -1,5 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.massivedisaster.adal.sample">
+<manifest package="com.massivedisaster.adal.sample"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:name=".app.App"
@@ -18,6 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".base.activity.ActivityToolbar"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>
 </manifest>
