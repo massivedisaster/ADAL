@@ -12,9 +12,7 @@ public class NotificationUtils {
      * @param notificationId the notification id
      */
     public static void cancelNotification(Context context, int notificationId) {
-        String ns = Context.NOTIFICATION_SERVICE;
-        NotificationManager nMgr = (NotificationManager) context.getSystemService(ns);
-        nMgr.cancel(notificationId);
+        internalCancelNotification(context, null, notificationId);
     }
 
     /**
@@ -25,6 +23,10 @@ public class NotificationUtils {
      * @param notificationId the notification id
      */
     public static void cancelNotification(Context context, String tag, int notificationId) {
+        internalCancelNotification(context, tag, notificationId);
+    }
+
+    public static void internalCancelNotification(Context context, String tag, int notificationId) {
         String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager nMgr = (NotificationManager) context.getSystemService(ns);
         nMgr.cancel(tag, notificationId);
