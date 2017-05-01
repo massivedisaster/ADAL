@@ -20,11 +20,7 @@ public class AppUtils {
      * @param requestCode to identify in onActivityResult
      */
     public static void openAppSettings(Activity activity, int requestCode) {
-        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                Uri.fromParts("package", activity.getPackageName(), null));
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        activity.startActivityForResult(intent, requestCode);
+        activity.startActivityForResult(createAppSettingsIntent(activity), requestCode);
     }
 
     /**
@@ -33,11 +29,15 @@ public class AppUtils {
      * @param context the application context
      */
     public static void openAppSettings(Context context) {
+        context.startActivity(createAppSettingsIntent(context));
+    }
+
+    private static Intent createAppSettingsIntent(Context context) {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                 Uri.fromParts("package", context.getPackageName(), null));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        context.startActivity(intent);
+        return intent;
     }
 
     /**
