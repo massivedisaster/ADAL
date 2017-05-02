@@ -9,14 +9,13 @@ import com.massivedisaster.activitymanager.ActivityFragmentManager;
 import com.massivedisaster.adal.adapter.AbstractBaseAdapter;
 import com.massivedisaster.adal.fragment.AbstractBaseFragment;
 import com.massivedisaster.adal.sample.R;
-import com.massivedisaster.adal.sample.base.activity.ActivityFullScreen;
 import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
 import com.massivedisaster.adal.sample.feature.accounts.FragmentAccounts;
+import com.massivedisaster.adal.sample.feature.bus.FragmentA;
 import com.massivedisaster.adal.sample.feature.location.FragmentLocation;
 import com.massivedisaster.adal.sample.feature.permissions.FragmentPermissions;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * ADAL by Carbon by BOLD
@@ -52,11 +51,12 @@ public class FragmentHome extends AbstractBaseFragment {
         mRclItems.setAdapter(adapter);
     }
 
-    public List<Class<? extends Fragment>> getExamples() {
-        return new ArrayList<Class<? extends Fragment>>() {{
-            add(FragmentLocation.class);
-            add(FragmentPermissions.class);
-            add(FragmentAccounts.class);
+    public HashMap<Class<? extends Fragment>, String> getExamples() {
+        return new HashMap<Class<? extends Fragment>, String>() {{
+            put(FragmentLocation.class, "Location");
+            put(FragmentPermissions.class, "Permissions");
+            put(FragmentAccounts.class, "Accounts");
+            put(FragmentA.class, "Bangbus");
         }};
     }
 }

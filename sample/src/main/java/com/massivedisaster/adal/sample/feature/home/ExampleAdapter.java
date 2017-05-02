@@ -6,7 +6,8 @@ import com.massivedisaster.adal.adapter.AbstractBaseAdapter;
 import com.massivedisaster.adal.adapter.BaseViewHolder;
 import com.massivedisaster.adal.sample.R;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * ADAL by Carbon by BOLD
@@ -15,13 +16,16 @@ import java.util.List;
  */
 public class ExampleAdapter extends AbstractBaseAdapter<Class<? extends Fragment>> {
 
-    public ExampleAdapter(List<Class<? extends Fragment>> lstItems) {
-        super(R.layout.adapter_example, lstItems);
+    private HashMap<Class<? extends Fragment>, String> mLstItems;
+
+    public ExampleAdapter(HashMap<Class<? extends Fragment>, String> lstItems) {
+        super(R.layout.adapter_example, new ArrayList<>(lstItems.keySet()));
+        mLstItems = lstItems;
     }
 
     @Override
     protected void bindItem(BaseViewHolder holder, Class<? extends Fragment> item) {
-        holder.setText(R.id.txtName, item.getSimpleName());
+        holder.setText(R.id.txtName, mLstItems.get(item));
     }
 
     @Override
