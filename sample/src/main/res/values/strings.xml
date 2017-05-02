@@ -10,4 +10,6 @@
     <string name="get_account_info">Get account info</string>
     <string name="add_hardcoded_account">Add hardcoded account</string>
     <string name="clear_account">Clear account</string>
+    <string name="send_bang">Send bang</string>
+    <string name="open_b">Open B</string>
 </resources>
