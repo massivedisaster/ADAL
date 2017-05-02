@@ -26,7 +26,6 @@ public class FragmentB extends AbstractBaseFragment {
 
     public void initialize() {
         mBangBus = new BangBus(getActivity());
-        mBangBus.subscribe(this);
 
         mSendBang.setOnClickListener(new View.OnClickListener() {
             @Override
