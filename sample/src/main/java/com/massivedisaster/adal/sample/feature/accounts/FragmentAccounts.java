@@ -3,6 +3,7 @@ package com.massivedisaster.adal.sample.feature.accounts;
 import android.accounts.Account;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.massivedisaster.adal.account.AccountHelper;
 import com.massivedisaster.adal.fragment.AbstractBaseFragment;
@@ -70,8 +71,7 @@ public class FragmentAccounts extends AbstractBaseFragment {
     private void getAccount() {
         if (AccountHelper.hasAccount(getContext())) {
             Account account = AccountHelper.getCurrentAccount(getContext());
-            SnackBuilder.show(mBtnGetAccount, "Name: " + account.name + " Password: " + AccountHelper.getAccountPassword(account) + " token: " + AccountHelper.getCurrentToken(getContext()), R.color.colorAccent);
-
+            Toast.makeText(getContext(), "Name: " + account.name + " \nPassword: " + AccountHelper.getAccountPassword(account) + " \ntoken: " + AccountHelper.getCurrentToken(getContext()), Toast.LENGTH_LONG).show();
         } else {
             SnackBuilder.show(mBtnGetAccount, "No accounts", R.color.colorAccent);
         }
