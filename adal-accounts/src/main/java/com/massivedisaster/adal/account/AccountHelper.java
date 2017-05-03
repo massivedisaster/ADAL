@@ -5,7 +5,6 @@ import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 
 public class AccountHelper {
@@ -37,14 +36,9 @@ public class AccountHelper {
             @Override
             public void onFinished() {
                 Account account = new Account(name, context.getPackageName());
-                Intent intent = new Intent();
 
                 mManager.addAccountExplicitly(account, password, null);
                 mManager.setAuthToken(account, context.getPackageName(), token);
-
-                intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, name);
-                intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, context.getPackageName());
-                intent.putExtra(AccountManager.KEY_AUTHTOKEN, token);
             }
         });
     }
