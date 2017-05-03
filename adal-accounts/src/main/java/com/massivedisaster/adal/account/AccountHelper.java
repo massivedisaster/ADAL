@@ -127,7 +127,7 @@ public class AccountHelper {
     public static String getCurrentToken(Context context) {
         validateAccountManager();
         Account account = mManager.getAccountsByType(context.getPackageName())[0];
-        return mManager.peekAuthToken(account, context.getPackageName().trim());
+        return mManager.peekAuthToken(account, context.getPackageName());
     }
 
     private static void validateAccountManager() {
