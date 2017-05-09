@@ -9,7 +9,7 @@ public class SnackBuilder {
     /**
      * Create a SnackBar and attach to the view
      *
-     * @param view        the view to attach the snackbar
+     * @param view        the view to attach the snack bar
      * @param messageRes  the message id from resources
      * @param actionColor color to set to action bottom
      */
@@ -20,7 +20,7 @@ public class SnackBuilder {
     /**
      * Create a Snackbar and attach to the view
      *
-     * @param view        the view to attach the snackbar
+     * @param view        the view to attach the snack bar
      * @param message     the message
      * @param actionColor color to set to action bottom
      */
