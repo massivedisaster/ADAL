@@ -5,7 +5,7 @@ import android.os.Handler;
 public abstract class AbstractSplashFragment extends AbstractRequestFragment {
 
     /**
-     * Method to start splashscreen.
+     * Method to start splash screen.
      * <p>
      * If you have not logic call 'startAppWithMethod' method inside this
      */

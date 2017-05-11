@@ -68,7 +68,7 @@ public class BangBus {
      * All the methods subscribed with this name
      *
      * @param context the application context
-     * @param name    the @anotation name
+     * @param name    the @annotation name
      */
     public static void bang(Context context, String name) {
         Intent intent = new Intent(name);
@@ -80,7 +80,7 @@ public class BangBus {
      * All the methods subscribed with this name
      *
      * @param context      the application context
-     * @param name         the anotation name
+     * @param name         the annotation name
      * @param serializable the object to send
      */
     public static void bang(Context context, String name, Serializable serializable) {
@@ -136,7 +136,7 @@ public class BangBus {
 
             mLstBroadcastReceivers.add(mBroadcastReceiver);
 
-            String filter = null;
+            String filter;
 
             Annotation annotation = m.getAnnotation(SubscribeBang.class);
             SubscribeBang subscribeBang = (SubscribeBang) annotation;
