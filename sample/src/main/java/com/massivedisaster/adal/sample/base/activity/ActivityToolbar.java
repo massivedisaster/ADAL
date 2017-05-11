@@ -9,11 +9,6 @@ import com.massivedisaster.activitymanager.AbstractFragmentActivity;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.utils.ToolbarUtils;
 
-/**
- * ADAL by Carbon by BOLD
- * Created in 4/27/17 by the following authors:
- * Jorge Costa - {jorgecosta@carbonbybold.com}
- */
 public class ActivityToolbar extends AbstractFragmentActivity {
 
     protected TextView toolBarTitle;

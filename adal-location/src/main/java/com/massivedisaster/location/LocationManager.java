@@ -14,11 +14,6 @@ import android.support.v4.app.Fragment;
 
 import com.massivedisaster.adal.manager.PermissionsManager;
 
-/**
- * ADAL by Carbon by BOLD
- * Created in 3/1/17 by the following authors:
- * Jorge Costa - {jorgecosta@carbonbybold.com}
- */
 public class LocationManager implements LocationListener {
 
     private static final long sDefaultTimeoutLocation = 20000;

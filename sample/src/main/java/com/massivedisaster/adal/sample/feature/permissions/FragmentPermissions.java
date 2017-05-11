@@ -10,7 +10,6 @@ import com.massivedisaster.adal.fragment.AbstractBaseFragment;
 import com.massivedisaster.adal.manager.PermissionsManager;
 import com.massivedisaster.adal.sample.R;
 
-
 public class FragmentPermissions extends AbstractBaseFragment {
 
     private PermissionsManager mPermissionsManager;
