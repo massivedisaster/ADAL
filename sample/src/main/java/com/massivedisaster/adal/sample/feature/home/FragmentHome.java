@@ -17,11 +17,6 @@ import com.massivedisaster.adal.sample.feature.permissions.FragmentPermissions;
 
 import java.util.HashMap;
 
-/**
- * ADAL by Carbon by BOLD
- * Created in 4/27/17 by the following authors:
- * Jorge Costa - {jorgecosta@carbonbybold.com}
- */
 public class FragmentHome extends AbstractBaseFragment {
 
     private RecyclerView mRclItems;

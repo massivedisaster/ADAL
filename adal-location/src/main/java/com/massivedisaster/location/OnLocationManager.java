@@ -2,11 +2,6 @@ package com.massivedisaster.location;
 
 import android.location.Location;
 
-/**
- * ADAL by Carbon by BOLD
- * Created in 3/1/17 by the following authors:
- * Jorge Costa - {jorgecosta@carbonbybold.com}
- */
 public abstract class OnLocationManager {
 
     /**

@@ -9,11 +9,6 @@ import com.massivedisaster.adal.sample.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * ADAL by Carbon by BOLD
- * Created in 4/27/17 by the following authors:
- * Jorge Costa - {jorgecosta@carbonbybold.com}
- */
 public class ExampleAdapter extends AbstractBaseAdapter<Class<? extends Fragment>> {
 
     private HashMap<Class<? extends Fragment>, String> mLstItems;
