@@ -22,3 +22,6 @@ dependencies {
   compile 'com.massivedisaster.adal:adal-utils:{libVersion}'
   compile 'com.massivedisaster.adal:adal-location:{libVersion}'
 }
+
+### License
+[GNU LESSER GENERAL PUBLIC LICENSE](LICENSE.md) 
