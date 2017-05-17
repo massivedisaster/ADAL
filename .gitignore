@@ -1,4 +1,4 @@
-ndroid ###
+# Android
 # Built application files
 *.apk
 *.ap_
@@ -53,8 +53,16 @@ hs_err_pid*
 
 *.iml
 
+
 ## Directory-based project format:
-.idea/
+.idea/*
+
+# Track copyright configuration
+!.idea/copyright
+.idea/copyright/*
+!.idea/copyright/ADAL_GNU_LESSER_GENERAL_PUBLIC_LICENSE.xml
+!.idea/copyright/profiles_settings.xml
+
 # if you remove the above rule, at least ignore the following:
 
 # User-specific stuff:
