@@ -23,5 +23,8 @@ dependencies {
   compile 'com.massivedisaster.adal:adal-location:{libVersion}'
 }
 
+### Contributing
+link:CONTRIBUTING.md[CONTRIBUTING]
+
 ### License
 link:LICENSE.md[GNU LESSER GENERAL PUBLIC LICENSE]
