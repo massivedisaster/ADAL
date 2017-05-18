@@ -6,7 +6,7 @@ This document describes contribution guidelines for ADAL.
 File Headers
 ------------
 
-The following file header is the used for ADAL. Please use it for new files.
+The following file header is the used for ADAL.
 
 ```
 ADAL - A set of Android libraries to help speed up Android development.
@@ -25,7 +25,7 @@ You should have received a copy of the GNU Lesser General Public License along
 with ADAL. If not, see http://www.gnu.org/licenses/.
 ```
 
-See [Configuring file header](https://github.com/massivedisaster/ADAL/wiki#configuring-file-header) for more detail in how to configure Android Studio.
+See [Configuring file header](https://github.com/massivedisaster/ADAL/wiki#configuring-file-header) for more detail in how to configure Android Studio to use the header.
 
 DO and DON'Ts
 --------------------
