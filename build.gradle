@@ -19,12 +19,12 @@
 ext {
     userOrgBase = 'jmspt'
     websiteBase = 'https://github.com/massivedisaster/ADAL'
-    licensesBase = ['Apache-2.0']
+    licensesBase = ['LGPL-3.0']
     packageBase = 'com.massivedisaster'
     adalModuleBase = packageBase + '.adal'
     isLibrary = true
     libraryVersionCode = 1
-    libraryVersionName = '0.1.7'
+    libraryVersionName = '0.1.9'
     librarySnaphotEnabled = false
 
     libraryVersionString = {
