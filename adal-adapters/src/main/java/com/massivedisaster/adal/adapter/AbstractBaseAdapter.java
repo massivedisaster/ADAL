@@ -1,3 +1,20 @@
+/*
+ * ADAL - A set of Android libraries to help speed up Android development.
+ * Copyright (C) 2017 ADAL.
+ *
+ * ADAL is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 3 of the License, or any later version.
+ *
+ * ADAL is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along
+ * with ADAL. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.massivedisaster.adal.adapter;
 
 import android.support.annotation.Nullable;
@@ -69,7 +86,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        if (viewType == sViewTypeLoad && mResLoading != sInvalidResourceId) {
+        if (viewType == sViewTypeLoad && hasLoadingLayout()) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(mResLoading, parent, false);
 
@@ -101,7 +118,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
         if (getItemViewType(position) == sViewTypeItem) {
             bindItem(holder, getItem(position));
-        } else if (getItemViewType(position) == sViewTypeLoad && mResLoading != sInvalidResourceId) {
+        } else if (getItemViewType(position) == sViewTypeLoad && hasLoadingLayout()) {
             bindError(holder, isLoadingError);
         }
     }
@@ -113,7 +130,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     @Override
     public int getItemCount() {
-        return (isLoading && mResLoading != sInvalidResourceId) ? mData.size() + 1 : mData.size();
+        return (isMoreDataAvailable && hasLoadingLayout()) ? mData.size() + 1 : mData.size();
     }
 
     protected abstract void bindItem(BaseViewHolder holder, T item);
@@ -134,7 +151,6 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
 
     public void setIsMoreDataAvailable(boolean moreDataAvailable) {
         isMoreDataAvailable = moreDataAvailable;
-        isLoading = moreDataAvailable;
     }
 
     public void setLoadingError(boolean isError) {
@@ -260,21 +276,6 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
     }
 
     /**
-     * <p>Validates an specific position according to the data set size</p>
-     *
-     * @param position: Specific position to be validated
-     */
-    private void validatePosition(int position) {
-        if (mData.isEmpty()) {
-            throw new IndexOutOfBoundsException("The adapter is empty!");
-        }
-
-        if (position < 0 || position >= mData.size()) {
-            throw new IndexOutOfBoundsException("Please, specify a valid position that is equals or greater than 0 and less than " + mData.size());
-        }
-    }
-
-    /**
      * Set a empty to br showed when the adapter is empty
      *
      * @param emptyView the view to be showed when the adapter is empty
@@ -293,9 +294,28 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
         checkIfEmpty();
     }
 
+    /**
+     * <p>Validates an specific position according to the data set size</p>
+     *
+     * @param position: Specific position to be validated
+     */
+    private void validatePosition(int position) {
+        if (mData.isEmpty()) {
+            throw new IndexOutOfBoundsException("The adapter is empty!");
+        }
+
+        if (position < 0 || position >= mData.size()) {
+            throw new IndexOutOfBoundsException("Please, specify a valid position that is equals or greater than 0 and less than " + mData.size());
+        }
+    }
+
     private void checkIfEmpty() {
         if (mEmptyView != null) {
             mEmptyView.setVisibility(getItemCount() > 0 ? GONE : VISIBLE);
         }
+    }
+
+    private boolean hasLoadingLayout(){
+        return mResLoading != sInvalidResourceId;
     }
 }

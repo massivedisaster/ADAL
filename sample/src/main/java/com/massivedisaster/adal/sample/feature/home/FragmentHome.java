@@ -1,0 +1,74 @@
+/*
+ * ADAL - A set of Android libraries to help speed up Android development.
+ * Copyright (C) 2017 ADAL.
+ *
+ * ADAL is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 3 of the License, or any later version.
+ *
+ * ADAL is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along
+ * with ADAL. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package com.massivedisaster.adal.sample.feature.home;
+
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
+import com.massivedisaster.activitymanager.ActivityFragmentManager;
+import com.massivedisaster.adal.adapter.AbstractBaseAdapter;
+import com.massivedisaster.adal.fragment.AbstractBaseFragment;
+import com.massivedisaster.adal.sample.R;
+import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
+import com.massivedisaster.adal.sample.feature.accounts.FragmentAccounts;
+import com.massivedisaster.adal.sample.feature.bus.FragmentA;
+import com.massivedisaster.adal.sample.feature.location.FragmentLocation;
+import com.massivedisaster.adal.sample.feature.permissions.FragmentPermissions;
+
+import java.util.HashMap;
+
+public class FragmentHome extends AbstractBaseFragment {
+
+    private RecyclerView mRclItems;
+
+    @Override
+    protected int layoutToInflate() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
+    protected void doOnCreated() {
+        mRclItems = findViewById(R.id.rclItems);
+
+        initialize();
+    }
+
+    private void initialize() {
+        ExampleAdapter adapter = new ExampleAdapter(getExamples());
+        adapter.setOnChildClickListener(new AbstractBaseAdapter.OnChildClickListener<Class<? extends Fragment>>() {
+            @Override
+            public void onChildClick(View view, Class<? extends Fragment> aClass, int position) {
+                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, aClass);
+            }
+        });
+
+        mRclItems.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRclItems.setAdapter(adapter);
+    }
+
+    public HashMap<Class<? extends Fragment>, String> getExamples() {
+        return new HashMap<Class<? extends Fragment>, String>() {{
+            put(FragmentLocation.class, "Location");
+            put(FragmentPermissions.class, "Permissions");
+            put(FragmentAccounts.class, "Accounts");
+            put(FragmentA.class, "Bangbus");
+        }};
+    }
+}

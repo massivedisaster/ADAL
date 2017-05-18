@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ ADAL - A set of Android libraries to help speed up Android development.
+  ~ Copyright (C) 2017 ADAL.
+  ~
+  ~ ADAL is free software; you can redistribute it and/or modify it under
+  ~ the terms of the GNU Lesser General Public License as published by the Free
+  ~ Software Foundation; either version 3 of the License, or any later version.
+  ~
+  ~ ADAL is distributed in the hope that it will be useful, but WITHOUT
+  ~ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  ~ FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+  ~ details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public License along
+  ~ with ADAL. If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <resources>
+
+    <string name="app_name">ADAL sample</string>
+
     <string name="get_location">Get Location</string>
+    <string name="get_permissions">Get permissions</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="get_account_info">Get account info</string>
+    <string name="add_hardcoded_account">Add hardcoded account</string>
+    <string name="clear_account">Clear account</string>
+    <string name="send_bang">Send bang</string>
+    <string name="open_b">Open B</string>
 </resources>

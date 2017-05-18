@@ -1,3 +1,20 @@
+/*
+ * ADAL - A set of Android libraries to help speed up Android development.
+ * Copyright (C) 2017 ADAL.
+ *
+ * ADAL is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 3 of the License, or any later version.
+ *
+ * ADAL is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along
+ * with ADAL. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.massivedisaster.adal.bus;
 
 import android.content.BroadcastReceiver;
@@ -68,7 +85,7 @@ public class BangBus {
      * All the methods subscribed with this name
      *
      * @param context the application context
-     * @param name    the @anotation name
+     * @param name    the @annotation name
      */
     public static void bang(Context context, String name) {
         Intent intent = new Intent(name);
@@ -80,7 +97,7 @@ public class BangBus {
      * All the methods subscribed with this name
      *
      * @param context      the application context
-     * @param name         the anotation name
+     * @param name         the annotation name
      * @param serializable the object to send
      */
     public static void bang(Context context, String name, Serializable serializable) {
@@ -136,7 +153,7 @@ public class BangBus {
 
             mLstBroadcastReceivers.add(mBroadcastReceiver);
 
-            String filter = null;
+            String filter;
 
             Annotation annotation = m.getAnnotation(SubscribeBang.class);
             SubscribeBang subscribeBang = (SubscribeBang) annotation;

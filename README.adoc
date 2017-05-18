@@ -1,4 +1,4 @@
-:libVersion: 0.1.7
+:libVersion: 0.1.9
 
 # ADAL
 
@@ -22,3 +22,9 @@ dependencies {
   compile 'com.massivedisaster.adal:adal-utils:{libVersion}'
   compile 'com.massivedisaster.adal:adal-location:{libVersion}'
 }
+
+### Contributing
+link:CONTRIBUTING.md[CONTRIBUTING]
+
+### License
+link:LICENSE.md[GNU LESSER GENERAL PUBLIC LICENSE]

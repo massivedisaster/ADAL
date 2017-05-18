@@ -1,0 +1,7 @@
+<component name="CopyrightManager">
+  <copyright>
+    <option name="myName" value="ADAL GNU Lesser General Public License" />
+    <option name="keyword" value="ADAL - A set" />
+    <option name="notice" value="&amp;#36;project.name - A set of Android libraries to help speed up Android development.&#10;Copyright (C) &amp;#36;today.year &amp;#36;project.name.&#10;&#10;&amp;#36;project.name is free software; you can redistribute it and/or modify it under&#10;the terms of the GNU Lesser General Public License as published by the Free&#10;Software Foundation; either version 3 of the License, or any later version.&#10;&#10;&amp;#36;project.name is distributed in the hope that it will be useful, but WITHOUT&#10;ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS&#10;FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more&#10;details.&#10;&#10;You should have received a copy of the GNU Lesser General Public License along&#10;with &amp;#36;project.name. If not, see &lt;http://www.gnu.org/licenses/&gt;." />
+  </copyright>
+</component>

@@ -1,3 +1,20 @@
+/*
+ * ADAL - A set of Android libraries to help speed up Android development.
+ * Copyright (C) 2017 ADAL.
+ *
+ * ADAL is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 3 of the License, or any later version.
+ *
+ * ADAL is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along
+ * with ADAL. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.massivedisaster.adal.account;
 
 import android.accounts.Account;
@@ -5,7 +22,6 @@ import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 
 public class AccountHelper {
@@ -37,14 +53,9 @@ public class AccountHelper {
             @Override
             public void onFinished() {
                 Account account = new Account(name, context.getPackageName());
-                Intent intent = new Intent();
 
                 mManager.addAccountExplicitly(account, password, null);
                 mManager.setAuthToken(account, context.getPackageName(), token);
-
-                intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, name);
-                intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, context.getPackageName());
-                intent.putExtra(AccountManager.KEY_AUTHTOKEN, token);
             }
         });
     }
@@ -133,7 +144,7 @@ public class AccountHelper {
     public static String getCurrentToken(Context context) {
         validateAccountManager();
         Account account = mManager.getAccountsByType(context.getPackageName())[0];
-        return mManager.peekAuthToken(account, context.getPackageName().trim());
+        return mManager.peekAuthToken(account, context.getPackageName());
     }
 
     private static void validateAccountManager() {

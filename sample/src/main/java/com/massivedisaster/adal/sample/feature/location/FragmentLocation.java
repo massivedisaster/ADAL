@@ -1,40 +1,57 @@
+/*
+ * ADAL - A set of Android libraries to help speed up Android development.
+ * Copyright (C) 2017 ADAL.
+ *
+ * ADAL is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 3 of the License, or any later version.
+ *
+ * ADAL is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along
+ * with ADAL. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.massivedisaster.adal.sample.feature.location;
 
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.massivedisaster.adal.fragment.AbstractBaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.location.LocationError;
 import com.massivedisaster.location.LocationManager;
 import com.massivedisaster.location.OnLocationManager;
 
-
-public class FragmentLocation extends Fragment {
+public class FragmentLocation extends AbstractBaseFragment {
 
     private LocationManager mLocationManager;
 
     private Button mBtnGetLocation;
     private TextView mTxtInfo;
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_location, container, false);
+    protected int layoutToInflate() {
+        return R.layout.fragment_location;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        mBtnGetLocation = (Button) view.findViewById(R.id.btnGetLocation);
-        mTxtInfo = (TextView) view.findViewById(R.id.txtInfo);
+    protected void doOnCreated() {
+        mBtnGetLocation = findViewById(R.id.btnGetLocation);
+        mTxtInfo = findViewById(R.id.txtInfo);
 
+        initialize();
+    }
+
+    public void initialize() {
         mBtnGetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +81,7 @@ public class FragmentLocation extends Fragment {
     }
 
     private void getLocation() {
-        mLocationManager.requestLocation(android.location.LocationManager.NETWORK_PROVIDER, true, 10000, new OnLocationManager() {
+        mLocationManager.requestSingleLocation(android.location.LocationManager.NETWORK_PROVIDER, true, 10000, new OnLocationManager() {
             @Override
             public void onLocationFound(Location location, boolean isLastKnowLocation) {
                 mTxtInfo.setText("Location found: " + location.toString());

@@ -1,3 +1,20 @@
+/*
+ * ADAL - A set of Android libraries to help speed up Android development.
+ * Copyright (C) 2017 ADAL.
+ *
+ * ADAL is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 3 of the License, or any later version.
+ *
+ * ADAL is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along
+ * with ADAL. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.massivedisaster.adal.utils;
 
 import android.app.Activity;
@@ -20,11 +37,7 @@ public class AppUtils {
      * @param requestCode to identify in onActivityResult
      */
     public static void openAppSettings(Activity activity, int requestCode) {
-        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                Uri.fromParts("package", activity.getPackageName(), null));
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        activity.startActivityForResult(intent, requestCode);
+        activity.startActivityForResult(createAppSettingsIntent(activity), requestCode);
     }
 
     /**
@@ -33,11 +46,15 @@ public class AppUtils {
      * @param context the application context
      */
     public static void openAppSettings(Context context) {
+        context.startActivity(createAppSettingsIntent(context));
+    }
+
+    private static Intent createAppSettingsIntent(Context context) {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                 Uri.fromParts("package", context.getPackageName(), null));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        context.startActivity(intent);
+        return intent;
     }
 
     /**
