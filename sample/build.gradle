@@ -29,12 +29,13 @@ android {
             initWith release
             debuggable false
         }
-
         debug {
             initWith debug
             debuggable true
         }
-
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 
