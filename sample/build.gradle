@@ -15,6 +15,18 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * Added for adal-analytics
+ */
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.google.gms:google-services:3.0.0'
+    }
+}
+
 apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
@@ -23,6 +35,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 25
+        buildConfigField "String", "API_BASE_URL", "\"https://jsonplaceholder.typicode.com/\""
+        buildConfigField "long", "API_TIMEOUT", "30"
     }
     buildTypes {
         release {
@@ -40,3 +54,8 @@ android {
 }
 
 apply from: 'dependencies.gradle'
+
+/**
+ * Added for adal-analytics
+ */
+apply plugin: 'com.google.gms.google-services'

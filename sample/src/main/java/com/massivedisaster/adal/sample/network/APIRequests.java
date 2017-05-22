@@ -15,23 +15,24 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-ext {
-    googlePlayServicesVersion = '10.2.1'
-    supportVersion = '25.1.1'
-    afmVersion = '0.2.0'
-}
+package com.massivedisaster.adal.sample.network;
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+import com.massivedisaster.adal.network.APICallback;
+import com.massivedisaster.adal.sample.model.Post;
 
-    compile project(':adal')
+import retrofit2.Call;
 
-    /* SUPPORT */
-    compile "com.android.support:appcompat-v7:$supportVersion"
+public class APIRequests {
 
-    /* ACTIVITY FRAGMENT MANAGER */
-    compile "com.massivedisaster:activity-fragment-manager:$afmVersion"
+    private static IRequests getAdapter() {
+        return RetrofitAdapter.getAccountAdapter();
+    }
 
-    /* ANALYTICS */
-    compile "com.google.android.gms:play-services-analytics:$googlePlayServicesVersion"
+    public static Call getPosts(APICallback<ResponseList<Post>> callObject) {
+
+        Call<ResponseList<Post>> call = getAdapter().getPosts();
+        call.enqueue(callObject);
+
+        return call;
+    }
 }

@@ -28,9 +28,12 @@ import com.massivedisaster.adal.fragment.AbstractBaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
 import com.massivedisaster.adal.sample.feature.accounts.FragmentAccounts;
+import com.massivedisaster.adal.sample.feature.analytics.FragmentAnalytics;
 import com.massivedisaster.adal.sample.feature.bus.FragmentA;
 import com.massivedisaster.adal.sample.feature.location.FragmentLocation;
+import com.massivedisaster.adal.sample.feature.network.FragmentNetworkRequest;
 import com.massivedisaster.adal.sample.feature.permissions.FragmentPermissions;
+import com.massivedisaster.adal.sample.feature.utils.FragmentUtils;
 
 import java.util.HashMap;
 
@@ -52,10 +55,10 @@ public class FragmentHome extends AbstractBaseFragment {
 
     private void initialize() {
         ExampleAdapter adapter = new ExampleAdapter(getExamples());
-        adapter.setOnChildClickListener(new AbstractBaseAdapter.OnChildClickListener<Class<? extends Fragment>>() {
+        adapter.setOnChildClickListener(new AbstractBaseAdapter.OnChildClickListener<String>() {
             @Override
-            public void onChildClick(View view, Class<? extends Fragment> aClass, int position) {
-                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, aClass);
+            public void onChildClick(View view, String key, int position) {
+                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, getExamples().get(key));
             }
         });
 
@@ -63,12 +66,16 @@ public class FragmentHome extends AbstractBaseFragment {
         mRclItems.setAdapter(adapter);
     }
 
-    public HashMap<Class<? extends Fragment>, String> getExamples() {
-        return new HashMap<Class<? extends Fragment>, String>() {{
-            put(FragmentLocation.class, "Location");
-            put(FragmentPermissions.class, "Permissions");
-            put(FragmentAccounts.class, "Accounts");
-            put(FragmentA.class, "Bangbus");
+    public HashMap<String, Class<? extends Fragment>> getExamples() {
+        return new HashMap<String, Class<? extends Fragment>>() {{
+            put("Location", FragmentLocation.class);
+            put("Permission", FragmentPermissions.class);
+            put("Accounts", FragmentAccounts.class);
+            put("Bangbus", FragmentA.class);
+            put("Network", FragmentNetworkRequest.class);
+            put("Adapter", FragmentNetworkRequest.class);
+            put("Analytics", FragmentAnalytics.class);
+            put("Utils", FragmentUtils.class);
         }};
     }
 }

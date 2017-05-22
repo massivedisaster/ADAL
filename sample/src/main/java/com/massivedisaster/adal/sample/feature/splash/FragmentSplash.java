@@ -15,30 +15,32 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.adal.sample.feature.home;
+package com.massivedisaster.adal.sample.feature.splash;
 
-import android.support.v4.app.Fragment;
-
-import com.massivedisaster.adal.adapter.AbstractBaseAdapter;
-import com.massivedisaster.adal.adapter.BaseViewHolder;
+import com.massivedisaster.activitymanager.ActivityFragmentManager;
+import com.massivedisaster.adal.fragment.AbstractSplashFragment;
 import com.massivedisaster.adal.sample.R;
+import com.massivedisaster.adal.sample.feature.home.FragmentHome;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+public class FragmentSplash extends AbstractSplashFragment {
 
-public class ExampleAdapter extends AbstractBaseAdapter<String> {
-
-    public ExampleAdapter(HashMap<String, Class<? extends Fragment>> lstItems) {
-        super(R.layout.adapter_example, new ArrayList<>(lstItems.keySet()));
+    @Override
+    protected int layoutToInflate() {
+        return R.layout.fragment_splash_screen;
     }
 
     @Override
-    protected void bindItem(BaseViewHolder holder, String item) {
-        holder.setText(R.id.txtName, item);
+    protected void onSplashStarted() {
+        onSplashFinish(openHome());
     }
 
-    @Override
-    protected void bindError(BaseViewHolder holder, boolean loadingError) {
-
+    private OnFinishSplashScreen openHome() {
+        return new OnFinishSplashScreen() {
+            @Override
+            public void onFinish() {
+                ActivityFragmentManager.open(getActivity(), ActivitySplashScreen.class, FragmentHome.class);
+                getActivity().finish();
+            }
+        };
     }
 }
