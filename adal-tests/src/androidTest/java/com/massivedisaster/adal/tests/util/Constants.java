@@ -15,7 +15,7 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.adal.testcoverage.util;
+package com.massivedisaster.adal.tests.util;
 
 public class Constants {
 

@@ -17,7 +17,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.massivedisaster.adal.testcoverage">
+    package="com.massivedisaster.adal.tests">
 
     <!--Added for adal-accounts-->
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>

@@ -15,7 +15,7 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.adal.testcoverage.suite.accounts;
+package com.massivedisaster.adal.tests.unit.suite.accounts;
 
 import android.accounts.Account;
 import android.app.Instrumentation;
@@ -25,7 +25,7 @@ import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.massivedisaster.adal.account.AccountHelper;
-import com.massivedisaster.adal.testcoverage.util.Constants;
+import com.massivedisaster.adal.tests.util.Constants;
 
 import org.junit.After;
 import org.junit.Before;
