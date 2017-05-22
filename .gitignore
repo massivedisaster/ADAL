@@ -41,6 +41,7 @@ gen-external-apklibs
 
 # Package Files #
 *.jar
+!BintrayDeployAutomator.jar
 *.war
 *.ear
 
