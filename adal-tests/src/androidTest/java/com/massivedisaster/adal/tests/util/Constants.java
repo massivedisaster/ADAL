@@ -15,4 +15,12 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-include ':adal', ':sample', ':adal-accounts', ':adal-managers', ':adal-analytics', ':adal-utils', ':adal-network', ':adal-adapters', ':adal-bus', ':adal-fragments', ':adal-location', ':adal-tests'
+package com.massivedisaster.adal.tests.util;
+
+public class Constants {
+
+    public static final String ACCOUNT_NAME = "ADAL - Test Coverage";
+    public static final String ACCOUNT_PASSWORD = "adal1234";
+    public static final String ACCOUNT_TOKEN = "adalToken";
+
+}

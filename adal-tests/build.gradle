@@ -15,4 +15,31 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-include ':adal', ':sample', ':adal-accounts', ':adal-managers', ':adal-analytics', ':adal-utils', ':adal-network', ':adal-adapters', ':adal-bus', ':adal-fragments', ':adal-location', ':adal-tests'
+apply plugin: 'com.android.application'
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 25
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            initWith release
+            debuggable false
+        }
+
+        debug {
+            initWith debug
+            debuggable true
+        }
+        lintOptions {
+            abortOnError false
+        }
+
+    }
+}
+
+apply from: 'dependencies.gradle'
