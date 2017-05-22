@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ ADAL - A set of Android libraries to help speed up Android development.
+  ~ Copyright (C) 2017 ADAL.
+  ~
+  ~ ADAL is free software; you can redistribute it and/or modify it under
+  ~ the terms of the GNU Lesser General Public License as published by the Free
+  ~ Software Foundation; either version 3 of the License, or any later version.
+  ~
+  ~ ADAL is distributed in the hope that it will be useful, but WITHOUT
+  ~ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  ~ FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+  ~ details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public License along
+  ~ with ADAL. If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_utils"/>
+
+    <Button
+        android:id="@+id/btnOpenSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/open_settings"/>
+
+    <Button
+        android:id="@+id/btnCheckPlayservicesExists"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/check_playservices_exists"/>
+
+    <Button
+        android:id="@+id/btnOpenDial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/open_dial"/>
+
+    <Button
+        android:id="@+id/btnOpenEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/open_email"/>
+
+</LinearLayout>

@@ -30,4 +30,12 @@
     <string name="send_bang">Send bang</string>
     <string name="open_b">Open B</string>
     <string name="loading">Loading...</string>
+    <string name="app_utils">App Utils</string>
+    <string name="open_settings">Open Settings</string>
+    <string name="check_playservices_exists">Check if Google PlayServices Exists</string>
+    <string name="playservices_exists">Google Play Services exists</string>
+    <string name="playservices_dont_exists">Google Play Services don\'t exists</string>
+    <string name="open_dial">Open Dial</string>
+    <string name="open_email">Open Email</string>
+    <string name="send_email">Send Email</string>
 </resources>
