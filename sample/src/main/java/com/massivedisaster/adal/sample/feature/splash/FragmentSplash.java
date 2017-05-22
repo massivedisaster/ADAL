@@ -18,18 +18,29 @@
 package com.massivedisaster.adal.sample.feature.splash;
 
 import com.massivedisaster.activitymanager.ActivityFragmentManager;
-import com.massivedisaster.adal.sample.base.activity.ActivityFullScreen;
+import com.massivedisaster.adal.fragment.AbstractSplashFragment;
+import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.sample.feature.home.FragmentHome;
-import com.massivedisaster.adal.sample.feature.location.FragmentLocation;
 
-public class ActivitySplashScreen extends ActivityFullScreen {
+public class FragmentSplash extends AbstractSplashFragment {
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected int layoutToInflate() {
+        return R.layout.fragment_splash_screen;
+    }
 
-        if (getSupportFragmentManager().getBackStackEntryCount() == 0 && !getIntent().hasExtra(ActivityFragmentManager.ACTIVITY_MANAGER_FRAGMENT)) {
-            performTransaction(new FragmentSplash(), FragmentSplash.class.getCanonicalName());
-        }
+    @Override
+    protected void onSplashStarted() {
+        onSplashFinish(openHome());
+    }
+
+    private OnFinishSplashScreen openHome() {
+        return new OnFinishSplashScreen() {
+            @Override
+            public void onFinish() {
+                ActivityFragmentManager.open(getActivity(), ActivitySplashScreen.class, FragmentHome.class);
+                getActivity().finish();
+            }
+        };
     }
 }
