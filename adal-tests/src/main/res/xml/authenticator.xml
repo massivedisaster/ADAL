@@ -17,7 +17,7 @@
   -->
 
 <account-authenticator xmlns:android="http://schemas.android.com/apk/res/android"
-                       android:accountType="com.massivedisaster.adal.testcoverage"
+                       android:accountType="com.massivedisaster.adal.tests"
                        android:icon="@mipmap/ic_launcher"
                        android:label="@string/app_name"
                        android:smallIcon="@mipmap/ic_launcher"/>
