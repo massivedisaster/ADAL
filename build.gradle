@@ -24,7 +24,7 @@ ext {
     adalModuleBase = packageBase + '.adal'
     isLibrary = true
     libraryVersionCode = 1
-    libraryVersionName = '0.1.9'
+    libraryVersionName = project.libraryVersionName
     librarySnaphotEnabled = false
 
     libraryVersionString = {
@@ -53,10 +53,6 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
-}
-
 task version {
-    println libraryVersionString()
+    println "Current version: " + libraryVersionString()
 }
