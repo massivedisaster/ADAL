@@ -15,29 +15,22 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-apply plugin: 'com.android.application'
-android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+package com.massivedisaster.adal.sample.network;
 
-    defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 25
-        buildConfigField "String", "API_BASE_URL", "\"https://jsonplaceholder.typicode.com/\""
-        buildConfigField "long", "API_TIMEOUT", "30"
+import com.massivedisaster.adal.network.APIResponseList;
+
+public class ResponseList<T> extends APIResponseList<T> {
+
+    private String error;
+    private String error_detail;
+
+    @Override
+    public String getError() {
+        return error;
     }
-    buildTypes {
-        release {
-            initWith release
-            debuggable false
-        }
 
-        debug {
-            initWith debug
-            debuggable true
-        }
-
+    @Override
+    public int getErrorCode() {
+        return 0;
     }
 }
-
-apply from: 'dependencies.gradle'

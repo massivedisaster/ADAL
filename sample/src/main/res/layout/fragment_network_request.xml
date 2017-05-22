@@ -16,18 +16,21 @@
   ~ with ADAL. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-    <string name="app_name">ADAL sample</string>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rclItems"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
-    <string name="get_location">Get Location</string>
-    <string name="get_permissions">Get permissions</string>
+    <TextView
+        android:id="@+id/txtMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="get_account_info">Get account info</string>
-    <string name="add_hardcoded_account">Add hardcoded account</string>
-    <string name="clear_account">Clear account</string>
-    <string name="send_bang">Send bang</string>
-    <string name="open_b">Open B</string>
-    <string name="loading">Loading...</string>
-</resources>
+</RelativeLayout>

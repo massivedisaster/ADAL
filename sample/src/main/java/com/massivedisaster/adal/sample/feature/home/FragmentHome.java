@@ -30,6 +30,7 @@ import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
 import com.massivedisaster.adal.sample.feature.accounts.FragmentAccounts;
 import com.massivedisaster.adal.sample.feature.bus.FragmentA;
 import com.massivedisaster.adal.sample.feature.location.FragmentLocation;
+import com.massivedisaster.adal.sample.feature.network.FragmentNetworkRequest;
 import com.massivedisaster.adal.sample.feature.permissions.FragmentPermissions;
 
 import java.util.HashMap;
@@ -69,6 +70,7 @@ public class FragmentHome extends AbstractBaseFragment {
             put(FragmentPermissions.class, "Permissions");
             put(FragmentAccounts.class, "Accounts");
             put(FragmentA.class, "Bangbus");
+            put(FragmentNetworkRequest.class, "Network");
         }};
     }
 }

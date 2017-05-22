@@ -15,29 +15,15 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-apply plugin: 'com.android.application'
-android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+package com.massivedisaster.adal.sample.network;
 
-    defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 25
-        buildConfigField "String", "API_BASE_URL", "\"https://jsonplaceholder.typicode.com/\""
-        buildConfigField "long", "API_TIMEOUT", "30"
-    }
-    buildTypes {
-        release {
-            initWith release
-            debuggable false
-        }
+import com.massivedisaster.adal.sample.model.Post;
 
-        debug {
-            initWith debug
-            debuggable true
-        }
+import retrofit2.Call;
+import retrofit2.http.GET;
 
-    }
+public interface IRequests {
+
+    @GET("posts")
+    Call<ResponseList<Post>> getPosts();
 }
-
-apply from: 'dependencies.gradle'

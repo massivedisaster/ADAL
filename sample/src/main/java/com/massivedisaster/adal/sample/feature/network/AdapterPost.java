@@ -15,29 +15,29 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-apply plugin: 'com.android.application'
-android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+package com.massivedisaster.adal.sample.feature.network;
 
-    defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 25
-        buildConfigField "String", "API_BASE_URL", "\"https://jsonplaceholder.typicode.com/\""
-        buildConfigField "long", "API_TIMEOUT", "30"
+import com.massivedisaster.adal.adapter.AbstractBaseAdapter;
+import com.massivedisaster.adal.adapter.BaseViewHolder;
+import com.massivedisaster.adal.sample.R;
+import com.massivedisaster.adal.sample.model.Post;
+
+import java.util.ArrayList;
+
+public class AdapterPost extends AbstractBaseAdapter<Post> {
+
+    public AdapterPost() {
+        super(R.layout.adapter_post, new ArrayList<Post>());
     }
-    buildTypes {
-        release {
-            initWith release
-            debuggable false
-        }
 
-        debug {
-            initWith debug
-            debuggable true
-        }
+    @Override
+    protected void bindItem(BaseViewHolder holder, Post item) {
+        holder.setText(R.id.txtTitle, item.getTitle());
+        holder.setText(R.id.txtBody, item.getBody());
+    }
+
+    @Override
+    protected void bindError(BaseViewHolder holder, boolean loadingError) {
 
     }
 }
-
-apply from: 'dependencies.gradle'
