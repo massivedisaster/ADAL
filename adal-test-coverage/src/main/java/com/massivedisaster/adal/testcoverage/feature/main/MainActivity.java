@@ -15,4 +15,18 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-include ':adal', ':sample', ':adal-accounts', ':adal-managers', ':adal-analytics', ':adal-utils', ':adal-network', ':adal-adapters', ':adal-bus', ':adal-fragments', ':adal-location', ':adal-test-coverage'
+package com.massivedisaster.adal.testcoverage.feature.main;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.massivedisaster.adal.testcoverage.R;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+}

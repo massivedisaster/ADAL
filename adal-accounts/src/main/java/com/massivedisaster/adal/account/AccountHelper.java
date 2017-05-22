@@ -24,6 +24,8 @@ import android.accounts.AccountManagerFuture;
 import android.content.Context;
 import android.os.Build;
 
+import static android.os.SystemClock.sleep;
+
 public class AccountHelper {
 
     private static AccountManager mManager;
@@ -80,6 +82,7 @@ public class AccountHelper {
             }
 
             if (onAccountListener != null) {
+                sleep(5000);
                 onAccountListener.onFinished();
             }
         } else {
