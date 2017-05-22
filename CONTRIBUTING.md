@@ -1,7 +1,17 @@
 Contributing to ADAL
 ======================
 
-This document describes contribution guidelines for ADAL. 
+This document describes the contribution guidelines for ADAL. 
+
+Before starting a new feature or bug fix
+------------
+
+When a new bug is detected or a new feature needs to be added there are the steps that need to be followed.
+
+1. Create a new [issue](https://github.com/massivedisaster/ADAL/issues/new) with the full description.
+2. Create the sample for that feature, or update the sample if the bug fix changes de sample status.
+3. Create a wiki section for the feature, or update the existing section if the bug fix changes wiki status.
+4. Work on feature brach and PR when you're done.
 
 File Headers
 ------------
