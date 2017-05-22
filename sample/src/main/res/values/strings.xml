@@ -30,4 +30,12 @@
     <string name="send_bang">Send bang</string>
     <string name="open_b">Open B</string>
     <string name="loading">Loading...</string>
+
+    <string name="analytics_message_screen">A screen was sended to Google Analytics after this fragment are opened.</string>
+    <string name="analytics_new_fragment">Open a new fragment</string>
+    <string name="analytics_message_screen_label">A screen with a label was sended to Google Analytics after this fragment are opened.\n\nThe screen must have a formmatted string to put your label</string>
+    <string name="analytics_send_event">Send an event</string>
+    <string name="analytics_send_event_label">Send an event with label</string>
+    <string name="analytics_message_events">After send an event you need to confirm this on your Google Analytics account.</string>
+    <string name="analytics_edittext_hint">Label</string>
 </resources>

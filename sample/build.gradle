@@ -15,6 +15,18 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * Added for adal-analytics
+ */
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.google.gms:google-services:3.0.0'
+    }
+}
+
 apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
@@ -41,3 +53,8 @@ android {
 }
 
 apply from: 'dependencies.gradle'
+
+/**
+ * Added for adal-analytics
+ */
+apply plugin: 'com.google.gms.google-services'
