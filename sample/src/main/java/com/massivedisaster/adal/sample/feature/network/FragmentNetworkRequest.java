@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.massivedisaster.adal.adapter.AbstractBaseAdapter;
 import com.massivedisaster.adal.fragment.AbstractRequestFragment;
 import com.massivedisaster.adal.network.APICallback;
 import com.massivedisaster.adal.network.APIError;
@@ -50,13 +51,23 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
         mRclItems.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mAdapterPost = new AdapterPost();
+        mAdapterPost.setOnLoadMoreListener(new AbstractBaseAdapter.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                request();
+            }
+        });
         mRclItems.setAdapter(mAdapterPost);
 
         request();
     }
 
     private void request() {
-        showLoading();
+
+        // Show the general loading if the adapter is empty
+        if (mAdapterPost.isEmpty()) {
+            showLoading();
+        }
 
         addRequest((APIRequests.getPosts(new APICallback<ResponseList<Post>>(getContext()) {
             @Override

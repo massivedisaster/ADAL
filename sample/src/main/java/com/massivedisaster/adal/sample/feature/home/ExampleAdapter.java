@@ -26,18 +26,15 @@ import com.massivedisaster.adal.sample.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ExampleAdapter extends AbstractBaseAdapter<Class<? extends Fragment>> {
+public class ExampleAdapter extends AbstractBaseAdapter<String> {
 
-    private HashMap<Class<? extends Fragment>, String> mLstItems;
-
-    public ExampleAdapter(HashMap<Class<? extends Fragment>, String> lstItems) {
+    public ExampleAdapter(HashMap<String, Class<? extends Fragment>> lstItems) {
         super(R.layout.adapter_example, new ArrayList<>(lstItems.keySet()));
-        mLstItems = lstItems;
     }
 
     @Override
-    protected void bindItem(BaseViewHolder holder, Class<? extends Fragment> item) {
-        holder.setText(R.id.txtName, mLstItems.get(item));
+    protected void bindItem(BaseViewHolder holder, String item) {
+        holder.setText(R.id.txtName, item);
     }
 
     @Override

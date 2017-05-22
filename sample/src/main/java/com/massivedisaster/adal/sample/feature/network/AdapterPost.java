@@ -27,7 +27,7 @@ import java.util.ArrayList;
 public class AdapterPost extends AbstractBaseAdapter<Post> {
 
     public AdapterPost() {
-        super(R.layout.adapter_post, new ArrayList<Post>());
+        super(R.layout.adapter_post, R.layout.adapter_loading, new ArrayList<Post>());
     }
 
     @Override
