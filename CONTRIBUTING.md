@@ -1,12 +1,22 @@
 Contributing to ADAL
 ======================
 
-This document describes contribution guidelines for ADAL. 
+This document describes the contribution guidelines for ADAL. 
+
+Before starting a new feature or bug fix
+------------
+
+When a new bug is detected or a new feature needs to be added there are some steps that need to be followed.
+
+1. Create a new [issue](https://github.com/massivedisaster/ADAL/issues/new) with the full description.
+2. Create the sample for that feature, or update the sample if the bug fix changes de sample status.
+3. Create a wiki section for the feature, or update the existing section if the bug fix changes wiki status.
+4. Work on feature branch and PR when you're done.
 
 File Headers
 ------------
 
-The following file header is the used for ADAL. Please use it for new files.
+The following file header is the used for ADAL.
 
 ```
 ADAL - A set of Android libraries to help speed up Android development.
@@ -25,7 +35,7 @@ You should have received a copy of the GNU Lesser General Public License along
 with ADAL. If not, see http://www.gnu.org/licenses/.
 ```
 
-See [Configuring file header](https://github.com/massivedisaster/ADAL/wiki#configuring-file-header) for more detail in how to configure Android Studio.
+See [Configuring file header](https://github.com/massivedisaster/ADAL/wiki#configuring-file-header) for more detail in how to configure Android Studio to use the header.
 
 DO and DON'Ts
 --------------------
