@@ -1,5 +1,6 @@
 # ADAL
-
+[![API](https://img.shields.io/badge/API-16%2B-green.svg?style=flat)](https://android-arsenal.com/api?level=16)
+[![Build Status](https://travis-ci.org/massivedisaster/ADAL.svg?branch=master)](https://travis-ci.org/massivedisaster/ADAL)
 [ ![Download](https://api.bintray.com/packages/jmspt/maven/adal/images/download.svg) ](https://bintray.com/jmspt/maven/adal/_latestVersion)
 
 Android Development Accelaration Library
