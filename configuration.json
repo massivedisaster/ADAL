@@ -12,7 +12,8 @@
         "adal-fragments",
         "adal-managers",
         "adal-network",
-        "adal-location"
+        "adal-location",
+        "adal-permissions"
     ],
     "bintrayUsername": "{username}",
     "bintrayKey": "{key}"
