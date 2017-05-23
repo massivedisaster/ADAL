@@ -45,7 +45,6 @@ dependencies {
     compile project(':adal-analytics')
     compile project(':adal-bus')
     compile project(':adal-fragments')
-    compile project(':adal-managers')
     compile project(':adal-network')
     compile project(':adal-utils')
     compile project(':adal-permissions')
