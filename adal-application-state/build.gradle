@@ -39,9 +39,9 @@ android {
 publish {
     userOrg = userOrgBase
     groupId = adalModuleBase
-    artifactId = 'adal-managers'
+    artifactId = 'adal-application-state'
     publishVersion = libraryVersionString()
-    desc = 'ADAL managers module'
+    desc = 'ADAL application state module'
     website = websiteBase
     licences = licensesBase
 }
