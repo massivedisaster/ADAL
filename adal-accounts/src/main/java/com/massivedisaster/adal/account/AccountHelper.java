@@ -23,6 +23,7 @@ import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 
 public class AccountHelper {
 
@@ -60,7 +61,7 @@ public class AccountHelper {
         });
     }
 
-    @SuppressWarnings("MissingPermission")
+    @SuppressWarnings("deprecation")
     public static synchronized void clearAccounts(Context context, final OnAccountListener onAccountListener) {
         validateAccountManager();
         deletedAccounts = 0;
@@ -84,16 +85,27 @@ public class AccountHelper {
             }
         } else {
             for (Account account : accounts) {
-                AccountManagerCallback<Boolean> callback = new AccountManagerCallback<Boolean>() {
-                    @Override
-                    public void run(AccountManagerFuture<Boolean> future) {
-                        if (onAccountListener != null && ++deletedAccounts == accounts.length) {
-                            onAccountListener.onFinished();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                    AccountManagerCallback<Bundle> callback = new AccountManagerCallback<Bundle>() {
+                        @Override
+                        public void run(AccountManagerFuture<Bundle> future) {
+                            if (onAccountListener != null && ++deletedAccounts == accounts.length) {
+                                onAccountListener.onFinished();
+                            }
                         }
-                    }
-                };
-
-                mManager.removeAccount(account, callback, null);
+                    };
+                    mManager.removeAccount(account, null, callback, null);
+                } else {
+                    AccountManagerCallback<Boolean> callback = new AccountManagerCallback<Boolean>() {
+                        @Override
+                        public void run(AccountManagerFuture<Boolean> future) {
+                            if (onAccountListener != null && ++deletedAccounts == accounts.length) {
+                                onAccountListener.onFinished();
+                            }
+                        }
+                    };
+                    mManager.removeAccount(account, callback, null);
+                }
             }
         }
     }
