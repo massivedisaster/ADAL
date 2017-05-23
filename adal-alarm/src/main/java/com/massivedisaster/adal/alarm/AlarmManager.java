@@ -15,7 +15,7 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.adal.manager;
+package com.massivedisaster.adal.alarm;
 
 import android.app.PendingIntent;
 import android.content.Context;
