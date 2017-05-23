@@ -148,6 +148,6 @@ public class AlarmManager {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(context.getPackageName() + sTagAlarms, jsonArray.toString());
 
-        editor.commit();
+        editor.apply();
     }
 }
