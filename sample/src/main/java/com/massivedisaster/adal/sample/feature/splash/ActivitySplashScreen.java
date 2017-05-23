@@ -29,7 +29,7 @@ public class ActivitySplashScreen extends ActivityFullScreen {
         super.onStart();
 
         if (getSupportFragmentManager().getBackStackEntryCount() == 0 && !getIntent().hasExtra(ActivityFragmentManager.ACTIVITY_MANAGER_FRAGMENT)) {
-            performTransaction(new FragmentHome(), FragmentHome.class.getCanonicalName());
+            performTransaction(new FragmentSplash(), FragmentSplash.class.getCanonicalName());
         }
     }
 }

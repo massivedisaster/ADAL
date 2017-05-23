@@ -15,23 +15,28 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-ext {
-    googlePlayServicesVersion = '10.2.1'
-    supportVersion = '25.1.1'
-    afmVersion = '0.2.0'
-}
+package com.massivedisaster.adal.sample.model;
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+public class Post {
 
-    compile project(':adal')
+    private int userId;
+    private int id;
+    private String title;
+    private String body;
 
-    /* SUPPORT */
-    compile "com.android.support:appcompat-v7:$supportVersion"
+    public int getUserId() {
+        return userId;
+    }
 
-    /* ACTIVITY FRAGMENT MANAGER */
-    compile "com.massivedisaster:activity-fragment-manager:$afmVersion"
+    public int getId() {
+        return id;
+    }
 
-    /* ANALYTICS */
-    compile "com.google.android.gms:play-services-analytics:$googlePlayServicesVersion"
+    public String getTitle() {
+        return title;
+    }
+
+    public String getBody() {
+        return body;
+    }
 }

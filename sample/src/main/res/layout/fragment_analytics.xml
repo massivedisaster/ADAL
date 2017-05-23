@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ ADAL - A set of Android libraries to help speed up Android development.
+  ~ Copyright (C) 2017 ADAL.
+  ~
+  ~ ADAL is free software; you can redistribute it and/or modify it under
+  ~ the terms of the GNU Lesser General Public License as published by the Free
+  ~ Software Foundation; either version 3 of the License, or any later version.
+  ~
+  ~ ADAL is distributed in the hope that it will be useful, but WITHOUT
+  ~ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  ~ FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+  ~ details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public License along
+  ~ with ADAL. If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/large_spacing"
+        android:text="@string/analytics_message_screen" />
+
+    <Button
+        android:id="@+id/btnAnalyticsNewFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/normal_spacing"
+        android:text="@string/analytics_new_fragment" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="@dimen/medium_spacing"
+        android:layout_marginTop="@dimen/medium_spacing"
+        android:background="@android:color/darker_gray" />
+
+    <Button
+        android:id="@+id/btnAnalyticsSendEvent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/normal_spacing"
+        android:text="@string/analytics_send_event" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/edtAnalyticsEventLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/extra_small_spacing"
+        android:layout_marginLeft="@dimen/normal_spacing"
+        android:layout_marginRight="@dimen/normal_spacing"
+        android:layout_marginTop="@dimen/normal_spacing"
+        android:gravity="center"
+        android:hint="@string/analytics_edittext_hint"
+        android:inputType="text"
+        android:lines="1" />
+
+    <Button
+        android:id="@+id/btnAnalyticsSendEventLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/normal_spacing"
+        android:layout_marginLeft="@dimen/normal_spacing"
+        android:layout_marginRight="@dimen/normal_spacing"
+        android:layout_marginTop="@dimen/extra_small_spacing"
+        android:text="@string/analytics_send_event_label" />
+
+    <TextView
+        android:id="@+id/txtAnalyticsSendEventMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/large_spacing"
+        android:text="@string/analytics_message_events"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+</LinearLayout>

@@ -15,26 +15,25 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.adal.sample.feature.home;
-
-import android.support.v4.app.Fragment;
+package com.massivedisaster.adal.sample.feature.network;
 
 import com.massivedisaster.adal.adapter.AbstractBaseAdapter;
 import com.massivedisaster.adal.adapter.BaseViewHolder;
 import com.massivedisaster.adal.sample.R;
+import com.massivedisaster.adal.sample.model.Post;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class ExampleAdapter extends AbstractBaseAdapter<String> {
+public class AdapterPost extends AbstractBaseAdapter<Post> {
 
-    public ExampleAdapter(HashMap<String, Class<? extends Fragment>> lstItems) {
-        super(R.layout.adapter_example, new ArrayList<>(lstItems.keySet()));
+    public AdapterPost() {
+        super(R.layout.adapter_post, R.layout.adapter_loading, new ArrayList<Post>());
     }
 
     @Override
-    protected void bindItem(BaseViewHolder holder, String item) {
-        holder.setText(R.id.txtName, item);
+    protected void bindItem(BaseViewHolder holder, Post item) {
+        holder.setText(R.id.txtTitle, item.getTitle());
+        holder.setText(R.id.txtBody, item.getBody());
     }
 
     @Override
