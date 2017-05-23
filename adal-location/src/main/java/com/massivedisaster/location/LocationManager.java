@@ -29,7 +29,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 
-import com.massivedisaster.adal.manager.PermissionsManager;
+import com.massivedisaster.adal.permissions.PermissionsManager;
 
 public class LocationManager implements LocationListener {
 

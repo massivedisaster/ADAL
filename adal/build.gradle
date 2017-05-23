@@ -34,7 +34,7 @@ android {
         }
     }
     lintOptions {
-        abortOnError false
+        disable 'InvalidPackage'
     }
 }
 
@@ -48,6 +48,8 @@ dependencies {
     compile project(':adal-managers')
     compile project(':adal-network')
     compile project(':adal-utils')
+    compile project(':adal-permissions')
+    compile project(':adal-alarm')
 }
 
 publish {

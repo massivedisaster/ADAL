@@ -24,8 +24,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.massivedisaster.adal.fragment.AbstractBaseFragment;
-import com.massivedisaster.adal.manager.PermissionsManager;
+import com.massivedisaster.adal.permissions.PermissionsManager;
 import com.massivedisaster.adal.sample.R;
+import com.massivedisaster.adal.utils.AppUtils;
 
 public class FragmentPermissions extends AbstractBaseFragment {
 
@@ -72,7 +73,7 @@ public class FragmentPermissions extends AbstractBaseFragment {
                 mTxtInfo.setText("onDenied, neverAskMeAgain: " + neverAskMeAgain);
 
                 if (neverAskMeAgain) {
-                    mPermissionsManager.openAppSettings(getActivity());
+                    AppUtils.openAppSettings(getActivity());
                 }
             }
         }, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.WRITE_CALENDAR);

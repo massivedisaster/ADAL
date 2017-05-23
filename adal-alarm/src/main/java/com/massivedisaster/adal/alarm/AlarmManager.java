@@ -15,7 +15,7 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.adal.manager;
+package com.massivedisaster.adal.alarm;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -148,6 +148,6 @@ public class AlarmManager {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(context.getPackageName() + sTagAlarms, jsonArray.toString());
 
-        editor.commit();
+        editor.apply();
     }
 }

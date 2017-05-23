@@ -82,6 +82,7 @@ public abstract class AbstractBaseFragment extends Fragment {
      * @param <T>:    Type of the requested view
      * @return view requested if it exists
      */
+    @SuppressWarnings("unchecked")
     protected <T extends View> T findViewById(@IdRes int viewId) {
         View view = getView();
         if (view == null) {
@@ -98,6 +99,7 @@ public abstract class AbstractBaseFragment extends Fragment {
      * @param <T>:    Type of the requested view
      * @return view requested if it exists
      */
+    @SuppressWarnings("unchecked")
     protected <T extends View> T findViewByIdOnActivity(@IdRes int viewId) {
         Activity activity = getActivity();
         if (activity == null) {

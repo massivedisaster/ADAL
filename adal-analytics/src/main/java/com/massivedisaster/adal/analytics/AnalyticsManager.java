@@ -28,6 +28,13 @@ import com.google.android.gms.analytics.Tracker;
 public class AnalyticsManager {
 
     private static AnalyticsManager sInstance;
+    private final Context mContext;
+    private Tracker mTracker;
+
+    private AnalyticsManager(@NonNull Context context) {
+        mContext = context.getApplicationContext();
+        getTracker();
+    }
 
     /**
      * Initialize AnalyticsManager in your Application class
@@ -40,14 +47,6 @@ public class AnalyticsManager {
             sInstance = new AnalyticsManager(context);
         }
         return sInstance;
-    }
-
-    private Tracker mTracker;
-    private final Context mContext;
-
-    private AnalyticsManager(@NonNull Context context) {
-        mContext = context.getApplicationContext();
-        getTracker();
     }
 
     private synchronized Tracker getTracker() {
@@ -78,7 +77,7 @@ public class AnalyticsManager {
         if (label == null) {
             sendScreen(mContext.getString(screenId));
         } else {
-            sendScreen(mContext.getString(screenId, label));
+            sendScreen(mContext.getString(screenId, (Object[]) label));
         }
     }
 
@@ -103,7 +102,7 @@ public class AnalyticsManager {
      *
      * @param resScreenName
      */
-    public synchronized void sendScreen(@NonNull int resScreenName) {
+    public synchronized void sendScreen(@NonNull Integer resScreenName) {
         if (getTracker() == null) return;
 
         sendScreen(mContext.getString(resScreenName));
