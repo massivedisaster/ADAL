@@ -15,7 +15,7 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.adal.manager;
+package com.massivedisaster.adal.permissions;
 
 import android.app.Activity;
 import android.os.Build;
@@ -23,9 +23,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-
-import com.massivedisaster.adal.utils.AppUtils;
-import com.massivedisaster.adal.utils.PermissionUtils;
 
 public class PermissionsManager {
 
@@ -117,10 +114,6 @@ public class PermissionsManager {
 
             mOnPermissionsListener.onDenied(false);
         }
-    }
-
-    public void openAppSettings(Activity activity) {
-        AppUtils.openAppSettings(activity, mRequestCode);
     }
 
     private void logInfo(String message) {

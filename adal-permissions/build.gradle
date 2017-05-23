@@ -36,6 +36,12 @@ android {
     }
 }
 
+def supportVersion = '25.1.1'
+
+dependencies {
+    compile "com.android.support:design:$supportVersion"
+}
+
 publish {
     userOrg = userOrgBase
     groupId = adalModuleBase
