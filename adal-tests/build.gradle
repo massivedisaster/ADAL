@@ -36,6 +36,9 @@ android {
             debuggable true
         }
     }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
 }
 
 apply from: 'dependencies.gradle'
