@@ -17,7 +17,6 @@
 
 package com.massivedisaster.adal.adapter;
 
-import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -52,11 +51,12 @@ public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
 
             return fragment;
 
-        } catch (InstantiationException e){
+        } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+
         return new Fragment();
     }
 

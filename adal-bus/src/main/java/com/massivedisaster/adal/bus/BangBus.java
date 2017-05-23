@@ -38,32 +38,13 @@ import java.util.List;
 
 public class BangBus {
 
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(ElementType.METHOD)
-    public @interface SubscribeBang {
-
-        String name() default "";
-    }
-
     private final static String sArgumentData = "argument_bang_data";
-
     private Context mContext;
     private List<BroadcastReceiver> mLstBroadcastReceivers;
     private Object mObject;
-
     public BangBus(Context context) {
         mLstBroadcastReceivers = new LinkedList<>();
         mContext = context;
-    }
-
-    /**
-     * Sends an object to another part of the application
-     * All the methods subscribed with this data type will receive the object
-     *
-     * @param serializable the object to send
-     */
-    public void bang(Serializable serializable) {
-        bang(mContext, serializable);
     }
 
     /**
@@ -108,6 +89,31 @@ public class BangBus {
         LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
+    private static List<Method> getMethodsAnnotatedWith(final Class<?> type, final Class<? extends Annotation> annotation) {
+        final List<Method> methods = new ArrayList<>();
+        Class<?> klass = type;
+        while (klass != Object.class) {
+            final List<Method> allMethods = new ArrayList<>(Arrays.asList(klass.getDeclaredMethods()));
+            for (final Method method : allMethods) {
+                if (method.isAnnotationPresent(annotation)) {
+                    methods.add(method);
+                }
+            }
+            klass = klass.getSuperclass();
+        }
+        return methods;
+    }
+
+    /**
+     * Sends an object to another part of the application
+     * All the methods subscribed with this data type will receive the object
+     *
+     * @param serializable the object to send
+     */
+    public void bang(Serializable serializable) {
+        bang(mContext, serializable);
+    }
+
     /**
      * Subscribes all methods in the object passed.
      *
@@ -125,28 +131,21 @@ public class BangBus {
             BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
-                    if (intent.hasExtra(sArgumentData)) {
-                        Object object = intent.getSerializableExtra(sArgumentData);
-
-                        try {
+                    try {
+                        if (intent.hasExtra(sArgumentData)) {
+                            Object object = intent.getSerializableExtra(sArgumentData);
                             m.setAccessible(true);
                             m.invoke(mObject, object);
                             m.setAccessible(false);
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        } catch (InvocationTargetException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        try {
+                        } else {
                             m.setAccessible(true);
                             m.invoke(mObject);
                             m.setAccessible(false);
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
-                        } catch (InvocationTargetException e) {
-                            e.printStackTrace();
                         }
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
                     }
                 }
             };
@@ -180,18 +179,10 @@ public class BangBus {
         }
     }
 
-    private static List<Method> getMethodsAnnotatedWith(final Class<?> type, final Class<? extends Annotation> annotation) {
-        final List<Method> methods = new ArrayList<>();
-        Class<?> klass = type;
-        while (klass != Object.class) {
-            final List<Method> allMethods = new ArrayList<>(Arrays.asList(klass.getDeclaredMethods()));
-            for (final Method method : allMethods) {
-                if (method.isAnnotationPresent(annotation)) {
-                    methods.add(method);
-                }
-            }
-            klass = klass.getSuperclass();
-        }
-        return methods;
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    public @interface SubscribeBang {
+
+        String name() default "";
     }
 }

@@ -35,10 +35,6 @@ android {
             initWith debug
             debuggable true
         }
-        lintOptions {
-            abortOnError false
-        }
-
     }
 }
 
