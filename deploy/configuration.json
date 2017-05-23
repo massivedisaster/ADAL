@@ -1,6 +1,6 @@
 {
-    "basePath": "./",
-    "readmePath": "./README.md",
+    "basePath": "../",
+    "readmePath": "../README.md",
     "version": "0.1.10",
     "modules": [
         "adal",
