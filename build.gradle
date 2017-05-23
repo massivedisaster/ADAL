@@ -17,7 +17,7 @@
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 ext {
-    userOrgBase = 'jmspt'
+    userOrgBase = 'massivedisaster'
     websiteBase = 'https://github.com/massivedisaster/ADAL'
     licensesBase = ['LGPL-3.0']
     packageBase = 'com.massivedisaster'
