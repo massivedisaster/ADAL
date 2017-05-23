@@ -50,6 +50,7 @@ dependencies {
     compile project(':adal-utils')
     compile project(':adal-permissions')
     compile project(':adal-alarm')
+    compile project(':adal-application-state')
 }
 
 publish {

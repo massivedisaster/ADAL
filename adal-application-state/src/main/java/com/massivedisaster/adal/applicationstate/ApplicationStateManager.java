@@ -15,7 +15,7 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.adal.manager;
+package com.massivedisaster.adal.applicationstate;
 
 import android.app.Activity;
 import android.app.Application;
