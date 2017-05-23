@@ -48,6 +48,7 @@ dependencies {
     compile project(':adal-managers')
     compile project(':adal-network')
     compile project(':adal-utils')
+    compile project(':adal-permissions')
 }
 
 publish {

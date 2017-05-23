@@ -36,16 +36,18 @@ android {
     }
 }
 
+def supportVersion = '25.1.1'
+
 dependencies {
-    compile project(":adal-permissions")
+    compile "com.android.support:design:$supportVersion"
 }
 
 publish {
     userOrg = userOrgBase
     groupId = adalModuleBase
-    artifactId = 'adal-location'
+    artifactId = 'adal-permissions'
     publishVersion = libraryVersionString()
-    desc = 'ADAL location module'
+    desc = 'ADAL permissions module'
     website = websiteBase
     licences = licensesBase
 }

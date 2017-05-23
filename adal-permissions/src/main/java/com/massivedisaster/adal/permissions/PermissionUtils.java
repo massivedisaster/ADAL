@@ -15,7 +15,7 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.adal.utils;
+package com.massivedisaster.adal.permissions;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
