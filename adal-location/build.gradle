@@ -37,7 +37,7 @@ android {
 }
 
 dependencies {
-    compile project(":adal-managers")
+    compile project(":adal-permissions")
 }
 
 publish {
