@@ -14,7 +14,8 @@
         "adal-network",
         "adal-location",
         "adal-permissions",
-        "adal-alarm"
+      "adal-alarm",
+      "adal-application-state"
     ],
     "bintrayUsername": "{username}",
     "bintrayKey": "{key}"
