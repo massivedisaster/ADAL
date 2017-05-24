@@ -17,6 +17,8 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'pt.simdea.verifier'
+apply from: "$project.rootDir/quality/quality.gradle"
 
 buildscript {
     repositories {
