@@ -15,44 +15,31 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.adal.sample.model;
+package com.massivedisaster.adal.tests;
 
-public class Post {
+import com.massivedisaster.adal.tests.adapter.TestAdapter;
+import com.massivedisaster.adal.tests.util.Constants;
 
-    private int mUserId;
-    private int mId;
-    private String mTitle;
-    private String mBody;
+import org.junit.Before;
+import org.junit.Test;
 
-    public int getUserId() {
-        return mUserId;
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
+
+public class AbstractBaseAdapterTests {
+
+    private TestAdapter testAdapter;
+
+    @Before
+    public void initialize() {
+        testAdapter = new TestAdapter(new ArrayList<String>());
     }
 
-    public void setUserId(int userId) {
-        this.mUserId = userId;
+    @Test
+    public void testAddItem() {
+        testAdapter.add(Constants.ADAPTER_MOCK_ITEM_ONE);
+        assertEquals(testAdapter.getItemCount(), 1);
     }
 
-    public int getId() {
-        return mId;
-    }
-
-    public void setId(int id) {
-        this.mId = id;
-    }
-
-    public String getTitle() {
-        return mTitle;
-    }
-
-    public void setTitle(String title) {
-        this.mTitle = title;
-    }
-
-    public String getBody() {
-        return mBody;
-    }
-
-    public void setBody(String body) {
-        this.mBody = body;
-    }
 }

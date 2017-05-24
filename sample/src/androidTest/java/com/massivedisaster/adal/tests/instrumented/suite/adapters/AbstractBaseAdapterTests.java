@@ -15,44 +15,7 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.adal.sample.model;
+package com.massivedisaster.adal.tests.instrumented.suite.adapters;
 
-public class Post {
-
-    private int mUserId;
-    private int mId;
-    private String mTitle;
-    private String mBody;
-
-    public int getUserId() {
-        return mUserId;
-    }
-
-    public void setUserId(int userId) {
-        this.mUserId = userId;
-    }
-
-    public int getId() {
-        return mId;
-    }
-
-    public void setId(int id) {
-        this.mId = id;
-    }
-
-    public String getTitle() {
-        return mTitle;
-    }
-
-    public void setTitle(String title) {
-        this.mTitle = title;
-    }
-
-    public String getBody() {
-        return mBody;
-    }
-
-    public void setBody(String body) {
-        this.mBody = body;
-    }
+public class AbstractBaseAdapterTests {
 }

@@ -37,6 +37,7 @@ android {
         targetSdkVersion 25
         buildConfigField "String", "API_BASE_URL", "\"https://jsonplaceholder.typicode.com/\""
         buildConfigField "long", "API_TIMEOUT", "30"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {

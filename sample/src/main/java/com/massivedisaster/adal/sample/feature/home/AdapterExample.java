@@ -15,44 +15,30 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.adal.sample.model;
+package com.massivedisaster.adal.sample.feature.home;
 
-public class Post {
+import android.support.v4.app.Fragment;
 
-    private int mUserId;
-    private int mId;
-    private String mTitle;
-    private String mBody;
+import com.massivedisaster.adal.adapter.AbstractBaseAdapter;
+import com.massivedisaster.adal.adapter.BaseViewHolder;
+import com.massivedisaster.adal.sample.R;
 
-    public int getUserId() {
-        return mUserId;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class AdapterExample extends AbstractBaseAdapter<String> {
+
+    public AdapterExample(HashMap<String, Class<? extends Fragment>> lstItems) {
+        super(R.layout.adapter_example, new ArrayList<>(lstItems.keySet()));
     }
 
-    public void setUserId(int userId) {
-        this.mUserId = userId;
+    @Override
+    protected void bindItem(BaseViewHolder holder, String item) {
+        holder.setText(R.id.txtName, item);
     }
 
-    public int getId() {
-        return mId;
-    }
+    @Override
+    protected void bindError(BaseViewHolder holder, boolean loadingError) {
 
-    public void setId(int id) {
-        this.mId = id;
-    }
-
-    public String getTitle() {
-        return mTitle;
-    }
-
-    public void setTitle(String title) {
-        this.mTitle = title;
-    }
-
-    public String getBody() {
-        return mBody;
-    }
-
-    public void setBody(String body) {
-        this.mBody = body;
     }
 }
