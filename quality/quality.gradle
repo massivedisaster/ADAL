@@ -19,24 +19,24 @@ check {
     abortOnError true
 
     checkstyle {
-        config "$project.rootDir/quality/checkstyle/conf-default.xml"
+        config "$project.rootDir/quality/checkstyle/config.xml"
         reportHTML new File(project.buildDir, 'reports/checkstyle/checkstyle.html')
     }
 
     findbugs {
-        config "$project.rootDir/quality/findbugs/conf-default.xml"
+        config "$project.rootDir/quality/findbugs/config.xml"
         reportHTML new File(project.buildDir, 'reports/findbugs/findbugs.html')
     }
 
     pmd {
-        config "$project.rootDir/quality/pmd/conf-default.xml"
+        config "$project.rootDir/quality/pmd/config.xml"
         reportHTML new File(project.buildDir, 'reports/pmd/pmd.html')
     }
 
     lint {
         xmlReport false
         htmlReport true
-        lintConfig new File(project.rootDir, '/quality/lint/conf-default.xml')
+        lintConfig new File(project.rootDir, '/quality/lint/config.xml')
         htmlOutput file("$project.buildDir/reports/lint/lint-result.html")
     }
 }
