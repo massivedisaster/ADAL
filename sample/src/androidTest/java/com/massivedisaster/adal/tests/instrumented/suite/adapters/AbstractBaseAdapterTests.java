@@ -17,5 +17,33 @@
 
 package com.massivedisaster.adal.tests.instrumented.suite.adapters;
 
-public class AbstractBaseAdapterTests {
+import android.content.Intent;
+import android.support.test.rule.ActivityTestRule;
+
+import com.massivedisaster.activitymanager.ActivityFragmentManager;
+import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
+import com.massivedisaster.adal.sample.feature.network.FragmentNetworkRequest;
+import com.massivedisaster.adal.tests.unit.suite.base.AbstractBaseTestSuite;
+
+import org.junit.Rule;
+
+public class AbstractBaseAdapterTests extends AbstractBaseTestSuite {
+
+    @Rule
+    public ActivityTestRule<ActivityToolbar> activityTestRule = new ActivityTestRule<>(ActivityToolbar.class, true, false);
+
+    @Override
+    protected void setup() {
+        Intent intent = new Intent();
+
+        intent.putExtra(ActivityFragmentManager.ACTIVITY_MANAGER_FRAGMENT, FragmentNetworkRequest.class.getCanonicalName());
+        intent.putExtra(ActivityFragmentManager.ACTIVITY_MANAGER_FRAGMENT_TAG, FragmentNetworkRequest.class.getCanonicalName());
+
+        activityTestRule.launchActivity(intent);
+    }
+
+    @Override
+    protected void dispose() {
+
+    }
 }
