@@ -15,12 +15,7 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.adal.tests.util;
+package com.massivedisaster.adal.tests.instrumented.suite.adapters;
 
-public class Constants {
-
-    public static final String ACCOUNT_NAME = "ADAL - Test Coverage";
-    public static final String ACCOUNT_PASSWORD = "adal1234";
-    public static final String ACCOUNT_TOKEN = "adalToken";
-
+public class AbstractBaseAdapterTests {
 }

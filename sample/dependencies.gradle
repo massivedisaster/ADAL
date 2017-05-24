@@ -16,22 +16,47 @@
  */
 
 ext {
-    googlePlayServicesVersion = '10.2.1'
-    supportVersion = '25.1.1'
     afmVersion = '0.2.0'
-}
+    espressoVersion = '2.2.2'
+    googlePlayServicesVersion = '10.2.1'
+    jUnitVersion = '4.12'
+    mockitoVersion = '2.8.9'
+    supportVersion = '25.1.1'
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    dependencies {
+        /** GENERAL **/
 
-    compile project(':adal')
+        compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    /* SUPPORT */
-    compile "com.android.support:appcompat-v7:$supportVersion"
+        /** APP **/
 
-    /* ACTIVITY FRAGMENT MANAGER */
-    compile "com.massivedisaster:activity-fragment-manager:$afmVersion"
+        /* ACTIVITY FRAGMENT MANAGER */
+        compile "com.massivedisaster:activity-fragment-manager:$afmVersion"
 
-    /* ANALYTICS */
-    compile "com.google.android.gms:play-services-analytics:$googlePlayServicesVersion"
+        /* ADAL */
+        compile project(':adal')
+
+        /* SUPPORT */
+        compile "com.android.support:appcompat-v7:$supportVersion"
+
+        /* ACTIVITY FRAGMENT MANAGER */
+        compile "com.massivedisaster:activity-fragment-manager:$afmVersion"
+
+        /* ANALYTICS */
+        compile "com.google.android.gms:play-services-analytics:$googlePlayServicesVersion"
+
+        /** TEST **/
+
+        /* ESPRESSO */
+        androidTestCompile ("com.android.support.test.espresso:espresso-core:$espressoVersion") {
+            exclude group: 'com.android.support', module: 'support-annotations'
+        }
+
+        /* JUNIT */
+        testCompile "junit:junit:$jUnitVersion"
+
+        /* MOCKITO */
+        androidTestCompile "org.mockito:mockito-android:$mockitoVersion"
+        testCompile "org.mockito:mockito-core:$mockitoVersion"
+    }
 }

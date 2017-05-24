@@ -26,9 +26,9 @@ import com.massivedisaster.adal.sample.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ExampleAdapter extends AbstractBaseAdapter<String> {
+public class AdapterExample extends AbstractBaseAdapter<String> {
 
-    public ExampleAdapter(HashMap<String, Class<? extends Fragment>> lstItems) {
+    public AdapterExample(HashMap<String, Class<? extends Fragment>> lstItems) {
         super(R.layout.adapter_example, new ArrayList<>(lstItems.keySet()));
     }
 

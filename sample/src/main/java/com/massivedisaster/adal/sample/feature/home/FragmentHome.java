@@ -54,7 +54,7 @@ public class FragmentHome extends AbstractBaseFragment {
     }
 
     private void initialize() {
-        ExampleAdapter adapter = new ExampleAdapter(getExamples());
+        AdapterExample adapter = new AdapterExample(getExamples());
         adapter.setOnChildClickListener(new AbstractBaseAdapter.OnChildClickListener<String>() {
             @Override
             public void onChildClick(View view, String key, int position) {

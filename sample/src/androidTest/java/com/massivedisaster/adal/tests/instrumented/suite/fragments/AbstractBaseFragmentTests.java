@@ -15,32 +15,7 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-ext {
-    def supportVersion = '25.1.1'
-    def espressoVersion = '2.2.2'
-    def jUnitVersion = '4.12'
+package com.massivedisaster.adal.tests.instrumented.suite.fragments;
 
-    dependencies {
-        /** GENERAL **/
-
-        compile fileTree(dir: 'libs', include: ['*.jar'])
-
-        /** APP **/
-
-        /* ADAL */
-        compile project(':adal')
-
-        /* SUPPORT */
-        compile "com.android.support:appcompat-v7:$supportVersion"
-
-        /** INSTRUMENTED TEST **/
-
-        /* ESPRESSO */
-        androidTestCompile ("com.android.support.test.espresso:espresso-core:$espressoVersion") {
-            exclude group: 'com.android.support', module: 'support-annotations'
-        }
-
-        /* JUNIT */
-        testCompile "junit:junit:$jUnitVersion"
-    }
+public class AbstractBaseFragmentTests {
 }

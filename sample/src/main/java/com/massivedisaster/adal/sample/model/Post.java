@@ -19,24 +19,40 @@ package com.massivedisaster.adal.sample.model;
 
 public class Post {
 
-    private int userId;
-    private int id;
-    private String title;
-    private String body;
+    private int mUserId;
+    private int mId;
+    private String mTitle;
+    private String mBody;
 
     public int getUserId() {
-        return userId;
+        return mUserId;
+    }
+
+    public void setUserId(int userId) {
+        this.mUserId = userId;
     }
 
     public int getId() {
-        return id;
+        return mId;
+    }
+
+    public void setId(int id) {
+        this.mId = id;
     }
 
     public String getTitle() {
-        return title;
+        return mTitle;
+    }
+
+    public void setTitle(String title) {
+        this.mTitle = title;
     }
 
     public String getBody() {
-        return body;
+        return mBody;
+    }
+
+    public void setBody(String body) {
+        this.mBody = body;
     }
 }

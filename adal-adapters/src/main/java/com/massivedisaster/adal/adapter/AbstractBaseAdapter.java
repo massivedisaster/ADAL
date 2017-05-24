@@ -17,6 +17,7 @@
 
 package com.massivedisaster.adal.adapter;
 
+import android.support.annotation.IntDef;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,8 +35,11 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
     private View mEmptyView;
 
     private static final int sInvalidResourceId = -1;
-    private static final int sViewTypeItem = 0;
-    private static final int sViewTypeLoad = 1;
+
+    @IntDef({VIEW_TYPE_ITEM, VIEW_TYPE_LOAD})
+    public @interface ViewType {}
+    public static final int VIEW_TYPE_ITEM = 0;
+    public static final int VIEW_TYPE_LOAD = 1;
 
     private OnChildClickListener<T> mListener;
     private OnLoadMoreListener mOnLoadMoreListener;
@@ -86,7 +90,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        if (viewType == sViewTypeLoad && hasLoadingLayout()) {
+        if (viewType == VIEW_TYPE_LOAD && hasLoadingLayout()) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(mResLoading, parent, false);
 
@@ -116,16 +120,17 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
             mOnLoadMoreListener.onLoadMore();
         }
 
-        if (getItemViewType(position) == sViewTypeItem) {
+        if (getItemViewType(position) == VIEW_TYPE_ITEM) {
             bindItem(holder, getItem(position));
-        } else if (getItemViewType(position) == sViewTypeLoad && hasLoadingLayout()) {
+        } else if (getItemViewType(position) == VIEW_TYPE_LOAD && hasLoadingLayout()) {
             bindError(holder, isLoadingError);
         }
     }
 
     @Override
+    @ViewType
     public int getItemViewType(int position) {
-        return position > mData.size() - 1 ? sViewTypeLoad : sViewTypeItem;
+        return position > mData.size() - 1 ? VIEW_TYPE_LOAD : VIEW_TYPE_ITEM;
     }
 
     @Override
@@ -245,6 +250,16 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
      */
     public int getItemPosition(T item) {
         return mData.indexOf(item);
+    }
+
+    /**
+     * <p>Check if data set contains the specified item</p>
+     *
+     * @param item: Item to verify if contains on data set
+     * @return true if contains otherwise false
+     */
+    public boolean containsItem(T item) {
+        return mData.contains(item);
     }
 
     /**

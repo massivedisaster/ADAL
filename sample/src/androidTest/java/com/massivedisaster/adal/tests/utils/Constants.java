@@ -15,30 +15,12 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-apply plugin: 'com.android.application'
-android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+package com.massivedisaster.adal.tests.utils;
 
-    defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 25
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            initWith release
-            debuggable false
-        }
+public class Constants {
 
-        debug {
-            initWith debug
-            debuggable true
-        }
-    }
-    lintOptions {
-        disable 'InvalidPackage'
-    }
+    /** BASE **/
+    public static final int BASE_DELAY_SMALL = 1000;
+    public static final int BASE_DELAY_MEDIUM = 2500;
+    public static final int BASE_DELAY_LARGE = 5000;
 }
-
-apply from: 'dependencies.gradle'
