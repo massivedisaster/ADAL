@@ -21,12 +21,6 @@ import com.massivedisaster.adal.analytics.AnalyticsManager;
 import com.massivedisaster.adal.fragment.AbstractBaseFragment;
 import com.massivedisaster.adal.sample.R;
 
-/**
- * ADAL by Carbon by BOLD
- * Created in 22/05/17 by the following authors:
- * <p>
- * Nuno Silva - {nunosilva@carbonbybold.com}
- */
 public class FragmentAnalyticsLabel extends AbstractBaseFragment {
 
     @Override
