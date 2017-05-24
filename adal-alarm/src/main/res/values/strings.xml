@@ -15,4 +15,6 @@
   ~ with ADAL. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<manifest package="com.massivedisaster.adal.manager"/>
+<resources>
+    <string name="app_name">adal-alarm</string>
+</resources>

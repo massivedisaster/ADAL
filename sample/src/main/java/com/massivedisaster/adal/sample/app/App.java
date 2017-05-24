@@ -20,7 +20,7 @@ package com.massivedisaster.adal.sample.app;
 import android.app.Application;
 import android.util.Log;
 
-import com.massivedisaster.adal.manager.ApplicationStateManager;
+import com.massivedisaster.adal.applicationstate.ApplicationStateManager;
 
 public class App extends Application implements ApplicationStateManager.BackAndForegroundListener {
 

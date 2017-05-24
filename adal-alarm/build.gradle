@@ -39,9 +39,9 @@ android {
 publish {
     userOrg = userOrgBase
     groupId = adalModuleBase
-    artifactId = 'adal-managers'
+    artifactId = 'adal-alarm'
     publishVersion = libraryVersionString()
-    desc = 'ADAL managers module'
+    desc = 'ADAL alarm module'
     website = websiteBase
     licences = licensesBase
 }

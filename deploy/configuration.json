@@ -1,6 +1,6 @@
 {
-    "basePath": "./",
-    "readmePath": "./README.md",
+    "basePath": "../",
+    "readmePath": "../README.md",
     "version": "0.1.10",
     "modules": [
         "adal",
@@ -10,10 +10,11 @@
         "adal-analytics",
         "adal-bus",
         "adal-fragments",
-        "adal-managers",
         "adal-network",
         "adal-location",
-        "adal-permissions"
+        "adal-permissions",
+        "adal-alarm",
+        "adal-application-state"
     ],
     "bintrayUsername": "{username}",
     "bintrayKey": "{key}"
