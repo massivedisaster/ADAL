@@ -47,7 +47,7 @@ public class FragmentB extends AbstractBaseFragment {
                 BangBus
                         .with(getContext())
                         .addAction(FragmentA.BANG_A)
-                        .addParameter("received bang with action from " + FragmentB.class.getSimpleName())
+                        .setParameter("received bang with action from " + FragmentB.class.getSimpleName())
                         .bang();
 
                 getActivity().finish();

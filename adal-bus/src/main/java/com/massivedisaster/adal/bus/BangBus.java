@@ -163,7 +163,7 @@ public class BangBus {
             return this;
         }
 
-        public BangBuilder addParameter(Serializable parameter) {
+        public BangBuilder setParameter(Serializable parameter) {
             mParameter = parameter;
             return this;
         }

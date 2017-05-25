@@ -60,7 +60,7 @@ public class FragmentA extends AbstractBaseFragment {
         });
     }
 
-    @BangBus.SubscribeBang(name = BANG_A)
+    @BangBus.SubscribeBang(action = BANG_A)
     public void showTripsSearch(String message) {
         mTxtResult.setText(message);
     }
