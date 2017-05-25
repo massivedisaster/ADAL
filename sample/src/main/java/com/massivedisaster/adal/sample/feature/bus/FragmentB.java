@@ -52,10 +52,4 @@ public class FragmentB extends AbstractBaseFragment {
             }
         });
     }
-
-    @Override
-    public void onDestroy() {
-        mBangBus.unsubscribe();
-        super.onDestroy();
-    }
 }
