@@ -23,7 +23,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
 
-import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -31,17 +30,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class BangBus {
 
-    private final static String sArgumentData = "argument_bang_data";
+    public final static String ARGUMENT_DATA = "argument_bang_data";
     private Context mContext;
     private HashMap<Method, BroadcastReceiver> mBroadcastReceivers;
 
@@ -91,8 +88,8 @@ public class BangBus {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     try {
-                        if(intent.hasExtra(sArgumentData)) {
-                            Object object = intent.getSerializableExtra(sArgumentData);
+                        if(intent.hasExtra(ARGUMENT_DATA)) {
+                            Object object = intent.getSerializableExtra(ARGUMENT_DATA);
                             method.setAccessible(true);
                             method.invoke(mObject, object);
                             method.setAccessible(false);
@@ -146,50 +143,5 @@ public class BangBus {
     public @interface SubscribeBang {
 
         String action() default "";
-    }
-
-    public static class BangBuilder {
-
-        private Context mContext;
-        private List<String> mActions;
-        private Serializable mParameter;
-
-        public BangBuilder(Context context) {
-            mContext = context;
-            mActions = new ArrayList<>();
-        }
-
-        public BangBuilder addAction(String action) {
-            mActions.add(action);
-            return this;
-        }
-
-        public BangBuilder setParameter(Serializable parameter) {
-            mParameter = parameter;
-            return this;
-        }
-
-        public void bang() {
-            if(mActions.isEmpty() && mParameter == null) {
-                throw new MissingBangArgumentException();
-            }
-
-            if(mActions.isEmpty()) {
-                Intent intent = new Intent(mParameter.getClass().getCanonicalName());
-                intent.putExtra(sArgumentData, mParameter);
-                LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
-                return;
-            }
-
-            for(String action : mActions) {
-                Intent intent = new Intent(action);
-
-                if(mParameter != null) {
-                    intent.putExtra(sArgumentData, mParameter);
-                }
-
-                LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
-            }
-        }
     }
 }
