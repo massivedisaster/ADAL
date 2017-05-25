@@ -43,12 +43,12 @@ public class BangBus {
 
     private final static String sArgumentData = "argument_bang_data";
     private Context mContext;
-    private HashMap<Method, BroadcastReceiver> mLstBroadcastReceivers;
+    private HashMap<Method, BroadcastReceiver> mBroadcastReceivers;
 
     private Object mObject;
 
     public BangBus(Context context) {
-        mLstBroadcastReceivers = new HashMap<>();
+        mBroadcastReceivers = new HashMap<>();
         mContext = context;
     }
 
@@ -59,10 +59,10 @@ public class BangBus {
     private static Set<Method> getMethodsAnnotatedWith(final Class<?> type, final Class<? extends Annotation> annotation) {
         final Set<Method> methods = new HashSet<>();
         Class<?> klass = type;
-        while (klass != Object.class) {
+        while(klass != Object.class) {
             final Set<Method> allMethods = new HashSet<>(Arrays.asList(klass.getDeclaredMethods()));
-            for (final Method method : allMethods) {
-                if (method.isAnnotationPresent(annotation)) {
+            for(final Method method : allMethods) {
+                if(method.isAnnotationPresent(annotation)) {
                     methods.add(method);
                 }
             }
@@ -80,10 +80,10 @@ public class BangBus {
     public BangBus subscribe(Object object) {
         mObject = object;
 
-        Set<Method> lstMethods = getMethodsAnnotatedWith(mObject.getClass(), SubscribeBang.class);
+        Set<Method> methods = getMethodsAnnotatedWith(mObject.getClass(), SubscribeBang.class);
 
-        for (final Method m : lstMethods) {
-            if(mLstBroadcastReceivers.containsKey(m)) {
+        for(final Method method : methods) {
+            if(mBroadcastReceivers.containsKey(method)) {
                 return this;
             }
 
@@ -91,15 +91,15 @@ public class BangBus {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     try {
-                        if (intent.hasExtra(sArgumentData)) {
+                        if(intent.hasExtra(sArgumentData)) {
                             Object object = intent.getSerializableExtra(sArgumentData);
-                            m.setAccessible(true);
-                            m.invoke(mObject, object);
-                            m.setAccessible(false);
+                            method.setAccessible(true);
+                            method.invoke(mObject, object);
+                            method.setAccessible(false);
                         } else {
-                            m.setAccessible(true);
-                            m.invoke(mObject);
-                            m.setAccessible(false);
+                            method.setAccessible(true);
+                            method.invoke(mObject);
+                            method.setAccessible(false);
                         }
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
@@ -109,21 +109,22 @@ public class BangBus {
                 }
             };
 
-            mLstBroadcastReceivers.put(m, mBroadcastReceiver);
+            mBroadcastReceivers.put(method, mBroadcastReceiver);
 
             String filter;
 
-            Annotation annotation = m.getAnnotation(SubscribeBang.class);
+            Annotation annotation = method.getAnnotation(SubscribeBang.class);
             SubscribeBang subscribeBang = (SubscribeBang) annotation;
 
-            if (!subscribeBang.action().isEmpty()) {
+            if(!subscribeBang.action().isEmpty()) {
                 filter = subscribeBang.action();
             } else {
-                filter = m.getParameterTypes()[0].getCanonicalName();
+                filter = method.getParameterTypes()[0].getCanonicalName();
             }
 
-            if (filter != null)
+            if(filter != null) {
                 LocalBroadcastManager.getInstance(mContext).registerReceiver(mBroadcastReceiver, new IntentFilter(filter));
+            }
         }
 
         return this;
@@ -133,11 +134,11 @@ public class BangBus {
      * Removes all methods subscribed in this instance
      */
     public void unsubscribe() {
-        for(Map.Entry<Method, BroadcastReceiver> entry : mLstBroadcastReceivers.entrySet()) {
+        for(Map.Entry<Method, BroadcastReceiver> entry : mBroadcastReceivers.entrySet()) {
             LocalBroadcastManager.getInstance(mContext).unregisterReceiver(entry.getValue());
         }
 
-        mLstBroadcastReceivers.clear();
+        mBroadcastReceivers.clear();
     }
 
     @Retention(RetentionPolicy.RUNTIME)
