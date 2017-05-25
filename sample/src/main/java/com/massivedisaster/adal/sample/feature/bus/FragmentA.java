@@ -32,7 +32,8 @@ public class FragmentA extends AbstractBaseFragment {
     public static final String BANG_A = "BANG_A";
 
     private BangBus mBangBus;
-    private Button mBtnOpenB;
+    private Button mBtnSubscribeOpenB;
+    private Button mUnsubscribeBtnOpenB;
     private TextView mTxtResult;
 
     @Override
@@ -42,7 +43,8 @@ public class FragmentA extends AbstractBaseFragment {
 
     @Override
     protected void doOnCreated() {
-        mBtnOpenB = findViewById(R.id.btnOpenB);
+        mBtnSubscribeOpenB = findViewById(R.id.btnSubscribeOpenB);
+        mUnsubscribeBtnOpenB = findViewById(R.id.btnUnsubscribeOpenB);
         mTxtResult = findViewById(R.id.txtResult);
 
         initialize();
@@ -52,9 +54,20 @@ public class FragmentA extends AbstractBaseFragment {
         mBangBus = new BangBus(getActivity());
         mBangBus.subscribe(this);
 
-        mBtnOpenB.setOnClickListener(new View.OnClickListener() {
+        mBtnSubscribeOpenB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mTxtResult.setText("");
+                mBangBus.subscribe(FragmentA.this);
+                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, FragmentB.class);
+            }
+        });
+
+        mUnsubscribeBtnOpenB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTxtResult.setText("");
+                mBangBus.unsubscribe();
                 ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, FragmentB.class);
             }
         });
