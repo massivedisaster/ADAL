@@ -26,7 +26,6 @@ import com.massivedisaster.adal.sample.R;
 
 public class FragmentB extends AbstractBaseFragment {
 
-    private BangBus mBangBus;
     private Button mSendBang;
 
     @Override
@@ -42,20 +41,17 @@ public class FragmentB extends AbstractBaseFragment {
     }
 
     public void initialize() {
-        mBangBus = new BangBus(getActivity());
-
         mSendBang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBangBus.bang(getContext(), FragmentA.BANG_A, "received bang from " + FragmentB.class.getSimpleName());
+                BangBus
+                        .with(getContext())
+                        .addAction(FragmentA.BANG_A)
+                        .setParameter("received bang with action from " + FragmentB.class.getSimpleName())
+                        .bang();
+
                 getActivity().finish();
             }
         });
-    }
-
-    @Override
-    public void onDestroy() {
-        mBangBus.unsubscribe();
-        super.onDestroy();
     }
 }
