@@ -18,6 +18,7 @@
 package com.massivedisaster.adal.tests.instrumented.suite.bus;
 
 import android.content.Intent;
+import android.support.test.espresso.NoMatchingViewException;
 import android.support.test.rule.ActivityTestRule;
 
 import com.massivedisaster.activitymanager.ActivityFragmentManager;
@@ -46,7 +47,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
  *
  * <b>Implemented tests:</b>
  *
- * # <p>({@link #testSendEvent() testSendEvent} method)</p>
+ * # <p>({@link #testSendEventSubscribed() testSendEventSubscribed} method)</p>
+ * # <p>({@link #testSendEventUnsubscribed() testSendEventUnsubscribed} method) throws {@link NoMatchingViewException}</p>
  */
 public class BangBusTests extends AbstractBaseTestSuite {
 
@@ -71,14 +73,33 @@ public class BangBusTests extends AbstractBaseTestSuite {
     }
 
     /**
-     * <p>Opens another fragment and send a bang bus event to the initial fragment, the result must
-     * match the expected message on txtResult TextView.</p>
+     * <p>Subscribes on band bus, opens another fragment and send a bang bus event to the initial
+     * fragment, the result must match the expected message on txtResult TextView.</p>
      */
     @Test
-    public void testSendEvent() {
+    public void testSendEventSubscribed() {
         sleep(Constants.BASE_DELAY_SMALL);
 
-        onView(withId(R.id.btnOpenB)).perform(click());
+        onView(withId(R.id.btnSubscribeOpenB)).perform(click());
+
+        sleep(Constants.BASE_DELAY_SMALL);
+
+        onView(withId(R.id.btnSendBang)).perform(click());
+
+        sleep(Constants.BASE_DELAY_SMALL);
+
+        onView(withText(sResultText.concat(FragmentB.class.getSimpleName()))).check(matches(isDisplayed()));
+    }
+
+    /**
+     * <p>Unsubscribes on bang bus, opens another fragment and send a bang bus event to the initial
+     * fragment, the method must throw an exception when try to find the expected TextView.</p>
+     */
+    @Test(expected = NoMatchingViewException.class)
+    public void testSendEventUnsubscribed() {
+        sleep(Constants.BASE_DELAY_SMALL);
+
+        onView(withId(R.id.btnUnsubscribeOpenB)).perform(click());
 
         sleep(Constants.BASE_DELAY_SMALL);
 
