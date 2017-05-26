@@ -17,11 +17,11 @@
 
 package com.massivedisaster.adal.bus;
 
-public final class MissingBangArgumentException extends NullPointerException {
+public final class BangMissingArgumentException extends NullPointerException {
 
     private final static String sMissingArgumentException = "You must call .addtarget or .addparameter before calling bang";
 
-    public MissingBangArgumentException() {
+    public BangMissingArgumentException() {
         super(sMissingArgumentException);
     }
 }
