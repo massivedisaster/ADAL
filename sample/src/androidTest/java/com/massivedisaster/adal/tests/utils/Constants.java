@@ -19,7 +19,7 @@ package com.massivedisaster.adal.tests.utils;
 
 public class Constants {
 
-    /** BASE **/
+    /* BASE */
     public static final int BASE_DELAY_SMALL = 1000;
     public static final int BASE_DELAY_MEDIUM = 2500;
     public static final int BASE_DELAY_LARGE = 5000;
