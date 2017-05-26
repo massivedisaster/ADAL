@@ -74,8 +74,13 @@ public class FragmentA extends AbstractBaseFragment {
     }
 
     @BangBus.SubscribeBang(action = BANG_A)
-    public void showTripsSearch(String message) {
+    public void bangWithAction(String message) {
         mTxtResult.setText(message);
+    }
+
+    @BangBus.SubscribeBang
+    public void bangWithoutAction(Integer number) {
+        mTxtResult.setText(String.valueOf(number));
     }
 
     @Override

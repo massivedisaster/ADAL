@@ -27,7 +27,8 @@
     <string name="get_account_info">Get account info</string>
     <string name="add_hardcoded_account">Add hardcoded account</string>
     <string name="clear_account">Clear account</string>
-    <string name="send_bang">Send bang</string>
+    <string name="send_bang_with_action">Send bang String with action</string>
+    <string name="send_bang_without_action">Send bang Integer without action</string>
     <string name="subscribe_and_open_b">Subscribe and Open B</string>
     <string name="unsubscribe_and_open_b">Unsubscribe and Open B</string>
     <string name="loading">Loading...</string>
