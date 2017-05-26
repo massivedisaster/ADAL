@@ -33,67 +33,33 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class BangBus {
 
-    private final static String sArgumentData = "argument_bang_data";
+    public final static String ARGUMENT_DATA = "argument_bang_data";
     private Context mContext;
-    private List<BroadcastReceiver> mLstBroadcastReceivers;
+    private HashMap<Method, BroadcastReceiver> mBroadcastReceivers;
     private Object mObject;
+
     public BangBus(Context context) {
-        mLstBroadcastReceivers = new LinkedList<>();
+        mBroadcastReceivers = new HashMap<>();
         mContext = context;
     }
 
-    /**
-     * Sends an object to another part of the application
-     * All the methods subscribed with this data type will receive the object
-     *
-     * @param context      the application context
-     * @param serializable the object to send
-     */
-    public static void bang(Context context, Serializable serializable) {
-        Intent intent = new Intent(serializable.getClass().getCanonicalName());
-        intent.putExtra(sArgumentData, serializable);
-
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+    public static BangBuilder with(Context context) {
+        return new BangBuilder(context);
     }
 
-    /**
-     * Sends an object to another part of the application
-     * All the methods subscribed with this name
-     *
-     * @param context the application context
-     * @param name    the @annotation name
-     */
-    public static void bang(Context context, String name) {
-        Intent intent = new Intent(name);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-    }
-
-    /**
-     * Sends an object to another part of the application
-     * All the methods subscribed with this name
-     *
-     * @param context      the application context
-     * @param name         the annotation name
-     * @param serializable the object to send
-     */
-    public static void bang(Context context, String name, Serializable serializable) {
-        Intent intent = new Intent(name);
-
-        intent.putExtra(sArgumentData, serializable);
-
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-    }
-
-    private static List<Method> getMethodsAnnotatedWith(final Class<?> type, final Class<? extends Annotation> annotation) {
-        final List<Method> methods = new ArrayList<>();
+    private static Set<Method> getMethodsAnnotatedWith(final Class<?> type, final Class<? extends Annotation> annotation) {
+        final Set<Method> methods = new HashSet<>();
         Class<?> klass = type;
         while (klass != Object.class) {
-            final List<Method> allMethods = new ArrayList<>(Arrays.asList(klass.getDeclaredMethods()));
+            final Set<Method> allMethods = new HashSet<>(Arrays.asList(klass.getDeclaredMethods()));
             for (final Method method : allMethods) {
                 if (method.isAnnotationPresent(annotation)) {
                     methods.add(method);
@@ -105,16 +71,6 @@ public class BangBus {
     }
 
     /**
-     * Sends an object to another part of the application
-     * All the methods subscribed with this data type will receive the object
-     *
-     * @param serializable the object to send
-     */
-    public void bang(Serializable serializable) {
-        bang(mContext, serializable);
-    }
-
-    /**
      * Subscribes all methods in the object passed.
      *
      * @param object the object to find methods to subscribe
@@ -123,24 +79,26 @@ public class BangBus {
     public BangBus subscribe(Object object) {
         mObject = object;
 
-        mLstBroadcastReceivers = new ArrayList<>();
+        Set<Method> methods = getMethodsAnnotatedWith(mObject.getClass(), SubscribeBang.class);
 
-        List<Method> lstMethods = getMethodsAnnotatedWith(mObject.getClass(), SubscribeBang.class);
+        for (final Method method : methods) {
+            if (mBroadcastReceivers.containsKey(method)) {
+                return this;
+            }
 
-        for (final Method m : lstMethods) {
             BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     try {
-                        if (intent.hasExtra(sArgumentData)) {
-                            Object object = intent.getSerializableExtra(sArgumentData);
-                            m.setAccessible(true);
-                            m.invoke(mObject, object);
-                            m.setAccessible(false);
+                        if (intent.hasExtra(ARGUMENT_DATA)) {
+                            Object object = intent.getSerializableExtra(ARGUMENT_DATA);
+                            method.setAccessible(true);
+                            method.invoke(mObject, object);
+                            method.setAccessible(false);
                         } else {
-                            m.setAccessible(true);
-                            m.invoke(mObject);
-                            m.setAccessible(false);
+                            method.setAccessible(true);
+                            method.invoke(mObject);
+                            method.setAccessible(false);
                         }
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
@@ -150,21 +108,22 @@ public class BangBus {
                 }
             };
 
-            mLstBroadcastReceivers.add(mBroadcastReceiver);
+            mBroadcastReceivers.put(method, mBroadcastReceiver);
 
             String filter;
 
-            Annotation annotation = m.getAnnotation(SubscribeBang.class);
+            Annotation annotation = method.getAnnotation(SubscribeBang.class);
             SubscribeBang subscribeBang = (SubscribeBang) annotation;
 
-            if (!subscribeBang.name().isEmpty()) {
-                filter = subscribeBang.name();
+            if (!subscribeBang.action().isEmpty()) {
+                filter = subscribeBang.action();
             } else {
-                filter = m.getParameterTypes()[0].getCanonicalName();
+                filter = method.getParameterTypes()[0].getCanonicalName();
             }
 
-            if (filter != null)
+            if (filter != null) {
                 LocalBroadcastManager.getInstance(mContext).registerReceiver(mBroadcastReceiver, new IntentFilter(filter));
+            }
         }
 
         return this;
@@ -174,15 +133,62 @@ public class BangBus {
      * Removes all methods subscribed in this instance
      */
     public void unsubscribe() {
-        for (BroadcastReceiver broadcastReceiver : mLstBroadcastReceivers) {
-            LocalBroadcastManager.getInstance(mContext).unregisterReceiver(broadcastReceiver);
+        for (Map.Entry<Method, BroadcastReceiver> entry : mBroadcastReceivers.entrySet()) {
+            LocalBroadcastManager.getInstance(mContext).unregisterReceiver(entry.getValue());
         }
+
+        mBroadcastReceivers.clear();
     }
 
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
     public @interface SubscribeBang {
 
-        String name() default "";
+        String action() default "";
+    }
+
+    public static class BangBuilder {
+
+        private Context mContext;
+        private List<String> mActions;
+        private Serializable mParameter;
+
+        public BangBuilder(Context context) {
+            mContext = context;
+            mActions = new ArrayList<>();
+        }
+
+        public BangBuilder addAction(String action) {
+            mActions.add(action);
+            return this;
+        }
+
+        public BangBuilder setParameter(Serializable parameter) {
+            mParameter = parameter;
+            return this;
+        }
+
+        public void bang() {
+            if (mActions.isEmpty() && mParameter == null) {
+                throw new MissingBangArgumentException();
+            }
+
+            if (mActions.isEmpty()) {
+                Intent intent = new Intent(mParameter.getClass().getCanonicalName());
+                intent.putExtra(BangBus.ARGUMENT_DATA, mParameter);
+                LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                return;
+            }
+
+            for (String action : mActions) {
+                Intent intent = new Intent(action);
+
+                if (mParameter != null) {
+                    intent.putExtra(BangBus.ARGUMENT_DATA, mParameter);
+                }
+
+                LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+            }
+        }
     }
 }

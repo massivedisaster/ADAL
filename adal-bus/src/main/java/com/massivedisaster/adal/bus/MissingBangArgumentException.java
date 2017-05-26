@@ -15,12 +15,13 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.adal.tests.utils;
+package com.massivedisaster.adal.bus;
 
-public class Constants {
+public final class MissingBangArgumentException extends NullPointerException {
 
-    /* BASE */
-    public static final int BASE_DELAY_SMALL = 1000;
-    public static final int BASE_DELAY_MEDIUM = 2500;
-    public static final int BASE_DELAY_LARGE = 5000;
+    private final static String sMissingArgumentException = "You must call .addtarget or .addparameter before calling bang";
+
+    public MissingBangArgumentException() {
+        super(sMissingArgumentException);
+    }
 }

@@ -49,7 +49,8 @@ public abstract class AbstractBaseTestSuite {
     @Before
     public void initialize() {
         Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-        mContext = instrumentation.getTargetContext().getApplicationContext();
+        mContext = instrumentation.getTargetContext()
+                                  .getApplicationContext();
         setup();
     }
 
