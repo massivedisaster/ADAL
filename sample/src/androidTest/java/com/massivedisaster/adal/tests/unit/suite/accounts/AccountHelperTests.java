@@ -38,13 +38,9 @@ import static org.junit.Assert.assertEquals;
  * <b>Implemented tests:</b>
  *
  * # <p>({@link #testAddAccount() testAddAccount} method)</p>
- *
  * # <p>({@link #testClearAccounts() testClearAccounts} method)</p>
- *
  * # <p>({@link #testRetrieveCurrentAccountName() testRetrieveCurrentAccountName} method)</p>
- *
  * # <p>({@link #testRetrieveCurrentPassword() testRetrieveCurrentPassword} method)</p>
- *
  * # <p>({@link #testRetrieveCurrentToken() testRetrieveCurrentToken} method)</p>
  */
 public class AccountHelperTests extends AbstractBaseTestSuite {
@@ -70,11 +66,7 @@ public class AccountHelperTests extends AbstractBaseTestSuite {
     public void testAddAccount() {
         clearAccounts();
 
-        AccountHelper.addAccount(
-                getContext(),
-                sAccountName,
-                sAccountPassword,
-                sAccountToken);
+        AccountHelper.addAccount(getContext(), sAccountName, sAccountPassword, sAccountToken);
 
         assertTrue(AccountHelper.hasAccount(getContext()));
     }

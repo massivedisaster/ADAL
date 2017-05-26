@@ -53,31 +53,17 @@ import static org.mockito.Mockito.when;
  * <b>Implemented tests:</b>
  *
  * # <p>({@link #testAddItem() testAddItem} method)</p>
- *
  * # <p>({@link #testAddItemAtPosition() testAddItemAtPosition} method)</p>
- *
  * # <p>({@link #testAddCollection() testAddCollection} method)</p>
- *
  * # <p>({@link #testRemoveItem() testRemoveItem} method)</p>
- *
  * # <p>({@link #testRemoveItemAtPosition() testRemoveItemAtPosition} method)</p>
- *
  * # <p>({@link #testRemoveCollection() testRemoveCollection} method)</p>
- *
- * # <p>({@link #testGetItemOutOfBounds() testGetItemOutOfBounds} method)
- *   throws {@link IndexOutOfBoundsException}</p>
- *
- * # <p>({@link #testGetItemEmptyAdapter() testGetItemEmptyAdapter} method)
- *   throws {@link IndexOutOfBoundsException}</p>
- *
+ * # <p>({@link #testGetItemOutOfBounds() testGetItemOutOfBounds} method) throws {@link IndexOutOfBoundsException}</p>
+ * # <p>({@link #testGetItemEmptyAdapter() testGetItemEmptyAdapter} method) throws {@link IndexOutOfBoundsException}</p>
  * # <p>({@link #testHasLoadingAddingEmptyCollection() testHasLoadingAddingEmptyCollection} method)</p>
- *
  * # <p>({@link #testHasLoadingSettingIsMoreDataAvailableFalse() testHasLoadingSettingIsMoreDataAvailableFalse} method)</p>
- *
  * # <p>({@link #testGetDataSet() testGetDataSet} method)</p>
- *
  * # <p>({@link #testEmpty() testEmpty} method)</p>
- *
  * # <p>({@link #testClear() testClear} method)</p>
  */
 @RunWith(AndroidJUnit4.class)
@@ -191,7 +177,7 @@ public class AbstractBaseAdapterTests extends AbstractBaseTestSuite {
 
         List<Post> posts = new ArrayList<>();
 
-        for(int i = 0; i < sTotalPostCollection; i++) {
+        for (int i = 0; i < sTotalPostCollection; i++) {
             Post post = mock(Post.class);
 
             when(post.getId()).thenReturn(i);
@@ -205,7 +191,7 @@ public class AbstractBaseAdapterTests extends AbstractBaseTestSuite {
         mAdapterPost.addAll(posts);
         assertEquals(mAdapterPost.getItemCount(), sTotalPostCollection);
 
-        for(Post post : posts) {
+        for (Post post : posts) {
             assertTrue(mAdapterPost.containsItem(post));
         }
     }
@@ -260,7 +246,7 @@ public class AbstractBaseAdapterTests extends AbstractBaseTestSuite {
         List<Post> posts = new ArrayList<>();
         int previousSize = mAdapterPost.getItemCount();
 
-        for(int i = 0; i < sTotalPostCollection; i++) {
+        for (int i = 0; i < sTotalPostCollection; i++) {
             Post post = mock(Post.class);
 
             when(post.getId()).thenReturn(i);
@@ -361,7 +347,7 @@ public class AbstractBaseAdapterTests extends AbstractBaseTestSuite {
 
         List<Post> posts = new ArrayList<>();
 
-        for(int i = 0; i < sTotalPostCollection; i++) {
+        for (int i = 0; i < sTotalPostCollection; i++) {
             Post post = mock(Post.class);
 
             when(post.getId()).thenReturn(i);

@@ -26,7 +26,11 @@ import com.massivedisaster.adal.sample.R;
 
 public class FragmentB extends AbstractBaseFragment {
 
-    private Button mSendBang;
+    public static final String BANG_MESSAGE_WITH_ACTION = "received bang with action";
+    public static final int BANG_NUMBER_WITHOUT_NUMBER = 666;
+
+    private Button mBtnSendBangWithAction;
+    private Button mBtnSendBangWithoutAction;
 
     @Override
     protected int layoutToInflate() {
@@ -35,19 +39,32 @@ public class FragmentB extends AbstractBaseFragment {
 
     @Override
     protected void doOnCreated() {
-        mSendBang = findViewById(R.id.btnSendBang);
+        mBtnSendBangWithAction = findViewById(R.id.btnSendBangWithAction);
+        mBtnSendBangWithoutAction = findViewById(R.id.btnSendBangWithoutAction);
 
         initialize();
     }
 
     public void initialize() {
-        mSendBang.setOnClickListener(new View.OnClickListener() {
+        mBtnSendBangWithAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 BangBus
                         .with(getContext())
                         .addAction(FragmentA.BANG_A)
-                        .setParameter("received bang with action from " + FragmentB.class.getSimpleName())
+                        .setParameter(BANG_MESSAGE_WITH_ACTION)
+                        .bang();
+
+                getActivity().finish();
+            }
+        });
+
+        mBtnSendBangWithoutAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BangBus
+                        .with(getContext())
+                        .setParameter(BANG_NUMBER_WITHOUT_NUMBER)
                         .bang();
 
                 getActivity().finish();
