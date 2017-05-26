@@ -17,11 +17,17 @@
 
 package com.massivedisaster.adal.sample.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Post {
 
+    @SerializedName("userId")
     private int mUserId;
+    @SerializedName("id")
     private int mId;
+    @SerializedName("title")
     private String mTitle;
+    @SerializedName("body")
     private String mBody;
 
     public int getUserId() {
