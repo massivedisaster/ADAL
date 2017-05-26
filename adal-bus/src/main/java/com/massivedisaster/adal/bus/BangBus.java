@@ -96,8 +96,7 @@ public class BangBus {
                             method.setAccessible(true);
                             method.invoke(mObject, object);
                             method.setAccessible(false);
-                        }
-                        else {
+                        } else {
                             method.setAccessible(true);
                             method.invoke(mObject);
                             method.setAccessible(false);
@@ -119,8 +118,7 @@ public class BangBus {
 
             if (!subscribeBang.action().isEmpty()) {
                 filter = subscribeBang.action();
-            }
-            else {
+            } else {
                 Class clazz = method.getParameterTypes()[0];
                 filter = clazz.getCanonicalName();
                 if (clazz.isPrimitive()) {
@@ -142,8 +140,7 @@ public class BangBus {
      */
     public void unsubscribe() {
         for (Map.Entry<Method, BroadcastReceiver> entry : mBroadcastReceivers.entrySet()) {
-            LocalBroadcastManager.getInstance(mContext)
-                                 .unregisterReceiver(entry.getValue());
+            LocalBroadcastManager.getInstance(mContext).unregisterReceiver(entry.getValue());
         }
 
         mBroadcastReceivers.clear();
@@ -152,7 +149,6 @@ public class BangBus {
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
     public @interface SubscribeBang {
-
         String action() default "";
     }
 
@@ -198,8 +194,7 @@ public class BangBus {
                     intent.putExtra(BangBus.ARGUMENT_DATA, mParameter);
                 }
 
-                LocalBroadcastManager.getInstance(mContext)
-                                     .sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
             }
         }
     }
