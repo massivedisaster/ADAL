@@ -74,6 +74,7 @@ public class BangBus {
      * Subscribes all methods in the object passed.
      *
      * @param object the object to find methods to subscribe
+     *
      * @return BangBus instance
      */
     public BangBus subscribe(Object object) {
@@ -118,11 +119,16 @@ public class BangBus {
             if (!subscribeBang.action().isEmpty()) {
                 filter = subscribeBang.action();
             } else {
-                filter = method.getParameterTypes()[0].getCanonicalName();
+                Class clazz = method.getParameterTypes()[0];
+                filter = clazz.getCanonicalName();
+                if (clazz.isPrimitive()) {
+                    throw new BangIllegalArgumentException();
+                }
             }
 
             if (filter != null) {
-                LocalBroadcastManager.getInstance(mContext).registerReceiver(mBroadcastReceiver, new IntentFilter(filter));
+                LocalBroadcastManager.getInstance(mContext)
+                                     .registerReceiver(mBroadcastReceiver, new IntentFilter(filter));
             }
         }
 
@@ -143,7 +149,6 @@ public class BangBus {
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
     public @interface SubscribeBang {
-
         String action() default "";
     }
 
@@ -170,13 +175,15 @@ public class BangBus {
 
         public void bang() {
             if (mActions.isEmpty() && mParameter == null) {
-                throw new MissingBangArgumentException();
+                throw new BangMissingArgumentException();
             }
 
             if (mActions.isEmpty()) {
-                Intent intent = new Intent(mParameter.getClass().getCanonicalName());
+                Intent intent = new Intent(mParameter.getClass()
+                                                     .getCanonicalName());
                 intent.putExtra(BangBus.ARGUMENT_DATA, mParameter);
-                LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(mContext)
+                                     .sendBroadcast(intent);
                 return;
             }
 
