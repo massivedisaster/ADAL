@@ -4,17 +4,17 @@
     "version": "0.1.10",
     "modules": [
         "adal",
-        "adal-utils",
         "adal-accounts",
         "adal-adapters",
+        "adal-alarm",
         "adal-analytics",
+        "adal-application-state",
         "adal-bus",
         "adal-fragments",
-        "adal-network",
         "adal-location",
+        "adal-network",
         "adal-permissions",
-        "adal-alarm",
-        "adal-application-state"
+        "adal-utils"
     ],
     "bintrayUsername": "{username}",
     "bintrayKey": "{key}"
