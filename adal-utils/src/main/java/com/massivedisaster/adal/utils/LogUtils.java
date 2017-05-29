@@ -38,7 +38,7 @@ public final class LogUtils {
      * @param enclosingClass the caller class
      * @param exception      the exception
      */
-    public static void logErrorException(@NonNull Class<?> enclosingClass, @NonNull Exception exception) {
+    public static void logErrorException(@NonNull Class<?> enclosingClass, @NonNull Throwable exception) {
         String message = exception.getMessage() == null ? "Exception error." : exception.getMessage();
         Log.e(enclosingClass.getName(), message, exception);
     }

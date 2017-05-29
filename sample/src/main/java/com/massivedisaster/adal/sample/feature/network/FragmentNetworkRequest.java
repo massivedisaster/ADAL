@@ -24,7 +24,7 @@ import android.widget.TextView;
 
 import com.massivedisaster.adal.adapter.AbstractBaseAdapter;
 import com.massivedisaster.adal.fragment.AbstractRequestFragment;
-import com.massivedisaster.adal.network.APICallback;
+import com.massivedisaster.adal.network.APIRequestCallback;
 import com.massivedisaster.adal.network.APIError;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.sample.model.Post;
@@ -69,7 +69,7 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
             showLoading();
         }
 
-        addRequest((APIRequests.getPosts(new APICallback<ResponseList<Post>>(getContext()) {
+        addRequest((APIRequests.getPosts(new APIRequestCallback<ResponseList<Post>>(getContext()) {
             @Override
             public void onSuccess(ResponseList<Post> posts) {
                 showContent();

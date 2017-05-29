@@ -54,6 +54,8 @@ dependencies {
     /* OKHTTP */
     compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
     compile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+
+    compile project(':adal-utils')
 }
 
 publish {
