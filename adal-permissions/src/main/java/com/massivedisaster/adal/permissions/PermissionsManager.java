@@ -24,49 +24,55 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
-public class PermissionsManager {
+/**
+ * Permissions manager.
+ */
+public final class PermissionsManager {
 
-    private static final int sRequestCode = 99;
-    private Activity mActivity;
+    private static final int REQUEST_CODE = 99;
+    private final Activity mActivity;
     private Fragment mFragment;
     private String[] mPermissions;
     private int mRequestCode;
     private OnPermissionsListener mOnPermissionsListener;
 
-    private PermissionsManager(Activity activity) {
+    /**
+     * Constructs permissions manager.
+     *
+     * @param activity the activity.
+     */
+    public PermissionsManager(Activity activity) {
         mActivity = activity;
     }
 
-    private PermissionsManager(Fragment fragment) {
+    /**
+     * Constructs permissions manager.
+     *
+     * @param fragment the fragment.
+     */
+    public PermissionsManager(Fragment fragment) {
         mFragment = fragment;
         mActivity = fragment.getActivity();
     }
 
     /**
-     * Initialize PermissionsManager inside a Activity
+     * Request permissions.
      *
-     * @param activity to manage the permissions
-     * @return the PermissionsManager instance
+     * @param onPermissionsListener the code associated with requested permissions.
+     * @param permissions           list of permissions to ask.
      */
-    public static PermissionsManager getInstance(Activity activity) {
-        return new PermissionsManager(activity);
+    public void requestPermissions(@NonNull OnPermissionsListener onPermissionsListener,
+                                   @NonNull String... permissions) {
+        requestPermissions(REQUEST_CODE, onPermissionsListener, permissions);
     }
 
     /**
-     * Initialize PermissionsManager inside a Fragment
+     * Request permissions.
      *
-     * @param fragment to manage the permissions
-     * @return the PermissionsManager instance
+     * @param requestCode           the code associated with requested permissions.
+     * @param onPermissionsListener listener for permissions.
+     * @param permissions           list of permissions to ask.
      */
-    public static PermissionsManager getInstance(Fragment fragment) {
-        return new PermissionsManager(fragment);
-    }
-
-    public void requestPermissions(@NonNull OnPermissionsListener onPermissionsListener,
-                                   @NonNull String... permissions) {
-        requestPermissions(sRequestCode, onPermissionsListener, permissions);
-    }
-
     public void requestPermissions(int requestCode,
                                    @NonNull OnPermissionsListener onPermissionsListener,
                                    @NonNull String... permissions) {
@@ -77,7 +83,7 @@ public class PermissionsManager {
         //Verify if permissions are added in manifest
         for (String s : permissions) {
             if (!PermissionUtils.hasPermissionInManifest((mFragment != null ? mFragment.getContext() : mActivity), s)) {
-                throw new RuntimeException("Please add permission to manifest: " + s);
+                throw new IllegalStateException("Please add permission to manifest: " + s);
             }
         }
 
@@ -95,6 +101,11 @@ public class PermissionsManager {
         }
     }
 
+    /**
+     * To be called on onPermissionsResult.
+     *
+     * @param requestCode the request code.
+     */
     public void onPermissionResult(int requestCode) {
         if (requestCode != mRequestCode) {
             logInfo("requestCode is different: " + requestCode + " != " + mRequestCode);
@@ -116,13 +127,29 @@ public class PermissionsManager {
         }
     }
 
+    /**
+     * Log information.
+     *
+     * @param message the message.
+     */
     private void logInfo(String message) {
         Log.i(PermissionsManager.class.getCanonicalName(), message);
     }
 
+    /**
+     * On permissions listener.
+     */
     public interface OnPermissionsListener {
+        /**
+         * On granted permission.
+         */
         void onGranted();
 
+        /**
+         * On denied permission.
+         *
+         * @param neverAskMeAgain tells if the user clicked never ask me again.
+         */
         void onDenied(boolean neverAskMeAgain);
     }
 }

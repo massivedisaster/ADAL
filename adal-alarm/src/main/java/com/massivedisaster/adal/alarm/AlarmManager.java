@@ -41,7 +41,7 @@ public final class AlarmManager {
     private static final String TAG_ALARMS = ":alarms";
 
     /**
-     * Private constructor.
+     * Private constructor to avoid user implement as a single instance instead of a Singleton.
      */
     private AlarmManager() {
     }
@@ -163,7 +163,7 @@ public final class AlarmManager {
             }
 
         } catch (JSONException e) {
-            LogUtils.LogErrorException(AlarmManager.class, e);
+            LogUtils.logErrorException(AlarmManager.class, e);
         }
 
         return ids;

@@ -50,7 +50,7 @@ public class FragmentPermissions extends AbstractBaseFragment {
 
 
     public void initialize() {
-        mPermissionsManager = PermissionsManager.getInstance(this);
+        mPermissionsManager = new PermissionsManager(this);
 
         mBtnGetPermissions.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -99,9 +99,9 @@ public class LocationManager implements LocationListener {
         mHandler = new Handler();
 
         if (mActivity != null) {
-            mPermissionsManager = PermissionsManager.getInstance(mActivity);
+            mPermissionsManager = new PermissionsManager(mActivity);
         } else {
-            mPermissionsManager = PermissionsManager.getInstance(mFragment);
+            mPermissionsManager = new PermissionsManager(mFragment);
         }
     }
 

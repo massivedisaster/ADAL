@@ -22,7 +22,18 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 
-public class PermissionUtils {
+import com.massivedisaster.adal.utils.LogUtils;
+
+/**
+ * Permissions utilities.
+ */
+public final class PermissionUtils {
+
+    /**
+     * Private constructor to avoid user implement as a single instance instead of a Singleton.
+     */
+    private PermissionUtils() {
+    }
 
     /**
      * Verify if all permissions given are granted
@@ -37,7 +48,7 @@ public class PermissionUtils {
         }
 
         for (String permission : permissions) {
-            if (!(ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED)) {
+            if ((ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED)) {
                 return false;
             }
         }
@@ -62,8 +73,8 @@ public class PermissionUtils {
                     }
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (PackageManager.NameNotFoundException e) {
+            LogUtils.logErrorException(PermissionUtils.class, e);
         }
         return false;
     }
