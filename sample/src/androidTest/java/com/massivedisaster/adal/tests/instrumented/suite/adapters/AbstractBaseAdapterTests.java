@@ -18,5 +18,4 @@
 package com.massivedisaster.adal.tests.instrumented.suite.adapters;
 
 public class AbstractBaseAdapterTests {
-
 }
