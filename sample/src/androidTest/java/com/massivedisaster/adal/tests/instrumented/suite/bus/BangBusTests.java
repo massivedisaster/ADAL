@@ -47,12 +47,12 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
  *
  * <b>Implemented tests:</b>
  *
- * # <p>({@link #testSendEventSubscribed() testSendEventSubscribed} method)</p>
- * # <p>({@link #testSendEventUnsubscribed() testSendEventUnsubscribed} method) throws {@link NoMatchingViewException}</p>
+ * # <p>({@link #testSendEventSubscribedWithAction() testSendEventSubscribed} method)</p>
+ * # <p>({@link #testSendEventSubscribedWithoutAction() testSendEventSubscribed} method)</p>
+ * # <p>({@link #testSendEventUnsubscribedWithAction() testSendEventUnsubscribed} method) throws {@link NoMatchingViewException}</p>
+ * # <p>({@link #testSendEventUnsubscribedWithoutAction() testSendEventUnsubscribed} method) throws {@link NoMatchingViewException}</p>
  */
 public class BangBusTests extends AbstractBaseTestSuite {
-
-    private static final String sResultText = "received bang from ";
 
     @Rule
     public ActivityTestRule<ActivityToolbar> activityTestRule = new ActivityTestRule<>(ActivityToolbar.class, true, false);
@@ -73,40 +73,78 @@ public class BangBusTests extends AbstractBaseTestSuite {
     }
 
     /**
-     * <p>Subscribes on band bus, opens another fragment and send a bang bus event to the initial
-     * fragment, the result must match the expected message on txtResult TextView.</p>
+     * <p>Subscribes on bang bus, opens another fragment and send a bang bus event with action to
+     * the initial fragment, the result must match the expected message on txtResult TextView.</p>
      */
     @Test
-    public void testSendEventSubscribed() {
+    public void testSendEventSubscribedWithAction() {
         sleep(Constants.BASE_DELAY_SMALL);
 
         onView(withId(R.id.btnSubscribeOpenB)).perform(click());
 
         sleep(Constants.BASE_DELAY_SMALL);
 
-        onView(withId(R.id.btnSendBang)).perform(click());
+        onView(withId(R.id.btnSendBangWithAction)).perform(click());
 
         sleep(Constants.BASE_DELAY_SMALL);
 
-        onView(withText(sResultText.concat(FragmentB.class.getSimpleName()))).check(matches(isDisplayed()));
+        onView(withText(FragmentB.BANG_MESSAGE_WITH_ACTION)).check(matches(isDisplayed()));
     }
 
     /**
-     * <p>Unsubscribes on bang bus, opens another fragment and send a bang bus event to the initial
-     * fragment, the method must throw an exception when try to find the expected TextView.</p>
+     * <p>Subscribes on bang bus, opens another fragment and send a bang bus event without action to
+     * the initial fragment, the result must match the expected message on txtResult TextView.</p>
+     */
+    @Test
+    public void testSendEventSubscribedWithoutAction() {
+        sleep(Constants.BASE_DELAY_SMALL);
+
+        onView(withId(R.id.btnSubscribeOpenB)).perform(click());
+
+        sleep(Constants.BASE_DELAY_SMALL);
+
+        onView(withId(R.id.btnSendBangWithoutAction)).perform(click());
+
+        sleep(Constants.BASE_DELAY_SMALL);
+
+        onView(withText(String.valueOf(FragmentB.BANG_NUMBER_WITHOUT_NUMBER))).check(matches(isDisplayed()));
+    }
+
+    /**
+     * <p>Unsubscribes on bang bus, opens another fragment and send a bang bus event with action to
+     * the initial fragment, the method must throw an exception when try to find the expected TextView.</p>
      */
     @Test(expected = NoMatchingViewException.class)
-    public void testSendEventUnsubscribed() {
+    public void testSendEventUnsubscribedWithAction() {
         sleep(Constants.BASE_DELAY_SMALL);
 
         onView(withId(R.id.btnUnsubscribeOpenB)).perform(click());
 
         sleep(Constants.BASE_DELAY_SMALL);
 
-        onView(withId(R.id.btnSendBang)).perform(click());
+        onView(withId(R.id.btnSendBangWithAction)).perform(click());
 
         sleep(Constants.BASE_DELAY_SMALL);
 
-        onView(withText(sResultText.concat(FragmentB.class.getSimpleName()))).check(matches(isDisplayed()));
+        onView(withText(FragmentB.BANG_MESSAGE_WITH_ACTION)).check(matches(isDisplayed()));
+    }
+
+    /**
+     * <p>Unsubscribes on bang bus, opens another fragment and send a bang bus event without action to
+     * the initial fragment, the method must throw an exception when try to find the expected TextView.</p>
+     */
+    @Test(expected = NoMatchingViewException.class)
+    public void testSendEventUnsubscribedWithoutAction() {
+        sleep(Constants.BASE_DELAY_SMALL);
+
+        onView(withId(R.id.btnUnsubscribeOpenB)).perform(click());
+
+        sleep(Constants.BASE_DELAY_SMALL);
+
+        onView(withId(R.id.btnSendBangWithoutAction)).perform(click());
+
+        sleep(Constants.BASE_DELAY_SMALL);
+
+        onView(withText(String.valueOf(FragmentB.BANG_NUMBER_WITHOUT_NUMBER))).check(matches(isDisplayed()));
     }
 }
