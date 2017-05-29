@@ -109,6 +109,16 @@ public class FragmentLocation extends AbstractBaseFragment {
                 mTxtInfo.setText("Permissions Denied");
                 mBtnGetLocation.setEnabled(true);
             }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+                // Intended.
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                // Intended.
+            }
         });
     }
 }

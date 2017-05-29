@@ -31,22 +31,22 @@ import android.support.v4.app.Fragment;
 
 import com.massivedisaster.adal.permissions.PermissionsManager;
 
+/**
+ * Location manager.
+ */
 public class LocationManager implements LocationListener {
 
-    private static final long sDefaultTimeoutLocation = 20000;
-
+    private static final long DEFAULT_TIMEOUT_LOCATION = 20000;
+    protected android.location.LocationManager mLocationManager;
+    protected String mProvider;
+    protected boolean mLastKnowLocation;
+    protected OnLocationManager mOnLocationManager;
     private Activity mActivity;
     private Fragment mFragment;
     private Context mContext;
-
-    private String mProvider;
-    private boolean mLastKnowLocation;
     private long mTimeout;
-
-    private android.location.LocationManager mLocationManager;
     private PermissionsManager mPermissionsManager;
     private Handler mHandler;
-    private OnLocationManager mOnLocationManager;
 
     /**
      * Initialize LocationManager
@@ -76,7 +76,8 @@ public class LocationManager implements LocationListener {
      * Stop and destroy location requests
      */
     public void onDestroy() {
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mLocationManager.removeUpdates(this);
         }
 
@@ -84,16 +85,21 @@ public class LocationManager implements LocationListener {
     }
 
     /**
-     * Callback for the result from requesting permissions. This method is invoked for every call on requestPermissions(android.app.Activity, String[], int).
+     * Callback for the result from requesting permissions. This method is invoked for every call
+     * on requestPermissions(android.app.Activity, String[], int).
      *
      * @param requestCode  The request code passed in requestPermissions(android.app.Activity, String[], int)
      * @param permissions  The requested permissions. Never null.
-     * @param grantResults The grant results for the corresponding permissions which is either PERMISSION_GRANTED or PERMISSION_DENIED. Never null.
+     * @param grantResults The grant results for the corresponding permissions which is either PERMISSION_GRANTED or PERMISSION_DENIED.
+     *                     Never null.
      */
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int... grantResults) {
         mPermissionsManager.onPermissionResult(requestCode);
     }
 
+    /**
+     * Initialize location manager.
+     */
     private void initialize() {
         mLocationManager = (android.location.LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         mHandler = new Handler();
@@ -122,7 +128,7 @@ public class LocationManager implements LocationListener {
      * @param onLocationManager callback
      */
     public void requestSingleLocation(final String provider, boolean lastKnowLocation, OnLocationManager onLocationManager) {
-        requestSingleLocation(provider, lastKnowLocation, sDefaultTimeoutLocation, onLocationManager);
+        requestSingleLocation(provider, lastKnowLocation, DEFAULT_TIMEOUT_LOCATION, onLocationManager);
     }
 
     /**
@@ -159,9 +165,12 @@ public class LocationManager implements LocationListener {
                 Manifest.permission.ACCESS_COARSE_LOCATION);
     }
 
+    /**
+     * Stat the request location process.
+     */
     @SuppressWarnings("MissingPermission")
-    private void startRequestLocation() {
-        mLocationManager.requestSingleUpdate(mProvider, LocationManager.this, null);
+    protected void startRequestLocation() {
+        mLocationManager.requestSingleUpdate(mProvider, this, null);
 
         Runnable mRun = new Runnable() {
             public void run() {
@@ -179,6 +188,11 @@ public class LocationManager implements LocationListener {
         mHandler.postDelayed(mRun, mTimeout);
     }
 
+    /**
+     * Callend when location changes.
+     *
+     * @param location the location.
+     */
     @Override
     public void onLocationChanged(Location location) {
         mHandler.removeCallbacksAndMessages(null);
@@ -186,18 +200,35 @@ public class LocationManager implements LocationListener {
         mOnLocationManager.onLocationFound(location, false);
     }
 
+    /**
+     * Called when status changes.
+     *
+     * @param provider the provider.
+     * @param status   the status.
+     * @param extras   the extras.
+     */
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-
+        // Intended.
     }
 
+    /**
+     * Called when provider is enabled.
+     *
+     * @param provider the provider.
+     */
     @Override
     public void onProviderEnabled(String provider) {
         mOnLocationManager.onProviderEnabled(provider);
     }
 
+    /**
+     * Called when provider is disabled.
+     *
+     * @param provider the provider.
+     */
     @Override
     public void onProviderDisabled(String provider) {
-
+        mOnLocationManager.onProviderDisabled(provider);
     }
 }
