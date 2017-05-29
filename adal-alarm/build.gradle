@@ -38,6 +38,10 @@ android {
     }
 }
 
+dependencies {
+    compile project(':adal-utils')
+}
+
 publish {
     userOrg = userOrgBase
     groupId = adalModuleBase
