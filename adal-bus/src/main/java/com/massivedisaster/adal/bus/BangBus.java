@@ -21,7 +21,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
+
+import com.massivedisaster.adal.utils.LogUtils;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
@@ -39,22 +42,43 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Cominucation between activities, fragments and services.
+ */
 public class BangBus {
 
-    public final static String ARGUMENT_DATA = "argument_bang_data";
-    private Context mContext;
-    private HashMap<Method, BroadcastReceiver> mBroadcastReceivers;
-    private Object mObject;
+    public static final String ARGUMENT_DATA = "argument_bang_data";
+    private final Context mContext;
+    private final Map<Method, BroadcastReceiver> mBroadcastReceivers;
+    protected Object mObject;
 
+    /**
+     * Creates a instance of {@link BangBus}.
+     *
+     * @param context the context.
+     */
     public BangBus(Context context) {
         mBroadcastReceivers = new HashMap<>();
         mContext = context;
     }
 
+    /**
+     * Creates a builder for {@link BangBus}.
+     *
+     * @param context the context.
+     * @return instance of {@link BangBuilder}.
+     */
     public static BangBuilder with(Context context) {
         return new BangBuilder(context);
     }
 
+    /**
+     * Retrieves the methods annotated with <var>annotation</var> from class <var>type</var>.
+     *
+     * @param type       the class type.
+     * @param annotation the annotation.
+     * @return a ser of methods.
+     */
     private static Set<Method> getMethodsAnnotatedWith(final Class<?> type, final Class<? extends Annotation> annotation) {
         final Set<Method> methods = new HashSet<>();
         Class<?> klass = type;
@@ -74,7 +98,6 @@ public class BangBus {
      * Subscribes all methods in the object passed.
      *
      * @param object the object to find methods to subscribe
-     *
      * @return BangBus instance
      */
     public BangBus subscribe(Object object) {
@@ -87,27 +110,7 @@ public class BangBus {
                 return this;
             }
 
-            BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    try {
-                        if (intent.hasExtra(ARGUMENT_DATA)) {
-                            Object object = intent.getSerializableExtra(ARGUMENT_DATA);
-                            method.setAccessible(true);
-                            method.invoke(mObject, object);
-                            method.setAccessible(false);
-                        } else {
-                            method.setAccessible(true);
-                            method.invoke(mObject);
-                            method.setAccessible(false);
-                        }
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
+            BroadcastReceiver mBroadcastReceiver = getBroadcastReceiver(method);
 
             mBroadcastReceivers.put(method, mBroadcastReceiver);
 
@@ -128,11 +131,42 @@ public class BangBus {
 
             if (filter != null) {
                 LocalBroadcastManager.getInstance(mContext)
-                                     .registerReceiver(mBroadcastReceiver, new IntentFilter(filter));
+                        .registerReceiver(mBroadcastReceiver, new IntentFilter(filter));
             }
         }
 
         return this;
+    }
+
+    /**
+     * Get a broadcast receiver for the <var>method</var>
+     *
+     * @param method the method to be analized.
+     * @return s
+     */
+    @NonNull
+    private BroadcastReceiver getBroadcastReceiver(final Method method) {
+        return new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                try {
+                    if (intent.hasExtra(ARGUMENT_DATA)) {
+                        Object object = intent.getSerializableExtra(ARGUMENT_DATA);
+                        method.setAccessible(true);
+                        method.invoke(mObject, object);
+                        method.setAccessible(false);
+                    } else {
+                        method.setAccessible(true);
+                        method.invoke(mObject);
+                        method.setAccessible(false);
+                    }
+                } catch (IllegalAccessException e) {
+                    LogUtils.LogErrorException(BangBus.class, e);
+                } catch (InvocationTargetException e) {
+                    LogUtils.LogErrorException(BangBus.class, e);
+                }
+            }
+        };
     }
 
     /**
@@ -152,27 +186,50 @@ public class BangBus {
         String action() default "";
     }
 
+    /**
+     * Builder for {@link BangBus}.
+     */
     public static class BangBuilder {
 
-        private Context mContext;
-        private List<String> mActions;
+        private final Context mContext;
+        private final List<String> mActions;
         private Serializable mParameter;
 
+        /**
+         * Create instance of {@link BangBuilder}
+         *
+         * @param context the context.
+         */
         public BangBuilder(Context context) {
             mContext = context;
             mActions = new ArrayList<>();
         }
 
+        /**
+         * Adds a action to the builder.
+         *
+         * @param action name of the action.
+         * @return the instance of {@link BangBuilder}.
+         */
         public BangBuilder addAction(String action) {
             mActions.add(action);
             return this;
         }
 
+        /**
+         * Adds a parameter to the builder.
+         *
+         * @param parameter the parameter for the action.
+         * @return the instance of {@link BangBuilder}.
+         */
         public BangBuilder setParameter(Serializable parameter) {
             mParameter = parameter;
             return this;
         }
 
+        /**
+         * Sends the message.
+         */
         public void bang() {
             if (mActions.isEmpty() && mParameter == null) {
                 throw new BangMissingArgumentException();
@@ -180,10 +237,10 @@ public class BangBus {
 
             if (mActions.isEmpty()) {
                 Intent intent = new Intent(mParameter.getClass()
-                                                     .getCanonicalName());
+                        .getCanonicalName());
                 intent.putExtra(BangBus.ARGUMENT_DATA, mParameter);
                 LocalBroadcastManager.getInstance(mContext)
-                                     .sendBroadcast(intent);
+                        .sendBroadcast(intent);
                 return;
             }
 

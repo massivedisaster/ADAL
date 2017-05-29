@@ -15,19 +15,25 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.adal.bus;
+package com.massivedisaster.adal.utils;
+
+import android.support.annotation.NonNull;
+import android.util.Log;
 
 /**
- * Missing argument exception.
+ * Log utilities.
  */
-public final class BangMissingArgumentException extends NullPointerException {
-
-    private static final String MISSING_ARGUMENT_EXCEPTION = "You must call .addtarget or .addparameter before calling bang";
+public class LogUtils {
 
     /**
-     * Constructs the {@link BangMissingArgumentException}
+     * Logs a error exception
+     *
+     * @param enclosingClass the caller class
+     * @param exception      the exception
      */
-    public BangMissingArgumentException() {
-        super(MISSING_ARGUMENT_EXCEPTION);
+    public static void LogErrorException(@NonNull Class<?> enclosingClass, @NonNull Exception exception) {
+        String message = exception.getMessage() == null ? "Exception error." : exception.getMessage();
+        Log.e(enclosingClass.getName(), message, exception);
     }
+
 }
