@@ -17,6 +17,8 @@
 
 package com.massivedisaster.adal.sample.feature.bus;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -37,8 +39,18 @@ public class FragmentA extends AbstractBaseFragment {
     private TextView mTxtResult;
 
     @Override
+    protected void getFromBundle(Bundle bundle) {
+        // Intended.
+    }
+
+    @Override
     protected int layoutToInflate() {
         return R.layout.fragment_a;
+    }
+
+    @Override
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+        // Intended.
     }
 
     @Override

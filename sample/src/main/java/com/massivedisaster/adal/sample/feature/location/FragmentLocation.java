@@ -39,8 +39,18 @@ public class FragmentLocation extends AbstractBaseFragment {
     private TextView mTxtInfo;
 
     @Override
+    protected void getFromBundle(Bundle bundle) {
+        // Intended.
+    }
+
+    @Override
     protected int layoutToInflate() {
         return R.layout.fragment_location;
+    }
+
+    @Override
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+        // Intended.
     }
 
     @Override

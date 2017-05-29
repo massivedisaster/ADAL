@@ -17,6 +17,8 @@
 
 package com.massivedisaster.adal.sample.feature.home;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,8 +44,18 @@ public class FragmentHome extends AbstractBaseFragment {
     private RecyclerView mRclItems;
 
     @Override
+    protected void getFromBundle(Bundle bundle) {
+        // Intended.
+    }
+
+    @Override
     protected int layoutToInflate() {
         return R.layout.fragment_home;
+    }
+
+    @Override
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+        // Intended.
     }
 
     @Override

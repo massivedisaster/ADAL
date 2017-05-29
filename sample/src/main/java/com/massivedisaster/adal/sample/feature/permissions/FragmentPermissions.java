@@ -18,7 +18,9 @@
 package com.massivedisaster.adal.sample.feature.permissions;
 
 import android.Manifest;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -36,8 +38,18 @@ public class FragmentPermissions extends AbstractBaseFragment {
     private TextView mTxtInfo;
 
     @Override
+    protected void getFromBundle(Bundle bundle) {
+        // Intended.
+    }
+
+    @Override
     protected int layoutToInflate() {
         return R.layout.fragment_permissions;
+    }
+
+    @Override
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+
     }
 
     @Override
@@ -47,7 +59,6 @@ public class FragmentPermissions extends AbstractBaseFragment {
 
         initialize();
     }
-
 
     public void initialize() {
         mPermissionsManager = new PermissionsManager(this);

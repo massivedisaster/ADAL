@@ -17,6 +17,8 @@
 
 package com.massivedisaster.adal.sample.feature.network;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -24,8 +26,8 @@ import android.widget.TextView;
 
 import com.massivedisaster.adal.adapter.AbstractBaseAdapter;
 import com.massivedisaster.adal.fragment.AbstractRequestFragment;
-import com.massivedisaster.adal.network.APIRequestCallback;
 import com.massivedisaster.adal.network.APIError;
+import com.massivedisaster.adal.network.APIRequestCallback;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.sample.model.Post;
 import com.massivedisaster.adal.sample.network.APIRequests;
@@ -39,8 +41,18 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
     private AdapterPost mAdapterPost;
 
     @Override
+    protected void getFromBundle(Bundle bundle) {
+        // Intended.
+    }
+
+    @Override
     protected int layoutToInflate() {
         return R.layout.fragment_network_request;
+    }
+
+    @Override
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+        // Intended.
     }
 
     @Override
