@@ -28,8 +28,6 @@ buildscript {
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'pt.simdea.verifier'
-apply from: "$project.rootDir/quality/quality.gradle"
 
 android {
     compileSdkVersion 25
