@@ -161,9 +161,9 @@ public class BangBus {
                         method.setAccessible(false);
                     }
                 } catch (IllegalAccessException e) {
-                    LogUtils.LogErrorException(BangBus.class, e);
+                    LogUtils.logErrorException(BangBus.class, e);
                 } catch (InvocationTargetException e) {
-                    LogUtils.LogErrorException(BangBus.class, e);
+                    LogUtils.logErrorException(BangBus.class, e);
                 }
             }
         };

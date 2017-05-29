@@ -23,7 +23,14 @@ import android.util.Log;
 /**
  * Log utilities.
  */
-public class LogUtils {
+public final class LogUtils {
+
+    /**
+     * Private constructor to avoid user implement as a single instance instead of a Singleton
+     */
+    private LogUtils() {
+
+    }
 
     /**
      * Logs a error exception
@@ -31,7 +38,7 @@ public class LogUtils {
      * @param enclosingClass the caller class
      * @param exception      the exception
      */
-    public static void LogErrorException(@NonNull Class<?> enclosingClass, @NonNull Exception exception) {
+    public static void logErrorException(@NonNull Class<?> enclosingClass, @NonNull Exception exception) {
         String message = exception.getMessage() == null ? "Exception error." : exception.getMessage();
         Log.e(enclosingClass.getName(), message, exception);
     }

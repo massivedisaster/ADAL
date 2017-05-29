@@ -21,7 +21,17 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
-public class SnackBuilder {
+/**
+ * Manages and generates snackbar messages on a given view
+ */
+public final class SnackBuilder {
+
+    /**
+     * Private constructor to avoid user implement as a single instance instead of a Singleton
+     */
+    private SnackBuilder() {
+
+    }
 
     /**
      * Create a SnackBar and attach to the view
@@ -44,9 +54,14 @@ public class SnackBuilder {
     public static void show(View view, String message, int actionColor) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
         snackbar.setAction(view.getContext().getString(android.R.string.ok), new View.OnClickListener() {
+            /**
+             * On click method used to handle user's touch on snackbar
+             *
+             * @param view
+             */
             @Override
             public void onClick(View view) {
-
+                //Intended
             }
         });
         snackbar.setActionTextColor(ContextCompat.getColor(view.getContext(), actionColor));
