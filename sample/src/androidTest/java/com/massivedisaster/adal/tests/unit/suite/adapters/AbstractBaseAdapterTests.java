@@ -22,7 +22,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.massivedisaster.adal.adapter.AbstractBaseAdapter;
+import com.massivedisaster.adal.adapter.LoadMoreBaseAdapter;
 import com.massivedisaster.adal.sample.feature.network.AdapterPost;
 import com.massivedisaster.adal.sample.model.Post;
 import com.massivedisaster.adal.tests.unit.suite.base.AbstractBaseTestSuite;
@@ -45,9 +45,9 @@ import static org.mockito.Mockito.when;
 /**
  * <b>AbstractBaseAdapterTests class</b>
  *
- * <p>Test suite to evaluate AbstractBaseAdapter class methods and behaviours</p>
+ * <p>Test suite to evaluate LoadMoreBaseAdapter class methods and behaviours</p>
  *
- * <p>Note: All {@link AbstractBaseAdapter#getItemCount() getItemCount} validations are considering
+ * <p>Note: All {@link LoadMoreBaseAdapter#getItemCount() getItemCount} validations are considering
  * one more item into the collection because of loading view</p>
  *
  * <b>Implemented tests:</b>
@@ -295,7 +295,7 @@ public class AbstractBaseAdapterTests extends AbstractBaseTestSuite {
     }
 
     /**
-     * <p>Adds an item, test if the {@link AbstractBaseAdapter#getItemCount() getItemCount} returns
+     * <p>Adds an item, test if the {@link LoadMoreBaseAdapter#getItemCount() getItemCount} returns
      * the number of items added plus one, adds an empty collection and check if returns the number
      * if items added</p>
      */
@@ -307,18 +307,18 @@ public class AbstractBaseAdapterTests extends AbstractBaseTestSuite {
 
         mAdapterPost.add(firstPost);
         assertEquals(mAdapterPost.getItemCount(), sNumberTwo);
-        assertEquals(mAdapterPost.getItemViewType(sNumberZero), AbstractBaseAdapter.VIEW_TYPE_ITEM);
-        assertEquals(mAdapterPost.getItemViewType(sNumberOne), AbstractBaseAdapter.VIEW_TYPE_LOAD);
+        assertEquals(mAdapterPost.getItemViewType(sNumberZero), LoadMoreBaseAdapter.VIEW_TYPE_ITEM);
+        assertEquals(mAdapterPost.getItemViewType(sNumberOne), LoadMoreBaseAdapter.VIEW_TYPE_LOAD);
 
         mAdapterPost.addAll(new HashSet<Post>());
         assertEquals(mAdapterPost.getItemCount(), sNumberOne);
-        assertEquals(mAdapterPost.getItemViewType(sNumberZero), AbstractBaseAdapter.VIEW_TYPE_ITEM);
+        assertEquals(mAdapterPost.getItemViewType(sNumberZero), LoadMoreBaseAdapter.VIEW_TYPE_ITEM);
     }
 
     /**
-     * <p>Adds an item, test if the {@link AbstractBaseAdapter#getItemCount() getItemCount} returns
+     * <p>Adds an item, test if the {@link LoadMoreBaseAdapter#getItemCount() getItemCount} returns
      * the number of items added plus one, use the method
-     * {@link AbstractBaseAdapter#setIsMoreDataAvailable(boolean) setIsMoreDataAvailable} to set
+     * {@link LoadMoreBaseAdapter#setIsMoreDataAvailable(boolean) setIsMoreDataAvailable} to set
      * variable isMoreDataAvailable false and check if returns the number if items added</p>
      */
     @Test
@@ -329,12 +329,12 @@ public class AbstractBaseAdapterTests extends AbstractBaseTestSuite {
 
         mAdapterPost.add(firstPost);
         assertEquals(mAdapterPost.getItemCount(), sNumberTwo);
-        assertEquals(mAdapterPost.getItemViewType(sNumberZero), AbstractBaseAdapter.VIEW_TYPE_ITEM);
-        assertEquals(mAdapterPost.getItemViewType(sNumberOne), AbstractBaseAdapter.VIEW_TYPE_LOAD);
+        assertEquals(mAdapterPost.getItemViewType(sNumberZero), LoadMoreBaseAdapter.VIEW_TYPE_ITEM);
+        assertEquals(mAdapterPost.getItemViewType(sNumberOne), LoadMoreBaseAdapter.VIEW_TYPE_LOAD);
 
         mAdapterPost.setIsMoreDataAvailable(false);
         assertEquals(mAdapterPost.getItemCount(), sNumberOne);
-        assertEquals(mAdapterPost.getItemViewType(sNumberZero), AbstractBaseAdapter.VIEW_TYPE_ITEM);
+        assertEquals(mAdapterPost.getItemViewType(sNumberZero), LoadMoreBaseAdapter.VIEW_TYPE_ITEM);
     }
 
     /**

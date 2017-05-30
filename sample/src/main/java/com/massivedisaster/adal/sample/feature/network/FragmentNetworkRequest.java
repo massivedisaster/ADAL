@@ -24,7 +24,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.massivedisaster.adal.adapter.AbstractBaseAdapter;
+import com.massivedisaster.adal.adapter.OnLoadMoreListener;
 import com.massivedisaster.adal.fragment.AbstractRequestFragment;
 import com.massivedisaster.adal.network.APIError;
 import com.massivedisaster.adal.network.APIRequestCallback;
@@ -63,7 +63,7 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
         mRclItems.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mAdapterPost = new AdapterPost();
-        mAdapterPost.setOnLoadMoreListener(new AbstractBaseAdapter.OnLoadMoreListener() {
+        mAdapterPost.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 request();

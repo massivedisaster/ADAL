@@ -25,12 +25,20 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
-public class AnalyticsManager {
+/**
+ * Google Analytics manager.
+ */
+public final class AnalyticsManager {
 
     private static AnalyticsManager sInstance;
     private final Context mContext;
     private Tracker mTracker;
 
+    /**
+     * Creates an instance of {@link AnalyticsManager}
+     *
+     * @param context the context
+     */
     private AnalyticsManager(@NonNull Context context) {
         mContext = context.getApplicationContext();
         getTracker();
@@ -39,17 +47,24 @@ public class AnalyticsManager {
     /**
      * Initialize AnalyticsManager in your Application class
      *
-     * @param context
-     * @return
+     * @param context the context
+     * @return an instance of {@link AnalyticsManager}
      */
-    public static synchronized AnalyticsManager with(@NonNull Context context) {
-        if (sInstance == null) {
-            sInstance = new AnalyticsManager(context);
+    public static AnalyticsManager with(@NonNull Context context) {
+        synchronized (context) {
+            if (sInstance == null) {
+                sInstance = new AnalyticsManager(context);
+            }
+            return sInstance;
         }
-        return sInstance;
     }
 
-    private synchronized Tracker getTracker() {
+    /**
+     * Gets the google analytics tracker.
+     *
+     * @return the google analytics tracker.
+     */
+    private Tracker getTracker() {
         if (mTracker == null) {
 
             int checkExistence = mContext.getResources().getIdentifier("global_tracker", "xml", mContext.getPackageName());
@@ -72,8 +87,10 @@ public class AnalyticsManager {
      * @param screenId from strings resources
      * @param label    label to format arguments in string resource
      */
-    public synchronized void sendScreen(int screenId, String... label) {
-        if (screenId == 0) return;
+    public void sendScreen(int screenId, String... label) {
+        if (screenId == 0) {
+            return;
+        }
         if (label == null) {
             sendScreen(mContext.getString(screenId));
         } else {
@@ -84,10 +101,12 @@ public class AnalyticsManager {
     /**
      * Send a screen with screenName
      *
-     * @param screenName
+     * @param screenName the screenName
      */
-    public synchronized void sendScreen(@NonNull String screenName) {
-        if (getTracker() == null) return;
+    public void sendScreen(@NonNull String screenName) {
+        if (getTracker() == null) {
+            return;
+        }
 
         if (BuildConfig.DEBUG) {
             Log.i(getClass().getCanonicalName(), "Setting Screen name: " + screenName);
@@ -100,10 +119,12 @@ public class AnalyticsManager {
     /**
      * Send a screen with screenName
      *
-     * @param resScreenName
+     * @param resScreenName the screenName
      */
-    public synchronized void sendScreen(@NonNull Integer resScreenName) {
-        if (getTracker() == null) return;
+    public void sendScreen(@NonNull Integer resScreenName) {
+        if (getTracker() == null) {
+            return;
+        }
 
         sendScreen(mContext.getString(resScreenName));
     }
@@ -114,7 +135,7 @@ public class AnalyticsManager {
      * @param categoryId from strings resources
      * @param actionId   from strings resources
      */
-    public synchronized void sendEvent(int categoryId, int actionId) {
+    public void sendEvent(int categoryId, int actionId) {
         sendEvent(categoryId, actionId, null);
     }
 
@@ -123,12 +144,16 @@ public class AnalyticsManager {
      *
      * @param categoryId from strings resources
      * @param actionId   from strings resources
-     * @param label
+     * @param label      the label
      */
-    public synchronized void sendEvent(int categoryId, int actionId, String label) {
-        if (getTracker() == null) return;
+    public void sendEvent(int categoryId, int actionId, String label) {
+        if (getTracker() == null) {
+            return;
+        }
 
-        if (categoryId == 0 || actionId == 0) return;
+        if (categoryId == 0 || actionId == 0) {
+            return;
+        }
 
         HitBuilders.EventBuilder builder = new HitBuilders.EventBuilder()
                 .setCategory(mContext.getString(categoryId))

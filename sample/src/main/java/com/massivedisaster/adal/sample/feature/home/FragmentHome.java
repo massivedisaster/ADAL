@@ -25,7 +25,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.massivedisaster.activitymanager.ActivityFragmentManager;
-import com.massivedisaster.adal.adapter.AbstractBaseAdapter;
+import com.massivedisaster.adal.adapter.OnChildClickListener;
 import com.massivedisaster.adal.fragment.AbstractBaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
@@ -67,7 +67,7 @@ public class FragmentHome extends AbstractBaseFragment {
 
     private void initialize() {
         AdapterExample adapter = new AdapterExample(getExamples());
-        adapter.setOnChildClickListener(new AbstractBaseAdapter.OnChildClickListener<String>() {
+        adapter.setOnChildClickListener(new OnChildClickListener<String>() {
             @Override
             public void onChildClick(View view, String key, int position) {
                 ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, getExamples().get(key));

@@ -17,6 +17,8 @@
 
 package com.massivedisaster.adal.sample.feature.utils;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,8 +29,16 @@ import com.massivedisaster.adal.utils.AppUtils;
 public class FragmentUtils extends AbstractBaseFragment {
 
     @Override
+    protected void getFromBundle(Bundle bundle) {
+    }
+
+    @Override
     protected int layoutToInflate() {
         return R.layout.fragment_utils;
+    }
+
+    @Override
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
     }
 
     @Override
