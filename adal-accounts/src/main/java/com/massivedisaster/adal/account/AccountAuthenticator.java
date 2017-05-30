@@ -27,13 +27,21 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.Toast;
 
+/**
+ * Account authenticator class.
+ * @see android.accounts.AbstractAccountAuthenticator
+ */
 class AccountAuthenticator extends AbstractAccountAuthenticator {
 
     private static final int ERROR_CODE_ONE_ACCOUNT_ALLOWED = 1001;
 
     private final Handler mHandler = new Handler();
-    private Context mContext;
+    protected final Context mContext;
 
+    /**
+     * Constructor of {@link AccountAuthenticator}
+     * @param context The application context
+     */
     AccountAuthenticator(Context context) {
         super(context);
 
@@ -41,8 +49,8 @@ class AccountAuthenticator extends AbstractAccountAuthenticator {
     }
 
     @Override
-    public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures, Bundle options)
-            throws NetworkErrorException {
+    public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures,
+                             Bundle options) throws NetworkErrorException {
 
         if (AccountHelper.hasAccount(mContext)) {
             final Bundle result = new Bundle();
@@ -74,7 +82,8 @@ class AccountAuthenticator extends AbstractAccountAuthenticator {
     }
 
     @Override
-    public Bundle getAuthToken(AccountAuthenticatorResponse response, Account account, String authTokenType, Bundle options) throws NetworkErrorException {
+    public Bundle getAuthToken(AccountAuthenticatorResponse response, Account account, String authTokenType, Bundle options)
+            throws NetworkErrorException {
         return null;
     }
 
@@ -89,7 +98,8 @@ class AccountAuthenticator extends AbstractAccountAuthenticator {
     }
 
     @Override
-    public Bundle updateCredentials(AccountAuthenticatorResponse response, Account account, String authTokenType, Bundle options) throws NetworkErrorException {
+    public Bundle updateCredentials(AccountAuthenticatorResponse response, Account account, String authTokenType, Bundle options)
+            throws NetworkErrorException {
         return null;
     }
 }

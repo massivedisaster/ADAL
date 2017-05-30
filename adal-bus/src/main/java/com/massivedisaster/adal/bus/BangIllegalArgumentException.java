@@ -17,11 +17,18 @@
 
 package com.massivedisaster.adal.bus;
 
+/**
+ * Illegal argument exception.
+ */
 public final class BangIllegalArgumentException extends IllegalArgumentException {
 
-    private final static String sIllegalArgumentException = "You can't use primitive type as parameter on subscribed methods when there's no action defined";
+    private static final String ILLEGAL_ARGUMENT_EXCEPTION =
+            "You can't use primitive type as parameter on subscribed methods when there's no action defined";
 
+    /**
+     * Constructs the {@link BangIllegalArgumentException}
+     */
     public BangIllegalArgumentException() {
-        super(sIllegalArgumentException);
+        super(ILLEGAL_ARGUMENT_EXCEPTION);
     }
 }

@@ -24,15 +24,27 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
 
+import com.massivedisaster.adal.utils.LogUtils;
+
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class AlarmManager {
+/**
+ * Class for managing alarms.
+ */
+public final class AlarmManager {
 
-    private static final String sTagAlarms = ":alarms";
+    private static final String TAG_ALARMS = ":alarms";
+
+    /**
+     * Private constructor to avoid user implement as a single instance instead of a Singleton.
+     */
+    private AlarmManager() {
+    }
 
     /**
      * Add alarm to the system
@@ -98,6 +110,12 @@ public class AlarmManager {
         return PendingIntent.getBroadcast(context, notificationId, intent, PendingIntent.FLAG_NO_CREATE) != null;
     }
 
+    /**
+     * Saves alarm by identifier.
+     *
+     * @param context the context.
+     * @param id      the identifier.
+     */
     private static void saveAlarmId(Context context, int id) {
         List<Integer> idsAlarms = getAlarmIds(context);
 
@@ -110,34 +128,53 @@ public class AlarmManager {
         saveIdsInPreferences(context, idsAlarms);
     }
 
+    /**
+     * Remove alarm by identifier.
+     *
+     * @param context the context.
+     * @param id      the identifier.
+     */
     private static void removeAlarmId(Context context, int id) {
         List<Integer> idsAlarms = getAlarmIds(context);
 
         for (int i = 0; i < idsAlarms.size(); i++) {
-            if (idsAlarms.get(i) == id)
+            if (idsAlarms.get(i) == id) {
                 idsAlarms.remove(i);
+            }
         }
 
         saveIdsInPreferences(context, idsAlarms);
     }
 
+    /**
+     * Get all alarms identifiers.
+     *
+     * @param context the context.
+     * @return list of alarm identifiers.
+     */
     private static List<Integer> getAlarmIds(Context context) {
         List<Integer> ids = new ArrayList<>();
         try {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            JSONArray jsonArray2 = new JSONArray(prefs.getString(context.getPackageName() + sTagAlarms, "[]"));
+            JSONArray jsonArray2 = new JSONArray(prefs.getString(context.getPackageName() + TAG_ALARMS, "[]"));
 
             for (int i = 0; i < jsonArray2.length(); i++) {
                 ids.add(jsonArray2.getInt(i));
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (JSONException e) {
+            LogUtils.logErrorException(AlarmManager.class, e);
         }
 
         return ids;
     }
 
+    /**
+     * Saves all identifiers in preferences.
+     *
+     * @param context the context.
+     * @param lstIds  list of alarm identifiers.
+     */
     private static void saveIdsInPreferences(Context context, List<Integer> lstIds) {
         JSONArray jsonArray = new JSONArray();
         for (Integer idAlarm : lstIds) {
@@ -146,7 +183,7 @@ public class AlarmManager {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(context.getPackageName() + sTagAlarms, jsonArray.toString());
+        editor.putString(context.getPackageName() + TAG_ALARMS, jsonArray.toString());
 
         editor.apply();
     }

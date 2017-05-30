@@ -17,15 +17,17 @@
 
 package com.massivedisaster.adal.sample.feature.network;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.massivedisaster.adal.adapter.AbstractBaseAdapter;
+import com.massivedisaster.adal.adapter.OnLoadMoreListener;
 import com.massivedisaster.adal.fragment.AbstractRequestFragment;
-import com.massivedisaster.adal.network.APICallback;
 import com.massivedisaster.adal.network.APIError;
+import com.massivedisaster.adal.network.APIRequestCallback;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.sample.model.Post;
 import com.massivedisaster.adal.sample.network.APIRequests;
@@ -39,8 +41,18 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
     private AdapterPost mAdapterPost;
 
     @Override
+    protected void getFromBundle(Bundle bundle) {
+        // Intended.
+    }
+
+    @Override
     protected int layoutToInflate() {
         return R.layout.fragment_network_request;
+    }
+
+    @Override
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+        // Intended.
     }
 
     @Override
@@ -51,7 +63,7 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
         mRclItems.setLayoutManager(new LinearLayoutManager(getContext()));
 
         mAdapterPost = new AdapterPost();
-        mAdapterPost.setOnLoadMoreListener(new AbstractBaseAdapter.OnLoadMoreListener() {
+        mAdapterPost.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 request();
@@ -69,7 +81,7 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
             showLoading();
         }
 
-        addRequest((APIRequests.getPosts(new APICallback<ResponseList<Post>>(getContext()) {
+        addRequest((APIRequests.getPosts(new APIRequestCallback<ResponseList<Post>>(getContext()) {
             @Override
             public void onSuccess(ResponseList<Post> posts) {
                 showContent();

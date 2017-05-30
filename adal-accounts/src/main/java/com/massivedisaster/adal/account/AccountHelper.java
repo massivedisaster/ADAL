@@ -20,15 +20,23 @@ package com.massivedisaster.adal.account;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
-import android.accounts.AccountManagerFuture;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
-public class AccountHelper {
+/**
+ * Utility class for accounts manager.
+ */
+public final class AccountHelper {
 
-    private static AccountManager mManager;
-    private static int deletedAccounts;
+    private static AccountManager sManager;
+    private static int sDeletedAccounts;
+    private static final String MISSING_PERMISSION = "MissingPermission";
+
+    /**
+     * private constructor.
+     */
+    private AccountHelper() { }
 
     /**
      * Initialize the AccountHelper
@@ -36,7 +44,7 @@ public class AccountHelper {
      * @param context The application context
      */
     public static void initialize(Context context) {
-        mManager = AccountManager.get(context);
+        sManager = AccountManager.get(context);
     }
 
     /**
@@ -49,63 +57,74 @@ public class AccountHelper {
      */
     public static void addAccount(final Context context, final String name, final String password, final String token) {
         validateAccountManager();
-        clearAccounts(context, new OnAccountListener() {
-            @SuppressWarnings("MissingPermission")
-            @Override
-            public void onFinished() {
-                Account account = new Account(name, context.getPackageName());
-
-                mManager.addAccountExplicitly(account, password, null);
-                mManager.setAuthToken(account, context.getPackageName(), token);
-            }
-        });
+        clearAccounts(context, new OnAddAccountListener(name, context, password, token));
     }
 
-    @SuppressWarnings("deprecation")
-    public static synchronized void clearAccounts(Context context, final OnAccountListener onAccountListener) {
-        validateAccountManager();
-        deletedAccounts = 0;
+    /**
+     * Add a new account to the account manager
+     *
+     * @param context  The application context.
+     * @param name     The account name.
+     * @param password The account password.
+     * @param token    The account token.
+     */
+    @SuppressWarnings(MISSING_PERMISSION)
+    public static void onFinished(String name, Context context, String password, String token) {
+        Account account = new Account(name, context.getPackageName());
 
-        final Account[] accounts = mManager.getAccountsByType(context.getPackageName());
+        sManager.addAccountExplicitly(account, password, null);
+        sManager.setAuthToken(account, context.getPackageName(), token);
+    }
 
-        if (accounts.length == 0) {
-            if (onAccountListener != null) {
-                onAccountListener.onFinished();
-            }
-            return;
-        }
+    /**
+     * Remove accounts from manager.
+     *
+     * @param context The application context.
+     * @param onAccountListener The listener to be called when process finished.
+     */
+    public static void clearAccounts(Context context, final OnAccountListener onAccountListener) {
+        synchronized (AccountHelper.class) {
+            validateAccountManager();
+            sDeletedAccounts = 0;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            for (Account acc : accounts) {
-                mManager.removeAccountExplicitly(acc);
-            }
+            final Account[] accounts = sManager.getAccountsByType(context.getPackageName());
 
-            if (onAccountListener != null) {
-                onAccountListener.onFinished();
-            }
-        } else {
-            for (Account account : accounts) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                    AccountManagerCallback<Bundle> callback = new AccountManagerCallback<Bundle>() {
-                        @Override
-                        public void run(AccountManagerFuture<Bundle> future) {
-                            if (onAccountListener != null && ++deletedAccounts == accounts.length) {
-                                onAccountListener.onFinished();
-                            }
-                        }
-                    };
-                    mManager.removeAccount(account, null, callback, null);
-                } else {
-                    AccountManagerCallback<Boolean> callback = new AccountManagerCallback<Boolean>() {
-                        @Override
-                        public void run(AccountManagerFuture<Boolean> future) {
-                            if (onAccountListener != null && ++deletedAccounts == accounts.length) {
-                                onAccountListener.onFinished();
-                            }
-                        }
-                    };
-                    mManager.removeAccount(account, callback, null);
+            if (accounts.length == 0) {
+                if (onAccountListener != null) {
+                    onAccountListener.onFinished();
                 }
+                return;
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                for (Account acc : accounts) {
+                    sManager.removeAccountExplicitly(acc);
+                }
+
+                if (onAccountListener != null) {
+                    onAccountListener.onFinished();
+                }
+            } else {
+                removeAccounts(onAccountListener, accounts);
+            }
+        }
+    }
+
+    /**
+     * Remove accounts from manager.
+     *
+     * @param onAccountListener The listener to be called when process finished.
+     * @param accounts The array of accounts to be removed.
+     */
+    @SuppressWarnings("deprecation")
+    private static void removeAccounts(final OnAccountListener onAccountListener, final Account... accounts) {
+        for (Account account : accounts) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                AccountManagerCallback<Bundle> callback = new AccountCallback<>(++sDeletedAccounts, onAccountListener, accounts.length);
+                sManager.removeAccount(account, null, callback, null);
+            } else {
+                AccountManagerCallback<Boolean> callback = new AccountCallback<>(++sDeletedAccounts, onAccountListener, accounts.length);
+                sManager.removeAccount(account, callback, null);
             }
         }
     }
@@ -116,10 +135,10 @@ public class AccountHelper {
      * @param context The application context.
      * @return True if the application has a account added.
      */
-    @SuppressWarnings("MissingPermission")
+    @SuppressWarnings(MISSING_PERMISSION)
     public static boolean hasAccount(Context context) {
         validateAccountManager();
-        return mManager.getAccountsByType(context.getPackageName()).length > 0;
+        return sManager.getAccountsByType(context.getPackageName()).length > 0;
     }
 
     /**
@@ -128,10 +147,10 @@ public class AccountHelper {
      * @param context The application context.
      * @return The current account.
      */
-    @SuppressWarnings("MissingPermission")
+    @SuppressWarnings(MISSING_PERMISSION)
     public static Account getCurrentAccount(Context context) {
         validateAccountManager();
-        return mManager.getAccountsByType(context.getPackageName())[0];
+        return sManager.getAccountsByType(context.getPackageName())[0];
     }
 
     /**
@@ -140,10 +159,10 @@ public class AccountHelper {
      * @param account The account.
      * @return The user password.
      */
-    @SuppressWarnings("MissingPermission")
+    @SuppressWarnings(MISSING_PERMISSION)
     public static String getAccountPassword(Account account) {
         validateAccountManager();
-        return mManager.getPassword(account);
+        return sManager.getPassword(account);
     }
 
     /**
@@ -152,21 +171,33 @@ public class AccountHelper {
      * @param context The application context.
      * @return The account token.
      */
-    @SuppressWarnings("MissingPermission")
+    @SuppressWarnings(MISSING_PERMISSION)
     public static String getCurrentToken(Context context) {
         validateAccountManager();
-        Account account = mManager.getAccountsByType(context.getPackageName())[0];
-        return mManager.peekAuthToken(account, context.getPackageName());
+        Account account = sManager.getAccountsByType(context.getPackageName())[0];
+        return sManager.peekAuthToken(account, context.getPackageName());
     }
 
+    /**
+     * Verify if manager was initialized.
+     *
+     * @throws ExceptionInInitializerError if <var>sManager</var> is null
+     */
     private static void validateAccountManager() {
-        if (mManager == null) {
-            throw new NullPointerException("It's necessary to call AccountHelper.initialize first");
+        if (sManager == null) {
+            throw new ExceptionInInitializerError("It's necessary to call AccountHelper.initialize first");
         }
     }
 
+    /**
+     * Listener for modifications in manager.
+     * @see #clearAccounts(Context, OnAccountListener)
+     */
     public interface OnAccountListener {
 
+        /**
+         * Called when finish modification to manager
+         */
         void onFinished();
 
     }

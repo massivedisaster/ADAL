@@ -19,6 +19,9 @@ package com.massivedisaster.location;
 
 import android.location.Location;
 
+/**
+ * Manages location.
+ */
 public abstract class OnLocationManager {
 
     /**
@@ -46,6 +49,12 @@ public abstract class OnLocationManager {
      *
      * @param provider the provider
      */
-    public void onProviderEnabled(String provider) {
-    }
+    public abstract void onProviderEnabled(String provider);
+
+    /**
+     * Called if provider change status
+     *
+     * @param provider the provider
+     */
+    public abstract void onProviderDisabled(String provider);
 }

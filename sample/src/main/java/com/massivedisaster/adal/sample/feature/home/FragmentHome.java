@@ -17,13 +17,15 @@
 
 package com.massivedisaster.adal.sample.feature.home;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.massivedisaster.activitymanager.ActivityFragmentManager;
-import com.massivedisaster.adal.adapter.AbstractBaseAdapter;
+import com.massivedisaster.adal.adapter.OnChildClickListener;
 import com.massivedisaster.adal.fragment.AbstractBaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
@@ -42,8 +44,18 @@ public class FragmentHome extends AbstractBaseFragment {
     private RecyclerView mRclItems;
 
     @Override
+    protected void getFromBundle(Bundle bundle) {
+        // Intended.
+    }
+
+    @Override
     protected int layoutToInflate() {
         return R.layout.fragment_home;
+    }
+
+    @Override
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+        // Intended.
     }
 
     @Override
@@ -55,7 +67,7 @@ public class FragmentHome extends AbstractBaseFragment {
 
     private void initialize() {
         AdapterExample adapter = new AdapterExample(getExamples());
-        adapter.setOnChildClickListener(new AbstractBaseAdapter.OnChildClickListener<String>() {
+        adapter.setOnChildClickListener(new OnChildClickListener<String>() {
             @Override
             public void onChildClick(View view, String key, int position) {
                 ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, getExamples().get(key));

@@ -20,6 +20,9 @@ package com.massivedisaster.adal.network;
 import android.content.Context;
 import android.util.Log;
 
+import com.massivedisaster.adal.utils.LogUtils;
+
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.UnknownHostException;
 
@@ -29,11 +32,21 @@ import retrofit2.Callback;
 import retrofit2.Converter;
 import retrofit2.Response;
 
-public abstract class APICallback<T extends APIErrorListener> implements Callback<T> {
+/**
+ * Base request API callbacks.
+ *
+ * @param <T> the type of the data in the requests.
+ */
+public abstract class APIRequestCallback<T extends APIErrorListener> implements Callback<T> {
 
-    private Context mContext;
+    private final Context mContext;
 
-    public APICallback(Context context) {
+    /**
+     * Constructcs {@link APIRequestCallback}
+     *
+     * @param context the context.
+     */
+    public APIRequestCallback(Context context) {
         mContext = context;
     }
 
@@ -43,11 +56,17 @@ public abstract class APICallback<T extends APIErrorListener> implements Callbac
     public abstract void onSuccess(T t);
 
     /**
-     * @param error
-     * @param isServerError
+     * @param error         the error.
+     * @param isServerError is a server error.
      */
     public abstract void onError(APIError error, boolean isServerError);
 
+    /**
+     * Called when response ends.
+     *
+     * @param call     the call.
+     * @param response the response.
+     */
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
 
@@ -70,8 +89,12 @@ public abstract class APICallback<T extends APIErrorListener> implements Callbac
                     processError(new APIError(error.getErrorCode(), error.getError()), true);
                     return;
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                LogUtils.logErrorException(APIRequestCallback.class, e);
+            } catch (IOException e) {
+                LogUtils.logErrorException(APIRequestCallback.class, e);
+            } catch (NoSuchFieldException e) {
+                LogUtils.logErrorException(APIRequestCallback.class, e);
             }
 
             processError(new APIError(mContext.getString(R.string.error_network_general)), true);
@@ -86,8 +109,23 @@ public abstract class APICallback<T extends APIErrorListener> implements Callbac
         onSuccess(response.body());
     }
 
+    /**
+     * Retrive the retrofit converter.
+     *
+     * @param call the call.
+     * @return return the converter.
+     * @throws NoSuchFieldException     if a field with the specified name is
+     *                                  not found.
+     * @throws IllegalAccessException   if object
+     *                                  is enforcing Java language access control and the underlying
+     *                                  field is inaccessible.
+     * @throws IllegalArgumentException if the specified object is not an
+     *                                  instance of the class or interface declaring the underlying
+     *                                  field (or a subclass or implementor thereof).
+     */
     @SuppressWarnings("unchecked")
-    private Converter<ResponseBody, T> getRetrofitConverter(Call<T> call) throws Exception {
+    private Converter<ResponseBody, T> getRetrofitConverter(Call<T> call) throws NoSuchFieldException, IllegalAccessException,
+            IllegalArgumentException {
         Field f = call.getClass().getDeclaredField("delegate");
         f.setAccessible(true);
         Object obj = f.get(call);
@@ -102,6 +140,12 @@ public abstract class APICallback<T extends APIErrorListener> implements Callbac
         return (Converter<ResponseBody, T>) f.get(obj);
     }
 
+    /**
+     * Called on request failure.
+     *
+     * @param call the call.
+     * @param t    the throwable.
+     */
     @Override
     public void onFailure(Call<T> call, Throwable t) {
 
@@ -110,7 +154,7 @@ public abstract class APICallback<T extends APIErrorListener> implements Callbac
         }
 
         if (t != null) {
-            t.printStackTrace();
+            LogUtils.logErrorException(APIRequestCallback.class, t);
 
             if ((t instanceof UnknownHostException) && t.getMessage() != null) {
                 processError(new APIError(mContext.getString(R.string.error_network_no_connection)), true);
@@ -121,10 +165,16 @@ public abstract class APICallback<T extends APIErrorListener> implements Callbac
         processError(new APIError(mContext.getString(R.string.error_network_general)), true);
     }
 
+    /**
+     * Processes de error.
+     *
+     * @param error       the error.
+     * @param serverError true if its a server error.
+     */
     private void processError(APIError error, boolean serverError) {
 
         if (BuildConfig.DEBUG) {
-            Log.e(APICallback.class.getCanonicalName(), error.getMessage());
+            Log.e(APIRequestCallback.class.getCanonicalName(), error.getMessage());
         }
 
         onError(error, serverError);

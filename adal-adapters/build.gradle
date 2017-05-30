@@ -17,6 +17,8 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'pt.simdea.verifier'
+apply from: "$project.rootDir/quality/quality.gradle"
 
 android {
     compileSdkVersion 25
@@ -41,6 +43,7 @@ def supportVersion = '25.1.1'
 dependencies {
     compile "com.android.support:recyclerview-v7:$supportVersion"
     compile "com.android.support:appcompat-v7:$supportVersion"
+    compile project(path: ':adal-utils')
 }
 
 publish {

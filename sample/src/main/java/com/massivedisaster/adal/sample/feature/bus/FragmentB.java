@@ -17,6 +17,8 @@
 
 package com.massivedisaster.adal.sample.feature.bus;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 
@@ -33,8 +35,18 @@ public class FragmentB extends AbstractBaseFragment {
     private Button mBtnSendBangWithoutAction;
 
     @Override
+    protected void getFromBundle(Bundle bundle) {
+        // Intended.
+    }
+
+    @Override
     protected int layoutToInflate() {
         return R.layout.fragment_b;
+    }
+
+    @Override
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+        // Intended.
     }
 
     @Override

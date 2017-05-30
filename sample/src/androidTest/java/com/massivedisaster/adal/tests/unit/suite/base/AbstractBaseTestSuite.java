@@ -60,7 +60,6 @@ public abstract class AbstractBaseTestSuite {
     @After
     public void finish() {
         dispose();
-        mContext = null;
     }
 
     /**

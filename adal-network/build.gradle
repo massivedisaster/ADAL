@@ -17,6 +17,8 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'pt.simdea.verifier'
+apply from: "$project.rootDir/quality/quality.gradle"
 
 android {
     compileSdkVersion 25
@@ -52,6 +54,8 @@ dependencies {
     /* OKHTTP */
     compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
     compile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+
+    compile project(':adal-utils')
 }
 
 publish {

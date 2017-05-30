@@ -17,6 +17,8 @@
 
 package com.massivedisaster.adal.sample.feature.analytics;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.TextUtils;
 import android.view.View;
@@ -33,14 +35,22 @@ public class FragmentAnalytics extends AbstractBaseFragment {
     private AppCompatEditText mEdtAnalyticsEventLabel;
 
     @Override
+    protected void getFromBundle(Bundle bundle) {
+        // Intended.
+    }
+
+    @Override
     protected int layoutToInflate() {
         return R.layout.fragment_analytics;
     }
 
     @Override
-    protected void doOnCreated() {
-        super.doOnCreated();
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+        // Intended.
+    }
 
+    @Override
+    protected void doOnCreated() {
         /*
          * You need to generate a json file
          *

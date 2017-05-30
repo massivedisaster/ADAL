@@ -17,24 +17,48 @@
 
 package com.massivedisaster.adal.network;
 
+/**
+ * Represents a API error.
+ */
 public class APIError {
 
-    private String mMessage;
+    private final String mMessage;
     private int mCode;
 
+    /**
+     * Constructs {@link APIError} instance.
+     *
+     * @param code    the code.
+     * @param message the menssage.
+     */
     public APIError(int code, String message) {
         mCode = code;
         mMessage = message;
     }
 
+    /**
+     * Constructs {@link APIError} instance.
+     *
+     * @param message the menssage
+     */
     public APIError(String message) {
         mMessage = message;
     }
 
+    /**
+     * Gets the message of the error.
+     *
+     * @return the error message.
+     */
     public String getMessage() {
         return mMessage;
     }
 
+    /**
+     * Gets the error code.
+     *
+     * @return the error code.
+     */
     public int getErrorCode() {
         return mCode;
     }

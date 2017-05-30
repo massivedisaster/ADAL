@@ -39,8 +39,18 @@ public class FragmentLocation extends AbstractBaseFragment {
     private TextView mTxtInfo;
 
     @Override
+    protected void getFromBundle(Bundle bundle) {
+        // Intended.
+    }
+
+    @Override
     protected int layoutToInflate() {
         return R.layout.fragment_location;
+    }
+
+    @Override
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+        // Intended.
     }
 
     @Override
@@ -108,6 +118,16 @@ public class FragmentLocation extends AbstractBaseFragment {
             public void onPermissionsDenied() {
                 mTxtInfo.setText("Permissions Denied");
                 mBtnGetLocation.setEnabled(true);
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+                // Intended.
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                // Intended.
             }
         });
     }

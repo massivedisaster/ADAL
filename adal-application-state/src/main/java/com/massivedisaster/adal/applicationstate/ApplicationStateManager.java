@@ -22,19 +22,21 @@ import android.app.Application;
 import android.os.Bundle;
 import android.os.Handler;
 
+/**
+ * Manage the background and foreground state of the application.
+ */
 public class ApplicationStateManager implements Application.ActivityLifecycleCallbacks {
 
     /**
      * How long to wait before checking onResume()/onPause() count to determine if the app has been
      * backgrounded.
      */
-    private static final long sBackgroundCheckDelay = 500;
-
+    private static final long BACKGROUND_CHECK_DELAY = 500;
+    protected boolean mIsForeground = true;
+    protected boolean mIsPaused;
+    protected BackAndForegroundListener mBackAndForegroundListener;
     private Handler mMainThreadHandler;
     private BackAndForegroundChecker mBackgroundChecker;
-    private BackAndForegroundListener mBackAndForegroundListener;
-    private boolean mIsForeground = true;
-    private boolean mIsPaused;
 
     /**
      * Creates a ApplicationStateManager instance
@@ -53,6 +55,9 @@ public class ApplicationStateManager implements Application.ActivityLifecycleCal
         mBackAndForegroundListener = listener;
     }
 
+    /**
+     * Initialize management objects.
+     */
     private void init() {
         mMainThreadHandler = new Handler();
         mBackgroundChecker = new BackAndForegroundChecker();
@@ -78,22 +83,27 @@ public class ApplicationStateManager implements Application.ActivityLifecycleCal
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+        // Intended.
     }
 
     @Override
     public void onActivityStarted(Activity activity) {
+        // Intended.
     }
 
     @Override
     public void onActivityStopped(Activity activity) {
+        // Intended.
     }
 
     @Override
     public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+        // Intended.
     }
 
     @Override
     public void onActivityDestroyed(Activity activity) {
+        // Intended.
     }
 
     @Override
@@ -124,12 +134,15 @@ public class ApplicationStateManager implements Application.ActivityLifecycleCal
         // if we're changing configurations we aren't going background so
         // no need to schedule the check
         if (!activity.isChangingConfigurations()) {
-            mMainThreadHandler.postDelayed(mBackgroundChecker, sBackgroundCheckDelay);
+            mMainThreadHandler.postDelayed(mBackgroundChecker, BACKGROUND_CHECK_DELAY);
         }
 
 
     }
 
+    /**
+     * Listener for background and foreground events.
+     */
     public interface BackAndForegroundListener {
         /**
          * Application went from foreground.

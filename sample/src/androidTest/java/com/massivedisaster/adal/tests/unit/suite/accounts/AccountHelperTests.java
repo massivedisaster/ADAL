@@ -32,11 +32,11 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * <b>AccountHelperTests class</b>
- *
+ * <p>
  * <p>Test suite to evaluate AccountHelper class methods and behaviours</p>
- *
+ * <p>
  * <b>Implemented tests:</b>
- *
+ * <p>
  * # <p>({@link #testAddAccount() testAddAccount} method)</p>
  * # <p>({@link #testClearAccounts() testClearAccounts} method)</p>
  * # <p>({@link #testRetrieveCurrentAccountName() testRetrieveCurrentAccountName} method)</p>

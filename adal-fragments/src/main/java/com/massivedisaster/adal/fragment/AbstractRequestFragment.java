@@ -22,16 +22,29 @@ import java.util.List;
 
 import retrofit2.Call;
 
+/**
+ * Abstract class for fragments that do requests.
+ */
 public abstract class AbstractRequestFragment extends AbstractBaseFragment {
 
-    private List<Call<?>> mLstCallbacks = new ArrayList<>();
+    private final List<Call<?>> mLstCallbacks = new ArrayList<>();
 
+    /**
+     * Constructs {@link AbstractRequestFragment}
+     *
+     * @param call the call.
+     * @param <U>  the call type.
+     * @return the call.
+     */
     public <U> Call<U> addRequest(Call<U> call) {
         mLstCallbacks.add(call);
 
         return call;
     }
 
+    /**
+     * Cancel all pending requests.
+     */
     public void cancelAllRequests() {
         for (Call<?> c : mLstCallbacks) {
             c.cancel();
