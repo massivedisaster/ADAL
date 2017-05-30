@@ -47,11 +47,9 @@ android {
     }
 }
 
-def googlePlayServicesVersion = '10.2.1'
-
 dependencies {
     /* ANALYTICS */
-    compile "com.google.android.gms:play-services-analytics:$googlePlayServicesVersion"
+    compile "com.google.android.gms:play-services-analytics:$project.googlePlayServicesVersion"
 }
 
 publish {

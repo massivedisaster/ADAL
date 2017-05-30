@@ -18,10 +18,8 @@
 ext {
     afmVersion = '0.2.0'
     espressoVersion = '2.2.2'
-    googlePlayServicesVersion = '10.2.1'
     jUnitVersion = '4.12'
     mockitoVersion = '2.8.9'
-    supportVersion = '25.1.1'
 
     dependencies {
         /** GENERAL **/
@@ -37,13 +35,13 @@ ext {
         compile project(':adal')
 
         /* SUPPORT */
-        compile "com.android.support:appcompat-v7:$supportVersion"
+        compile "com.android.support:appcompat-v7:$project.supportVersion"
 
         /* ACTIVITY FRAGMENT MANAGER */
         compile "com.massivedisaster:activity-fragment-manager:$afmVersion"
 
         /* ANALYTICS */
-        compile "com.google.android.gms:play-services-analytics:$googlePlayServicesVersion"
+        compile "com.google.android.gms:play-services-analytics:$project.googlePlayServicesVersion"
 
         /** TEST **/
 

@@ -38,10 +38,8 @@ android {
     }
 }
 
-def supportVersion = '25.1.1'
-
 dependencies {
-    compile "com.android.support:support-v4:$supportVersion"
+    compile "com.android.support:support-v4:$project.supportVersion"
     compile project(':adal-utils')
 }
 

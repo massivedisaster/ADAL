@@ -38,12 +38,10 @@ android {
     }
 }
 
-def supportVersion = '25.1.1'
-def googlePlayServicesVersion = '10.0.1'
 
 dependencies {
-    compile "com.android.support:design:$supportVersion"
-    compile "com.google.android.gms:play-services-base:$googlePlayServicesVersion"
+    compile "com.android.support:design:$project.supportVersion"
+    compile "com.google.android.gms:play-services-base:$project.googlePlayServicesVersion"
 }
 
 publish {
