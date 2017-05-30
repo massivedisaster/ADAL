@@ -20,12 +20,16 @@ package com.massivedisaster.adal.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.provider.Settings;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+
+import java.util.List;
 
 /**
  * Manages general app behaviours and actions like open specific intents (dial, settings and email)
@@ -96,6 +100,11 @@ public final class AppUtils {
         try {
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + phoneNumber));
+
+            if (!canResolveIntent(context, intent)) {
+                return;
+            }
+
             context.startActivity(intent);
         } catch (IllegalStateException e) {
             Log.e(AppUtils.class.getCanonicalName(), e.toString());
@@ -113,7 +122,27 @@ public final class AppUtils {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
         intent.putExtra(Intent.EXTRA_EMAIL, email);
+
+        if (!canResolveIntent(context, intent)) {
+            return;
+        }
+
         context.startActivity(Intent.createChooser(intent, intentTitle));
+    }
+
+    /**
+     * Tell if an intent can be resolved.
+     *
+     * @param context the context
+     * @param intent  the intent
+     * @return returns true if intent can be resolved.
+     */
+    public static boolean canResolveIntent(Context context, Intent intent) {
+        final PackageManager mgr = context.getPackageManager();
+        List<ResolveInfo> list =
+                mgr.queryIntentActivities(intent,
+                        PackageManager.MATCH_DEFAULT_ONLY);
+        return !list.isEmpty();
     }
 
 }
