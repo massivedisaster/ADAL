@@ -393,30 +393,4 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
     @IntDef({VIEW_TYPE_ITEM, VIEW_TYPE_LOAD})
     public @interface ViewType {
     }
-
-    /**
-     * Listener called when an element is clicked.
-     *
-     * @param <T> The type of the elements.
-     */
-    public interface OnChildClickListener<T> {
-        /**
-         * Method called when an element is clicked.
-         *
-         * @param view     The view clicked.
-         * @param t        The element clicked.
-         * @param position The position of the element clicked.
-         */
-        void onChildClick(View view, T t, int position);
-    }
-
-    /**
-     * Called when there is more data to load
-     */
-    public interface OnLoadMoreListener {
-        /**
-         * Called when there is more data to load
-         */
-        void onLoadMore();
-    }
 }
