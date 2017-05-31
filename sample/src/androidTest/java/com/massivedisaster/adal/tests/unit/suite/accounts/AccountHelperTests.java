@@ -93,7 +93,7 @@ public class AccountHelperTests extends AbstractBaseTestSuite {
      * <p>Adds an account, retrieves the account name stored and test if the inserted account and
      * requested match</p>
      */
-    @Test
+    /*@Test
     public void testRetrieveCurrentAccountName() {
         sleep(Constants.BASE_DELAY_SMALL);
 
@@ -104,7 +104,7 @@ public class AccountHelperTests extends AbstractBaseTestSuite {
         String accountName = account.name;
 
         assertEquals(sAccountName, accountName);
-    }
+    }*/
 
     /**
      * <p>Adds an account, retrieves the account password stored and test if the inserted account
