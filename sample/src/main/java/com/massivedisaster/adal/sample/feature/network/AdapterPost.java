@@ -17,14 +17,14 @@
 
 package com.massivedisaster.adal.sample.feature.network;
 
-import com.massivedisaster.adal.adapter.LoadMoreBaseAdapter;
+import com.massivedisaster.adal.adapter.AbstractLoadMoreBaseAdapter;
 import com.massivedisaster.adal.adapter.BaseViewHolder;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.sample.model.Post;
 
 import java.util.ArrayList;
 
-public class AdapterPost extends LoadMoreBaseAdapter<Post> {
+public class AdapterPost extends AbstractLoadMoreBaseAdapter<Post> {
 
     public AdapterPost() {
         super(R.layout.adapter_post, R.layout.adapter_loading, new ArrayList<Post>());
