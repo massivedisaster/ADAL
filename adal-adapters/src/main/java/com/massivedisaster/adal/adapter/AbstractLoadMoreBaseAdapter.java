@@ -17,6 +17,7 @@
 
 package com.massivedisaster.adal.adapter;
 
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,31 +38,33 @@ import static android.view.View.VISIBLE;
  *
  * @param <T> The type of the elements from the adapter.
  */
-public abstract class LoadMoreBaseAdapter<T> extends BaseAdapter<T> {
+public abstract class AbstractLoadMoreBaseAdapter<T> extends AbstractBaseAdapter<T> {
 
     public static final int VIEW_TYPE_ITEM = 0;
     public static final int VIEW_TYPE_LOAD = 1;
+
     private static final int INVALID_RESOURCE_ID = -1;
-    protected OnChildClickListener<T> mListener;
+
+    protected OnChildClickListener<T> mOnChildCLickListener;
+    private OnLoadMoreListener mOnLoadMoreListener;
+    private int mResLayout, mResLoading;
     private View mEmptyView;
     private final RecyclerView.AdapterDataObserver mDataObserver = new RecyclerView.AdapterDataObserver() {
         @Override
         public void onChanged() {
-            checkIfEmpty();
+            setEmptyViewVisibility();
         }
 
         @Override
         public void onItemRangeInserted(int positionStart, int itemCount) {
-            checkIfEmpty();
+            setEmptyViewVisibility();
         }
 
         @Override
         public void onItemRangeRemoved(int positionStart, int itemCount) {
-            checkIfEmpty();
+            setEmptyViewVisibility();
         }
     };
-    private OnLoadMoreListener mOnLoadMoreListener;
-    private int mResLayout, mResLoading;
     private boolean mIsLoading, mIsMoreDataAvailable = true, mIsLoadingError;
 
     /**
@@ -70,7 +73,7 @@ public abstract class LoadMoreBaseAdapter<T> extends BaseAdapter<T> {
      * @param resLayout The layout.
      * @param lstItems  The list of items.
      */
-    public LoadMoreBaseAdapter(int resLayout, List<T> lstItems) {
+    public AbstractLoadMoreBaseAdapter(int resLayout, List<T> lstItems) {
         super();
         init(resLayout, INVALID_RESOURCE_ID, lstItems);
     }
@@ -78,11 +81,11 @@ public abstract class LoadMoreBaseAdapter<T> extends BaseAdapter<T> {
     /**
      * The constructor of the adapter.
      *
-     * @param resLayout  The layout.
-     * @param resLoading The loading.
+     * @param resLayout  The layout resource id.
+     * @param resLoading The loading resource id.
      * @param lstItems   The list of items.
      */
-    public LoadMoreBaseAdapter(int resLayout, int resLoading, List<T> lstItems) {
+    public AbstractLoadMoreBaseAdapter(int resLayout, int resLoading, List<T> lstItems) {
         super();
         init(resLayout, resLoading, lstItems);
     }
@@ -90,8 +93,8 @@ public abstract class LoadMoreBaseAdapter<T> extends BaseAdapter<T> {
     /**
      * Initialization fo the adapter.
      *
-     * @param resLayout  The layout.
-     * @param resLoading The loading.
+     * @param resLayout  The layout resource id.
+     * @param resLoading The loading resource id.
      * @param data       The list of items.
      */
     private void init(int resLayout, int resLoading, List<T> data) {
@@ -114,11 +117,11 @@ public abstract class LoadMoreBaseAdapter<T> extends BaseAdapter<T> {
 
             final BaseViewHolder baseViewHolder = new BaseViewHolder(v);
 
-            if (mListener != null) {
+            if (mOnChildCLickListener != null) {
                 baseViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         int position = baseViewHolder.getAdapterPosition();
-                        mListener.onChildClick(v, mData.get(position), position);
+                        mOnChildCLickListener.onChildClick(v, mData.get(position), position);
                     }
                 });
             }
@@ -170,12 +173,12 @@ public abstract class LoadMoreBaseAdapter<T> extends BaseAdapter<T> {
     }
 
     /**
-     * Set the on click listener on elements.
+     * Set the on click listener on list elements.
      *
      * @param listener the listener called when an element is clicked.
      */
     public void setOnChildClickListener(OnChildClickListener<T> listener) {
-        this.mListener = listener;
+        this.mOnChildCLickListener = listener;
     }
 
     /**
@@ -242,13 +245,13 @@ public abstract class LoadMoreBaseAdapter<T> extends BaseAdapter<T> {
 
         mEmptyView = emptyView;
 
-        checkIfEmpty();
+        setEmptyViewVisibility();
     }
 
     /**
      * Hide view if there is no items to show.
      */
-    protected void checkIfEmpty() {
+    protected void setEmptyViewVisibility() {
         if (mEmptyView != null) {
             mEmptyView.setVisibility(getItemCount() > 0 ? GONE : VISIBLE);
         }
@@ -261,5 +264,9 @@ public abstract class LoadMoreBaseAdapter<T> extends BaseAdapter<T> {
      */
     private boolean hasLoadingLayout() {
         return mResLoading != INVALID_RESOURCE_ID;
+    }
+
+    @IntDef({VIEW_TYPE_ITEM, VIEW_TYPE_LOAD})
+    @interface ViewType {
     }
 }

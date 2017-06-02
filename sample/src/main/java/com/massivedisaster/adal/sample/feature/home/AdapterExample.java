@@ -19,14 +19,14 @@ package com.massivedisaster.adal.sample.feature.home;
 
 import android.support.v4.app.Fragment;
 
-import com.massivedisaster.adal.adapter.LoadMoreBaseAdapter;
+import com.massivedisaster.adal.adapter.AbstractLoadMoreBaseAdapter;
 import com.massivedisaster.adal.adapter.BaseViewHolder;
 import com.massivedisaster.adal.sample.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AdapterExample extends LoadMoreBaseAdapter<String> {
+public class AdapterExample extends AbstractLoadMoreBaseAdapter<String> {
 
     public AdapterExample(HashMap<String, Class<? extends Fragment>> lstItems) {
         super(R.layout.adapter_example, new ArrayList<>(lstItems.keySet()));

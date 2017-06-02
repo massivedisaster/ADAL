@@ -27,7 +27,7 @@ import java.util.List;
  *
  * @param <T> The type of the elements from the adapter.
  */
-public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
+public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
 
     protected List<T> mData;
 
