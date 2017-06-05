@@ -17,5 +17,14 @@
 
 package com.massivedisaster.adal.network;
 
+/**
+ * Base class for API responses.
+ */
 public abstract class APIResponse implements APIErrorListener {
+
+    @Override
+    public abstract String getError();
+
+    @Override
+    public abstract int getErrorCode();
 }

@@ -32,60 +32,57 @@ import android.view.animation.AnimationUtils;
 
 import com.massivedisaster.adal.utils.KeyboardUtils;
 
+/**
+ * Base class for fragments.
+ */
 public abstract class AbstractBaseFragment extends Fragment {
 
-    private static final int sInvalidResourceId = -1;
+    private static final int INVALID_RESOURCE_ID = -1;
 
     /**
      * <p>Used to get data from bundle</p>
      *
      * @param bundle Fragment Bundle
      */
-    protected void getFromBundle(Bundle bundle) {
-        //In case you're gonna use this method it could be override without calling super!
-    }
+    protected abstract void getFromBundle(Bundle bundle);
 
     /**
      * <p>Used to specify fragment layout</p>
      *
      * @return Layout ID
      */
-    protected
     @LayoutRes
-    int layoutToInflate() {
-        return sInvalidResourceId;
+    protected int layoutToInflate() {
+        return INVALID_RESOURCE_ID;
     }
 
     /**
      * <p>Restores last instance state of the fragment, this method is always empty
      * and going to restore data only when it's override</p>
      *
-     * @param savedInstanceState: Last instance state saved from this fragment
+     * @param savedInstanceState Last instance state saved from this fragment
      */
-    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
-        //In case you're gonna use this method it could be override without calling super!
-    }
+    protected abstract void restoreInstanceState(@Nullable Bundle savedInstanceState);
 
     /**
      * <p>This method is called when the view is already created and is available to inflate
      * children views</p>
      */
-    protected void doOnCreated() {
-        //In case you're gonna use this method it could be override without calling super!
-    }
+    protected abstract void doOnCreated();
 
     /**
      * <p>Request a view by id in case is there any root view inflated
      * otherwise throws a null pointer exception</p>
      *
-     * @param viewId: Id of the requested view (child)
-     * @param <T>:    Type of the requested view
-     * @return view requested if it exists
+     * @param viewId Id of the requested view (child)
+     * @param <T>    Type of the requested view
+     * @return view requested if it exists else null caused by root not inflated.
      */
+    @SuppressWarnings("unchecked")
     protected <T extends View> T findViewById(@IdRes int viewId) {
         View view = getView();
         if (view == null) {
-            throw new NullPointerException("You must inflate the root view before request their children!");
+            return null;
         }
         return (T) view.findViewById(viewId);
     }
@@ -94,14 +91,15 @@ public abstract class AbstractBaseFragment extends Fragment {
      * <p>Request a view by id on activity sight in case is there any activity
      * otherwise throws a null pointer exception</p>
      *
-     * @param viewId: Id of the requested view (child)
-     * @param <T>:    Type of the requested view
-     * @return view requested if it exists
+     * @param viewId Id of the requested view (child)
+     * @param <T>    Type of the requested view
+     * @return view requested if it exists else null if fragment is not attached to the activity yet.
      */
+    @SuppressWarnings("unchecked")
     protected <T extends View> T findViewByIdOnActivity(@IdRes int viewId) {
         Activity activity = getActivity();
         if (activity == null) {
-            throw new NullPointerException("Fragment is not attached to the activity yet!");
+            return null;
         }
         return (T) activity.findViewById(viewId);
     }
@@ -111,7 +109,7 @@ public abstract class AbstractBaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = null;
 
-        if (layoutToInflate() != sInvalidResourceId) {
+        if (layoutToInflate() != INVALID_RESOURCE_ID) {
             view = inflater.inflate(layoutToInflate(), container, false);
         }
 
@@ -163,7 +161,7 @@ public abstract class AbstractBaseFragment extends Fragment {
 
                 @Override
                 public void onAnimationRepeat(Animation animation) {
-
+                    // Intended.
                 }
             });
 

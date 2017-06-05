@@ -18,14 +18,17 @@
 package com.massivedisaster.adal.sample.feature.permissions;
 
 import android.Manifest;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.massivedisaster.adal.fragment.AbstractBaseFragment;
-import com.massivedisaster.adal.manager.PermissionsManager;
+import com.massivedisaster.adal.permissions.PermissionsManager;
 import com.massivedisaster.adal.sample.R;
+import com.massivedisaster.adal.utils.AppUtils;
 
 public class FragmentPermissions extends AbstractBaseFragment {
 
@@ -35,8 +38,18 @@ public class FragmentPermissions extends AbstractBaseFragment {
     private TextView mTxtInfo;
 
     @Override
+    protected void getFromBundle(Bundle bundle) {
+        // Intended.
+    }
+
+    @Override
     protected int layoutToInflate() {
         return R.layout.fragment_permissions;
+    }
+
+    @Override
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+
     }
 
     @Override
@@ -47,9 +60,8 @@ public class FragmentPermissions extends AbstractBaseFragment {
         initialize();
     }
 
-
     public void initialize() {
-        mPermissionsManager = PermissionsManager.getInstance(this);
+        mPermissionsManager = new PermissionsManager(this);
 
         mBtnGetPermissions.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +84,7 @@ public class FragmentPermissions extends AbstractBaseFragment {
                 mTxtInfo.setText("onDenied, neverAskMeAgain: " + neverAskMeAgain);
 
                 if (neverAskMeAgain) {
-                    mPermissionsManager.openAppSettings(getActivity());
+                    AppUtils.openAppSettings(getActivity());
                 }
             }
         }, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.WRITE_CALENDAR);

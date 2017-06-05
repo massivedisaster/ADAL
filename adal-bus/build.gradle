@@ -17,10 +17,12 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'pt.simdea.verifier'
+apply from: "$project.rootDir/quality/quality.gradle"
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion project.buildToolsVersion
 
     defaultConfig {
         minSdkVersion 16
@@ -34,15 +36,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    lintOptions {
-        abortOnError false
-    }
 }
 
-def supportVersion = '25.1.1'
-
 dependencies {
-    compile "com.android.support:support-v4:$supportVersion"
+    compile "com.android.support:support-v4:$project.supportVersion"
+    compile project(':adal-utils')
 }
 
 publish {

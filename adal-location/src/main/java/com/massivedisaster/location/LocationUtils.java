@@ -19,7 +19,16 @@ package com.massivedisaster.location;
 
 import android.util.Log;
 
-public class LocationUtils {
+/**
+ * Location utilities.
+ */
+public final class LocationUtils {
+
+    /**
+     * Private constructor to avoid user implement as a single instance instead of a Singleton.
+     */
+    private LocationUtils() {
+    }
 
     /**
      * Verify if location are enable
@@ -28,16 +37,16 @@ public class LocationUtils {
      * @return True if location are enabled
      */
     public static boolean isLocationEnabled(android.location.LocationManager locationManager) {
-        boolean gps_enabled;
-        boolean network_enabled;
+        boolean gpsEnabled;
+        boolean networkEnabled;
 
         try {
-            gps_enabled = locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER);
-            network_enabled = locationManager.isProviderEnabled(android.location.LocationManager.NETWORK_PROVIDER);
+            gpsEnabled = locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER);
+            networkEnabled = locationManager.isProviderEnabled(android.location.LocationManager.NETWORK_PROVIDER);
 
-            return !(!gps_enabled && !network_enabled);
+            return !(!gpsEnabled && !networkEnabled);
 
-        } catch (Exception ex) {
+        } catch (IllegalArgumentException ex) {
             Log.d(LocationUtils.class.getCanonicalName(), ex.toString());
         }
 

@@ -20,7 +20,17 @@ package com.massivedisaster.adal.utils;
 import android.app.NotificationManager;
 import android.content.Context;
 
-public class NotificationUtils {
+/**
+ * Class that allow users to cancel notifications on application
+ */
+public final class NotificationUtils {
+
+    /**
+     * Private constructor to avoid user implement as a single instance instead of a Singleton
+     */
+    private NotificationUtils() {
+
+    }
 
     /**
      * Cancel a specify notification based on notification id
@@ -43,6 +53,13 @@ public class NotificationUtils {
         internalCancelNotification(context, tag, notificationId);
     }
 
+    /**
+     * Cancel a specify notification given a tag and an id
+     *
+     * @param context        the application context
+     * @param tag            the notification tag
+     * @param notificationId the notification id
+     */
     private static void internalCancelNotification(Context context, String tag, int notificationId) {
         String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager nMgr = (NotificationManager) context.getSystemService(ns);

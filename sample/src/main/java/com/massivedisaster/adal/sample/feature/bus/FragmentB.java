@@ -17,6 +17,8 @@
 
 package com.massivedisaster.adal.sample.feature.bus;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 
@@ -26,8 +28,16 @@ import com.massivedisaster.adal.sample.R;
 
 public class FragmentB extends AbstractBaseFragment {
 
-    private BangBus mBangBus;
-    private Button mSendBang;
+    public static final String BANG_MESSAGE_WITH_ACTION = "received bang with action";
+    public static final int BANG_NUMBER_WITHOUT_NUMBER = 666;
+
+    private Button mBtnSendBangWithAction;
+    private Button mBtnSendBangWithoutAction;
+
+    @Override
+    protected void getFromBundle(Bundle bundle) {
+        // Intended.
+    }
 
     @Override
     protected int layoutToInflate() {
@@ -35,27 +45,42 @@ public class FragmentB extends AbstractBaseFragment {
     }
 
     @Override
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+        // Intended.
+    }
+
+    @Override
     protected void doOnCreated() {
-        mSendBang = findViewById(R.id.btnSendBang);
+        mBtnSendBangWithAction = findViewById(R.id.btnSendBangWithAction);
+        mBtnSendBangWithoutAction = findViewById(R.id.btnSendBangWithoutAction);
 
         initialize();
     }
 
     public void initialize() {
-        mBangBus = new BangBus(getActivity());
-
-        mSendBang.setOnClickListener(new View.OnClickListener() {
+        mBtnSendBangWithAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBangBus.bang(getContext(), FragmentA.BANG_A, "received bang from " + FragmentB.class.getSimpleName());
+                BangBus
+                        .with(getContext())
+                        .addAction(FragmentA.BANG_A)
+                        .setParameter(BANG_MESSAGE_WITH_ACTION)
+                        .bang();
+
                 getActivity().finish();
             }
         });
-    }
 
-    @Override
-    public void onDestroy() {
-        mBangBus.unsubscribe();
-        super.onDestroy();
+        mBtnSendBangWithoutAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BangBus
+                        .with(getContext())
+                        .setParameter(BANG_NUMBER_WITHOUT_NUMBER)
+                        .bang();
+
+                getActivity().finish();
+            }
+        });
     }
 }

@@ -19,7 +19,14 @@ package com.massivedisaster.adal.fragment;
 
 import android.os.Handler;
 
+/**
+ * Abstract class for splash screen.
+ */
 public abstract class AbstractSplashFragment extends AbstractRequestFragment {
+
+    private static final long SPLASH_TIME_OUT = 3000;
+    private Handler mHandler;
+    private long mStartTime;
 
     /**
      * Method to start splash screen.
@@ -27,11 +34,6 @@ public abstract class AbstractSplashFragment extends AbstractRequestFragment {
      * If you have not logic call 'startAppWithMethod' method inside this
      */
     protected abstract void onSplashStarted();
-
-    private static final long SPLASH_TIME_OUT = 3000;
-
-    private Handler mHandler;
-    private long mStartTime;
 
     @Override
     public void onStart() {
@@ -58,22 +60,39 @@ public abstract class AbstractSplashFragment extends AbstractRequestFragment {
         mHandler.removeCallbacksAndMessages(null);
     }
 
+    /**
+     * Splash timeout.
+     *
+     * @return the splash timeout.
+     */
     protected long getSplashTimeOut() {
         return SPLASH_TIME_OUT;
     }
 
-    protected void onSplashFinish(final OnFinishSplashScreen onFinishSplashscreen) {
-        if (mHandler == null) return;
+    /**
+     * Called when splash finishes.
+     *
+     * @param onFinishSplashScreen splash finisghes callback.
+     */
+    protected void onSplashFinish(final OnFinishSplashScreen onFinishSplashScreen) {
+        if (mHandler == null) {
+            return;
+        }
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (onFinishSplashscreen != null) {
-                    onFinishSplashscreen.onFinish();
+                if (onFinishSplashScreen != null) {
+                    onFinishSplashScreen.onFinish();
                 }
             }
         }, getTimeout());
     }
 
+    /**
+     * Gets the timeout for the splash finishes.
+     *
+     * @return the timeout.
+     */
     private long getTimeout() {
         long diff = System.currentTimeMillis() - mStartTime;
 
@@ -84,7 +103,13 @@ public abstract class AbstractSplashFragment extends AbstractRequestFragment {
         return getSplashTimeOut() - diff;
     }
 
+    /**
+     * Callback when splash finishes.
+     */
     public interface OnFinishSplashScreen {
+        /**
+         * Splash finish.
+         */
         void onFinish();
     }
 }

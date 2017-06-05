@@ -20,6 +20,8 @@ package com.massivedisaster.adal.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.provider.Settings;
 import android.util.Log;
@@ -27,7 +29,20 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-public class AppUtils {
+import java.util.List;
+
+/**
+ * Manages general app behaviours and actions like open specific intents (dial, settings and email)
+ * and google play services features
+ */
+public final class AppUtils {
+
+    /**
+     * Private constructor to avoid user implement as a single instance instead of a Singleton
+     */
+    private AppUtils() {
+
+    }
 
     /**
      * Open application settings for a specify context
@@ -49,6 +64,12 @@ public class AppUtils {
         context.startActivity(createAppSettingsIntent(context));
     }
 
+    /**
+     * Generates an intent to open app settings
+     *
+     * @param context the application context
+     * @return settings intent
+     */
     private static Intent createAppSettingsIntent(Context context) {
         Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                 Uri.fromParts("package", context.getPackageName(), null));
@@ -79,8 +100,13 @@ public class AppUtils {
         try {
             Intent intent = new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse("tel:" + phoneNumber));
+
+            if (!canResolveIntent(context, intent)) {
+                return;
+            }
+
             context.startActivity(intent);
-        } catch (Exception e) {
+        } catch (IllegalStateException e) {
             Log.e(AppUtils.class.getCanonicalName(), e.toString());
         }
     }
@@ -95,8 +121,28 @@ public class AppUtils {
     public static void openEmail(Context context, String intentTitle, String... email) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
-        intent.putExtra(android.content.Intent.EXTRA_EMAIL, email);
+        intent.putExtra(Intent.EXTRA_EMAIL, email);
+
+        if (!canResolveIntent(context, intent)) {
+            return;
+        }
+
         context.startActivity(Intent.createChooser(intent, intentTitle));
+    }
+
+    /**
+     * Tell if an intent can be resolved.
+     *
+     * @param context the context
+     * @param intent  the intent
+     * @return returns true if intent can be resolved.
+     */
+    public static boolean canResolveIntent(Context context, Intent intent) {
+        final PackageManager mgr = context.getPackageManager();
+        List<ResolveInfo> list =
+                mgr.queryIntentActivities(intent,
+                        PackageManager.MATCH_DEFAULT_ONLY);
+        return !list.isEmpty();
     }
 
 }

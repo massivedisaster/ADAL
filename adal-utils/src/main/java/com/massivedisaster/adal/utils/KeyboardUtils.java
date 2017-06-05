@@ -22,9 +22,19 @@ import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-public class KeyboardUtils {
+/**
+ * Manages keyboard action enabling users to force hide keyboard
+ */
+public final class KeyboardUtils {
 
-    private static final int sHideSoftInputFlagsNone = 0;
+    private static final int HIDE_SOFT_INPUT_FLAGS_NONE = 0;
+
+    /**
+     * Private constructor to avoid user implement as a single instance instead of a Singleton
+     */
+    private KeyboardUtils() {
+
+    }
 
     /**
      * Hide keyboard
@@ -45,10 +55,16 @@ public class KeyboardUtils {
         internalHide(activity, view);
     }
 
+    /**
+     *
+     *
+     * @param activity  context to retrieve system services
+     * @param view      view to get getWindowToken
+     */
     private static void internalHide(Activity activity, View view) {
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), sHideSoftInputFlagsNone);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), HIDE_SOFT_INPUT_FLAGS_NONE);
         }
     }
 }

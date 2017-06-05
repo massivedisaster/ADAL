@@ -17,7 +17,7 @@
 
 package com.massivedisaster.adal.sample.network;
 
-import com.massivedisaster.adal.network.APICallback;
+import com.massivedisaster.adal.network.APIRequestCallback;
 import com.massivedisaster.adal.sample.model.Post;
 
 import retrofit2.Call;
@@ -28,7 +28,7 @@ public class APIRequests {
         return RetrofitAdapter.getAccountAdapter();
     }
 
-    public static Call getPosts(APICallback<ResponseList<Post>> callObject) {
+    public static Call getPosts(APIRequestCallback<ResponseList<Post>> callObject) {
 
         Call<ResponseList<Post>> call = getAdapter().getPosts();
         call.enqueue(callObject);
