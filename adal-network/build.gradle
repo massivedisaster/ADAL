@@ -22,7 +22,7 @@ apply from: "$project.rootDir/quality/quality.gradle"
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion project.buildToolsVersion
 
     defaultConfig {
         minSdkVersion 16
@@ -41,8 +41,8 @@ android {
     }
 }
 
-def retrofitVersion = '2.1.0'
-def okHttpVersion = '3.4.2'
+def retrofitVersion = '2.3.0'
+def okHttpVersion = '3.8.0'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
