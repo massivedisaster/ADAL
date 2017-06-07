@@ -23,46 +23,42 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.massivedisaster.location;
+package com.massivedisaster.location.utils;
 
-import android.location.Location;
+import android.util.Log;
 
 /**
- * Manages location.
+ * Location utilities.
  */
-public abstract class OnLocationManager {
+public final class LocationUtils {
 
     /**
-     * Called if location manager retrieve the user position
+     * Private constructor to avoid user implement as a single instance instead of a Singleton.
+     */
+    private LocationUtils() {
+    }
+
+    /**
+     * Verify if location are enable
      *
-     * @param location           The user location
-     * @param isLastKnowLocation True if a location its given from the last know position
+     * @param locationManager the location manager
+     * @return True if location are enabled
      */
-    public abstract void onLocationFound(Location location, boolean isLastKnowLocation);
+    public static boolean isLocationEnabled(android.location.LocationManager locationManager) {
+        boolean gpsEnabled;
+        boolean networkEnabled;
 
-    /**
-     * Called if the request gives an error
-     *
-     * @param locationError The location error
-     */
-    public abstract void onLocationError(LocationError locationError);
+        try {
+            gpsEnabled = locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER);
+            networkEnabled = locationManager.isProviderEnabled(android.location.LocationManager.NETWORK_PROVIDER);
 
-    /**
-     * Called if user don't permissions to get location
-     */
-    public abstract void onPermissionsDenied();
+            return !(!gpsEnabled && !networkEnabled);
 
-    /**
-     * Called if provider change status
-     *
-     * @param provider the provider
-     */
-    public abstract void onProviderEnabled(String provider);
+        } catch (IllegalArgumentException ex) {
+            Log.d(LocationUtils.class.getCanonicalName(), ex.toString());
+        }
 
-    /**
-     * Called if provider change status
-     *
-     * @param provider the provider
-     */
-    public abstract void onProviderDisabled(String provider);
+        return true;
+    }
+
 }

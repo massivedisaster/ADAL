@@ -23,9 +23,11 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.massivedisaster.location;
+package com.massivedisaster.location.utils;
 
 public enum LocationError {
     TIMEOUT,
-    DISABLED
+    DISABLED,
+    REQUEST_NEEDED,
+    UPDATES_ENABLED
 }
