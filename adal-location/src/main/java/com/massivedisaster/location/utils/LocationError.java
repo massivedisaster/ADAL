@@ -15,9 +15,11 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.location;
+package com.massivedisaster.location.utils;
 
 public enum LocationError {
     TIMEOUT,
-    DISABLED
+    DISABLED,
+    REQUEST_NEEDED,
+    UPDATES_ENABLED
 }

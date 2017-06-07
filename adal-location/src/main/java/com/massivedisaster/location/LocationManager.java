@@ -30,6 +30,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 
 import com.massivedisaster.adal.permissions.PermissionsManager;
+import com.massivedisaster.location.listener.OnLocationManager;
+import com.massivedisaster.location.utils.LocationError;
+import com.massivedisaster.location.utils.LocationUtils;
 
 /**
  * Location manager.

@@ -15,9 +15,11 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.location;
+package com.massivedisaster.location.listener;
 
 import android.location.Location;
+
+import com.massivedisaster.location.utils.LocationError;
 
 /**
  * Manages location.

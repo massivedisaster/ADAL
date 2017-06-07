@@ -15,7 +15,7 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.location;
+package com.massivedisaster.location.utils;
 
 import android.util.Log;
 
