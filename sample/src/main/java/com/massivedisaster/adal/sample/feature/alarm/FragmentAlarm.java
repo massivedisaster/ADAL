@@ -32,14 +32,14 @@ import android.view.View;
 import android.widget.Button;
 
 import com.massivedisaster.adal.alarm.AlarmManager;
-import com.massivedisaster.adal.fragment.AbstractBaseFragment;
+import com.massivedisaster.adal.fragment.BaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.utils.SnackBuilder;
 
 import java.util.Calendar;
 import java.util.Date;
 
-public class FragmentAlarm extends AbstractBaseFragment implements View.OnClickListener {
+public class FragmentAlarm extends BaseFragment implements View.OnClickListener {
 
     public static final String PARAM_EVENT_NAME = "PARAM_EVENT_NAME";
 

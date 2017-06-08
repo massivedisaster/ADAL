@@ -42,13 +42,14 @@ import com.massivedisaster.adal.sample.feature.accounts.FragmentAccounts;
 import com.massivedisaster.adal.sample.feature.alarm.FragmentAlarm;
 import com.massivedisaster.adal.sample.feature.analytics.FragmentAnalytics;
 import com.massivedisaster.adal.sample.feature.bus.FragmentA;
-import com.massivedisaster.adal.sample.feature.location.FragmentFusedLocation;
 import com.massivedisaster.adal.sample.feature.location.FragmentLocation;
 import com.massivedisaster.adal.sample.feature.network.FragmentNetworkRequest;
 import com.massivedisaster.adal.sample.feature.permissions.FragmentPermissions;
 import com.massivedisaster.adal.sample.feature.utils.FragmentUtils;
 
 import java.util.HashMap;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class FragmentHome extends BaseFragment {
 
@@ -93,13 +94,9 @@ public class FragmentHome extends BaseFragment {
         mRclItems.setAdapter(adapter);
     }
 
-    public HashMap<String, Class<? extends Fragment>> getExamples() {
-        return new HashMap<String, Class<? extends Fragment>>() {{
-<<<<<<< e2f9a7abddd63c01e90fa0decf8615de9932e635
+    public TreeMap<String, Class<? extends Fragment>> getExamples() {
+        return new TreeMap<String, Class<? extends Fragment>>() {{
             put("Alarm", FragmentAlarm.class);
-=======
-            put("FusedLocation", FragmentFusedLocation.class);
->>>>>>> - Request location via FusedLocationApi has been added
             put("Location", FragmentLocation.class);
             put("Permission", FragmentPermissions.class);
             put("Accounts", FragmentAccounts.class);
