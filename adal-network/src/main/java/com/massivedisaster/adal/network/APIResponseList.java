@@ -19,6 +19,16 @@ package com.massivedisaster.adal.network;
 
 import java.util.ArrayList;
 
+/**
+ * API response for lists.
+ *
+ * @param <E> the list element type.
+ */
 public abstract class APIResponseList<E> extends ArrayList<E> implements APIErrorListener {
+    @Override
+    public abstract String getError();
+
+    @Override
+    public abstract int getErrorCode();
 }
 

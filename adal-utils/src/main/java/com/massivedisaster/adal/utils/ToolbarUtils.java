@@ -21,7 +21,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 
-public class ToolbarUtils {
+/**
+ * Helper class to retrieve toolbar information and define behaviours like center title
+ */
+public final class ToolbarUtils {
+
+    /**
+     * Private constructor to avoid user implement as a single instance instead of a Singleton
+     */
+    private ToolbarUtils() {
+
+    }
 
     /**
      * Center the toolbar view

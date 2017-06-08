@@ -17,10 +17,12 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'pt.simdea.verifier'
+apply from: "$project.rootDir/quality/quality.gradle"
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion project.buildToolsVersion
 
     defaultConfig {
         minSdkVersion 16
@@ -34,15 +36,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     lintOptions {
-        abortOnError false
         disable 'InvalidPackage'
     }
 }
 
-def retrofitVersion = '2.1.0'
-def okHttpVersion = '3.4.2'
+def retrofitVersion = '2.3.0'
+def okHttpVersion = '3.8.0'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -54,6 +54,8 @@ dependencies {
     /* OKHTTP */
     compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
     compile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+
+    compile project(':adal-utils')
 }
 
 publish {

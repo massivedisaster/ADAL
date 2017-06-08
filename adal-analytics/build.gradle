@@ -17,6 +17,8 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'pt.simdea.verifier'
+apply from: "$project.rootDir/quality/quality.gradle"
 
 buildscript {
     repositories {
@@ -29,7 +31,7 @@ buildscript {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion project.buildToolsVersion
 
     defaultConfig {
         minSdkVersion 16
@@ -43,16 +45,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    lintOptions {
-        abortOnError false
-    }
 }
-
-def googlePlayServicesVersion = '10.2.1'
 
 dependencies {
     /* ANALYTICS */
-    compile "com.google.android.gms:play-services-analytics:$googlePlayServicesVersion"
+    compile "com.google.android.gms:play-services-analytics:$project.googlePlayServicesVersion"
 }
 
 publish {

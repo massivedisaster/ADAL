@@ -17,6 +17,8 @@
 
 package com.massivedisaster.adal.sample.feature.bus;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -32,8 +34,14 @@ public class FragmentA extends AbstractBaseFragment {
     public static final String BANG_A = "BANG_A";
 
     private BangBus mBangBus;
-    private Button mBtnOpenB;
+    private Button mBtnSubscribeOpenB;
+    private Button mUnsubscribeBtnOpenB;
     private TextView mTxtResult;
+
+    @Override
+    protected void getFromBundle(Bundle bundle) {
+        // Intended.
+    }
 
     @Override
     protected int layoutToInflate() {
@@ -41,8 +49,14 @@ public class FragmentA extends AbstractBaseFragment {
     }
 
     @Override
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+        // Intended.
+    }
+
+    @Override
     protected void doOnCreated() {
-        mBtnOpenB = findViewById(R.id.btnOpenB);
+        mBtnSubscribeOpenB = findViewById(R.id.btnSubscribeOpenB);
+        mUnsubscribeBtnOpenB = findViewById(R.id.btnUnsubscribeOpenB);
         mTxtResult = findViewById(R.id.txtResult);
 
         initialize();
@@ -52,17 +66,33 @@ public class FragmentA extends AbstractBaseFragment {
         mBangBus = new BangBus(getActivity());
         mBangBus.subscribe(this);
 
-        mBtnOpenB.setOnClickListener(new View.OnClickListener() {
+        mBtnSubscribeOpenB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mTxtResult.setText("");
+                mBangBus.subscribe(FragmentA.this);
+                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, FragmentB.class);
+            }
+        });
+
+        mUnsubscribeBtnOpenB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mTxtResult.setText("");
+                mBangBus.unsubscribe();
                 ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, FragmentB.class);
             }
         });
     }
 
-    @BangBus.SubscribeBang(name = BANG_A)
-    public void showTripsSearch(String message) {
+    @BangBus.SubscribeBang(action = BANG_A)
+    public void bangWithAction(String message) {
         mTxtResult.setText(message);
+    }
+
+    @BangBus.SubscribeBang
+    public void bangWithoutAction(Integer number) {
+        mTxtResult.setText(String.valueOf(number));
     }
 
     @Override

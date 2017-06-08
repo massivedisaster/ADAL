@@ -17,167 +17,41 @@
 
 package com.massivedisaster.adal.adapter;
 
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.Collection;
 import java.util.List;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-
+/**
+ * Base class for an Adapter
+ *
+ * @param <T> The type of the elements from the adapter.
+ */
 public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
 
-    private View mEmptyView;
-
-    private static final int sInvalidResourceId = -1;
-    private static final int sViewTypeItem = 0;
-    private static final int sViewTypeLoad = 1;
-
-    private OnChildClickListener<T> mListener;
-    private OnLoadMoreListener mOnLoadMoreListener;
-
-    public interface OnChildClickListener<T> {
-        void onChildClick(android.view.View view, T t, int position);
-    }
-
-    public interface OnLoadMoreListener {
-        void onLoadMore();
-    }
-
-    private List<T> mData;
-    private int mResLayout, mResLoading;
-    private boolean isLoading = false, isMoreDataAvailable = true, isLoadingError = false;
-
-    private RecyclerView.AdapterDataObserver mDataObserver = new RecyclerView.AdapterDataObserver() {
-        @Override
-        public void onChanged() {
-            checkIfEmpty();
-        }
-
-        @Override
-        public void onItemRangeInserted(int positionStart, int itemCount) {
-            checkIfEmpty();
-        }
-
-        @Override
-        public void onItemRangeRemoved(int positionStart, int itemCount) {
-            checkIfEmpty();
-        }
-    };
-
-    public AbstractBaseAdapter(int resLayout, List<T> lstItems) {
-        init(resLayout, sInvalidResourceId, lstItems);
-    }
-
-    public AbstractBaseAdapter(int resLayout, int resLoading, List<T> lstItems) {
-        init(resLayout, resLoading, lstItems);
-    }
-
-    private void init(int resLayout, int resLoading, List<T> data) {
-        mResLoading = resLoading;
-        mResLayout = resLayout;
-        mData = data;
-    }
-
-    @Override
-    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        if (viewType == sViewTypeLoad && hasLoadingLayout()) {
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(mResLoading, parent, false);
-
-            return new BaseViewHolder(v);
-        } else {
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(mResLayout, parent, false);
-
-            final BaseViewHolder baseViewHolder = new BaseViewHolder(v);
-
-            if (mListener != null) {
-                baseViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View v) {
-                        int position = baseViewHolder.getAdapterPosition();
-                        mListener.onChildClick(v, mData.get(position), position);
-                    }
-                });
-            }
-            return baseViewHolder;
-        }
-    }
-
-    @Override
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
-        if (position >= getItemCount() - 1 && isMoreDataAvailable && !isLoading && mOnLoadMoreListener != null) {
-            isLoading = true;
-            mOnLoadMoreListener.onLoadMore();
-        }
-
-        if (getItemViewType(position) == sViewTypeItem) {
-            bindItem(holder, getItem(position));
-        } else if (getItemViewType(position) == sViewTypeLoad && hasLoadingLayout()) {
-            bindError(holder, isLoadingError);
-        }
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return position > mData.size() - 1 ? sViewTypeLoad : sViewTypeItem;
-    }
-
-    @Override
-    public int getItemCount() {
-        return (isMoreDataAvailable && hasLoadingLayout()) ? mData.size() + 1 : mData.size();
-    }
-
-    protected abstract void bindItem(BaseViewHolder holder, T item);
-
-    protected abstract void bindError(BaseViewHolder holder, boolean loadingError);
-
-    public OnLoadMoreListener getOnLoadMoreListener() {
-        return mOnLoadMoreListener;
-    }
-
-    public void setOnChildClickListener(OnChildClickListener<T> listener) {
-        this.mListener = listener;
-    }
-
-    public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
-        mOnLoadMoreListener = onLoadMoreListener;
-    }
-
-    public void setIsMoreDataAvailable(boolean moreDataAvailable) {
-        isMoreDataAvailable = moreDataAvailable;
-    }
-
-    public void setLoadingError(boolean isError) {
-        isLoadingError = isError;
-        notifyDataSetChanged();
-    }
+    protected List<T> mData;
 
     /**
-     * <p>Adds an entire data set</p>
+     * When item is binded.
      *
-     * @param data: Collection of data that will be added
+     * @param holder The item holder with error layout.
+     * @param item   The item binded.
      */
-    public void addAll(Collection<T> data) {
-        if (data.isEmpty()) {
-            isMoreDataAvailable = false;
-        }
+    protected abstract void bindItem(BaseViewHolder holder, T item);
 
-        mData.addAll(data);
-        notifyDataSetChanged();
-        isLoading = false;
-    }
+    /**
+     * When error is binded.
+     *
+     * @param holder       The view holder with error layout.
+     * @param loadingError true if is loading an error.
+     */
+    protected abstract void bindError(BaseViewHolder holder, boolean loadingError);
 
     /**
      * <p>Adds an item on a specific position of the data set</p>
      *
-     * @param position: specific position to add the item
-     * @param item:     Item to be added
+     * @param position specific position to add the item
+     * @param item     Item to be added
      */
     public void add(int position, T item) {
         validatePosition(position);
@@ -188,7 +62,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
     /**
      * <p>Adds an item into data set</p>
      *
-     * @param item: Item to be added
+     * @param item Item to be added
      */
     public void add(T item) {
         mData.add(item);
@@ -198,7 +72,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
     /**
      * <p>Returns the item on the given position</p>
      *
-     * @param position: Position of the retrieved item
+     * @param position Position of the retrieved item
      * @return item: The item at the specific position
      */
     public T getItem(int position) {
@@ -209,7 +83,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
     /**
      * <p>Removes the item at the given position</p>
      *
-     * @param position: Position of the item that will be removed
+     * @param position Position of the item that will be removed
      */
     public void remove(int position) {
         validatePosition(position);
@@ -220,7 +94,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
     /**
      * <p>Removes the given item</p>
      *
-     * @param item: The item that will be removed
+     * @param item The item that will be removed
      */
     public void remove(T item) {
         mData.remove(item);
@@ -230,7 +104,7 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
     /**
      * <p>Remove a collection of items</p>
      *
-     * @param ts: Collection of items that will be removed
+     * @param ts Collection of items that will be removed
      */
     public void removeAll(Collection<T> ts) {
         mData.removeAll(ts);
@@ -240,11 +114,21 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
     /**
      * <p>Returns the given item position</p>
      *
-     * @param item: Item to retrieve the position
+     * @param item Item to retrieve the position
      * @return position: Position of the specified item
      */
     public int getItemPosition(T item) {
         return mData.indexOf(item);
+    }
+
+    /**
+     * <p>Check if data set contains the specified item</p>
+     *
+     * @param item Item to verify if contains on data set
+     * @return true if contains otherwise false
+     */
+    public boolean containsItem(T item) {
+        return mData.contains(item);
     }
 
     /**
@@ -260,8 +144,6 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
      * <p>Clears data set and reset loading variables</p>
      */
     public void clear() {
-        isMoreDataAvailable = true;
-        isLoadingError = false;
         mData.clear();
         notifyDataSetChanged();
     }
@@ -276,28 +158,9 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
     }
 
     /**
-     * Set a empty to br showed when the adapter is empty
-     *
-     * @param emptyView the view to be showed when the adapter is empty
-     */
-    public void setEmptyView(@Nullable View emptyView) {
-        if (emptyView == null) {
-            throw new NullPointerException("EmptyView cannot be null");
-        }
-
-        if (mEmptyView == null) {
-            registerAdapterDataObserver(mDataObserver);
-        }
-
-        mEmptyView = emptyView;
-
-        checkIfEmpty();
-    }
-
-    /**
      * <p>Validates an specific position according to the data set size</p>
      *
-     * @param position: Specific position to be validated
+     * @param position Specific position to be validated
      */
     private void validatePosition(int position) {
         if (mData.isEmpty()) {
@@ -307,15 +170,5 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
         if (position < 0 || position >= mData.size()) {
             throw new IndexOutOfBoundsException("Please, specify a valid position that is equals or greater than 0 and less than " + mData.size());
         }
-    }
-
-    private void checkIfEmpty() {
-        if (mEmptyView != null) {
-            mEmptyView.setVisibility(getItemCount() > 0 ? GONE : VISIBLE);
-        }
-    }
-
-    private boolean hasLoadingLayout(){
-        return mResLoading != sInvalidResourceId;
     }
 }

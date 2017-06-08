@@ -23,12 +23,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+/**
+ * This class is an Base ViewHolder for recycler views.
+ */
 public class BaseViewHolder extends RecyclerView.ViewHolder {
 
+    /**
+     * Constructor of view holder.
+     *
+     * @param itemView The layout view for adapter element.
+     */
     public BaseViewHolder(View itemView) {
         super(itemView);
     }
 
+    /**
+     * Set text in a TextView.
+     *
+     * @param view The TextView.
+     * @param res  The string from resources.
+     * @return The TextView with the new text.
+     */
     public TextView setText(@IdRes int view, @StringRes int res) {
         TextView t = getView(view);
         if (t != null) {
@@ -37,14 +52,30 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         return t;
     }
 
-    public TextView setText(@IdRes int view, String res) {
+    /**
+     * Set text in a TextView.
+     *
+     * @param view The TextView.
+     * @param text The text to add to TextView.
+     * @return The TextView with the new text.
+     */
+    public TextView setText(@IdRes int view, String text) {
         TextView t = getView(view);
         if (t != null) {
-            t.setText(res);
+            t.setText(text);
         }
         return t;
     }
 
+    /**
+     * Look for a child view with the given id.  If this view has the given
+     * id, return this view.
+     *
+     * @param viewId The id to search for.
+     * @param <T>    The type of view.
+     * @return The view that has the given id in the hierarchy or null
+     */
+    @SuppressWarnings("unchecked")
     public <T extends View> T getView(@IdRes int viewId) {
         return (T) itemView.findViewById(viewId);
     }
