@@ -17,17 +17,19 @@
 
 package com.massivedisaster.adal.sample.feature.analytics;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
 import com.massivedisaster.adal.analytics.AnalyticsManager;
 import com.massivedisaster.adal.fragment.AbstractBaseFragment;
 import com.massivedisaster.adal.sample.R;
 
-/**
- * ADAL by Carbon by BOLD
- * Created in 22/05/17 by the following authors:
- * <p>
- * Nuno Silva - {nunosilva@carbonbybold.com}
- */
 public class FragmentAnalyticsLabel extends AbstractBaseFragment {
+
+    @Override
+    protected void getFromBundle(Bundle bundle) {
+        // Intended.
+    }
 
     @Override
     protected int layoutToInflate() {
@@ -35,8 +37,12 @@ public class FragmentAnalyticsLabel extends AbstractBaseFragment {
     }
 
     @Override
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+        // Intended.
+    }
+
+    @Override
     protected void doOnCreated() {
-        super.doOnCreated();
 
         /*
          * Send a screen with a label to GA

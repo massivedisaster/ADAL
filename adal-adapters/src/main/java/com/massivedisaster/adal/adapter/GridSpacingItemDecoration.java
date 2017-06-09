@@ -21,40 +21,56 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+/**
+ * An ItemDecoration allows the application to add a special drawing and layout offset
+ * to specific item views from the adapter's data set. This can be useful for drawing dividers
+ * between items, highlights, visual grouping boundaries and more.
+ * <p>
+ * In this case the GridSpacingItemDecoration calculates the space between elements in a grid list.
+ */
 public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
-    private int spanCount;
-    private int spacing;
-    private boolean includeEdge;
-    private int headerNum;
+    private final int mSpanCount;
+    private final int mSpacing;
+    private final boolean mIncludeEdge;
+    private final int mHeaderNum;
 
+    /**
+     * Constructor of item decoration.
+     *
+     * @param spanCount   The span count.
+     * @param spacing     The size of the space.
+     * @param includeEdge true if is to include edge, false otherwise.
+     * @param headerNum   The number of headers
+     */
     public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge, int headerNum) {
-        this.spanCount = spanCount;
-        this.spacing = spacing;
-        this.includeEdge = includeEdge;
-        this.headerNum = headerNum;
+        super();
+        this.mSpanCount = spanCount;
+        this.mSpacing = spacing;
+        this.mIncludeEdge = includeEdge;
+        this.mHeaderNum = headerNum;
     }
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        int position = parent.getChildAdapterPosition(view) - headerNum; // item position
+        int position = parent.getChildAdapterPosition(view) - mHeaderNum; // item position
 
         if (position >= 0) {
-            int column = position % spanCount; // item column
+            int column = position % mSpanCount; // item column
 
-            if (includeEdge) {
-                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
-                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
+            if (mIncludeEdge) {
+                outRect.left = mSpacing - column * mSpacing / mSpanCount; // mSpacing - column * ((1f / mSpanCount) * mSpacing)
+                outRect.right = (column + 1) * mSpacing / mSpanCount; // (column + 1) * ((1f / mSpanCount) * mSpacing)
 
-                if (position < spanCount) { // top edge
-                    outRect.top = spacing;
+                if (position < mSpanCount) { // top edge
+                    outRect.top = mSpacing;
                 }
-                outRect.bottom = spacing; // item bottom
+                outRect.bottom = mSpacing; // item bottom
             } else {
-                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
-                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
-                if (position >= spanCount) {
-                    outRect.top = spacing; // item top
+                outRect.left = column * mSpacing / mSpanCount; // column * ((1f / mSpanCount) * mSpacing)
+                outRect.right = mSpacing - (column + 1) * mSpacing / mSpanCount; // mSpacing - (column + 1) * ((1f /    mSpanCount) * mSpacing)
+                if (position >= mSpanCount) {
+                    outRect.top = mSpacing; // item top
                 }
             }
         } else {

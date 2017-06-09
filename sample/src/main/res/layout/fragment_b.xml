@@ -22,9 +22,15 @@
               android:orientation="vertical">
 
     <Button
-        android:id="@+id/btnSendBang"
+        android:id="@+id/btnSendBangWithAction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/send_bang"/>
+        android:text="@string/send_bang_with_action"/>
+
+    <Button
+        android:id="@+id/btnSendBangWithoutAction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/send_bang_without_action"/>
 
 </LinearLayout>

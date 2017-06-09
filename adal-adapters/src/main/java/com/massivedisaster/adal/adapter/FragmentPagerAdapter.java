@@ -17,46 +17,56 @@
 
 package com.massivedisaster.adal.adapter;
 
-import android.annotation.SuppressLint;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.SparseArray;
 
+import com.massivedisaster.adal.utils.LogUtils;
+
 import java.util.List;
 
+/**
+ * The adapter of fragments.
+ */
 public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
 
-    private List<Class<? extends Fragment>> mLstFragments;
+    private final List<Class<? extends Fragment>> mLstFragments;
 
-    private SparseArray<Fragment> fragmentSparseArray;
+    private final SparseArray<Fragment> mFragmentSparseArray;
 
+    /**
+     * Constructor of the adapter.
+     *
+     * @param fm          The fragment manager.
+     * @param lstFragment The list of fragments to be add to the adapter.
+     */
     public FragmentPagerAdapter(FragmentManager fm, List<Class<? extends Fragment>> lstFragment) {
         super(fm);
         mLstFragments = lstFragment;
-        fragmentSparseArray = new SparseArray<>(lstFragment.size());
+        mFragmentSparseArray = new SparseArray<>(lstFragment.size());
     }
 
     @Override
     public Fragment getItem(int position) {
         try {
 
-            Fragment fragment;
+            Fragment fragment = mFragmentSparseArray.get(position);
 
-            if ((fragment = fragmentSparseArray.get(position)) == null) {
-
-                fragmentSparseArray.put(position, fragment = mLstFragments.get(position).newInstance());
+            if (fragment == null) {
+                fragment = mLstFragments.get(position).newInstance();
+                mFragmentSparseArray.put(position, fragment);
                 fragment.setRetainInstance(true);
-
             }
 
             return fragment;
 
-        } catch (InstantiationException e){
-            e.printStackTrace();
+        } catch (InstantiationException e) {
+            LogUtils.logErrorException(FragmentPagerAdapter.class, e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            LogUtils.logErrorException(FragmentPagerAdapter.class, e);
         }
+
         return new Fragment();
     }
 
@@ -65,7 +75,12 @@ public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
         return mLstFragments.size();
     }
 
+    /**
+     * Get all the fragments in the adapter.
+     *
+     * @return The {@link SparseArray} with all the fragments.
+     */
     public SparseArray<Fragment> getFragments() {
-        return fragmentSparseArray;
+        return mFragmentSparseArray;
     }
 }

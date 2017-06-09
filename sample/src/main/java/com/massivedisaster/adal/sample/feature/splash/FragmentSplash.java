@@ -17,6 +17,9 @@
 
 package com.massivedisaster.adal.sample.feature.splash;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
 import com.massivedisaster.activitymanager.ActivityFragmentManager;
 import com.massivedisaster.adal.fragment.AbstractSplashFragment;
 import com.massivedisaster.adal.sample.R;
@@ -25,8 +28,23 @@ import com.massivedisaster.adal.sample.feature.home.FragmentHome;
 public class FragmentSplash extends AbstractSplashFragment {
 
     @Override
+    protected void getFromBundle(Bundle bundle) {
+
+    }
+
+    @Override
     protected int layoutToInflate() {
         return R.layout.fragment_splash_screen;
+    }
+
+    @Override
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    protected void doOnCreated() {
+
     }
 
     @Override

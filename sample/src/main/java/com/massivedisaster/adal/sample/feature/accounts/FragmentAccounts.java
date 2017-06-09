@@ -18,6 +18,8 @@
 package com.massivedisaster.adal.sample.feature.accounts;
 
 import android.accounts.Account;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -32,8 +34,18 @@ public class FragmentAccounts extends AbstractBaseFragment {
     private Button mBtnGetAccount, mBtnAddHardCodedAccount, mBtnClearAccount;
 
     @Override
+    protected void getFromBundle(Bundle bundle) {
+        // Intended.
+    }
+
+    @Override
     protected int layoutToInflate() {
         return R.layout.fragment_accounts;
+    }
+
+    @Override
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+        // Intended.
     }
 
     @Override

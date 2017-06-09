@@ -1,0 +1,54 @@
+/*
+ * ADAL - A set of Android libraries to help speed up Android development.
+ * Copyright (C) 2017 ADAL.
+ *
+ * ADAL is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 3 of the License, or any later version.
+ *
+ * ADAL is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along
+ * with ADAL. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'pt.simdea.verifier'
+apply from: "$project.rootDir/quality/quality.gradle"
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion project.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode libraryVersionCode
+        versionName libraryVersionName
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile "com.android.support:design:$project.supportVersion"
+    compile project(':adal-utils')
+}
+
+publish {
+    userOrg = userOrgBase
+    groupId = adalModuleBase
+    artifactId = 'adal-permissions'
+    publishVersion = libraryVersionString()
+    desc = 'ADAL permissions module'
+    website = websiteBase
+    licences = licensesBase
+}

@@ -27,8 +27,10 @@
     <string name="get_account_info">Get account info</string>
     <string name="add_hardcoded_account">Add hardcoded account</string>
     <string name="clear_account">Clear account</string>
-    <string name="send_bang">Send bang</string>
-    <string name="open_b">Open B</string>
+    <string name="send_bang_with_action">Send bang String with action</string>
+    <string name="send_bang_without_action">Send bang Integer without action</string>
+    <string name="subscribe_and_open_b">Subscribe and Open B</string>
+    <string name="unsubscribe_and_open_b">Unsubscribe and Open B</string>
     <string name="loading">Loading...</string>
 
     <string name="analytics_message_screen">A screen was sended to Google Analytics after this fragment are opened.</string>
@@ -38,7 +40,7 @@
     <string name="analytics_send_event_label">Send an event with label</string>
     <string name="analytics_message_events">After send an event you need to confirm this on your Google Analytics account.</string>
     <string name="analytics_edittext_hint">Label</string>
-    
+
     <string name="app_utils">App Utils</string>
     <string name="open_settings">Open Settings</string>
     <string name="check_playservices_exists">Check if Google PlayServices Exists</string>

@@ -17,9 +17,22 @@
 
 package com.massivedisaster.adal.network;
 
+/**
+ * The error listener for the API.
+ */
 interface APIErrorListener {
 
+    /**
+     * Gets the error message.
+     *
+     * @return the error message.
+     */
     String getError();
 
+    /**
+     * Gets the error code.
+     *
+     * @return the error code.
+     */
     int getErrorCode();
 }
