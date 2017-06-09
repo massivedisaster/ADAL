@@ -19,7 +19,17 @@ package com.massivedisaster.adal.utils;
 
 import java.text.Normalizer;
 
-public class StringUtils {
+/**
+ * Utils to help to manipulate strings
+ */
+public final class StringUtils {
+
+    /**
+     * Private constructor to avoid user implement as a single instance instead of a Singleton
+     */
+    private StringUtils() {
+
+    }
 
     /**
      * Replace all special characters from the string
