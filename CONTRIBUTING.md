@@ -13,7 +13,6 @@ When a new bug is detected or a new feature needs to be added there are some ste
 3. When the feature is done, please run (`./gradlew check`) to ensure the code respects the ADAL style guidelines.
 4. Create PR when you're done.
 
-* See [Configuring file header](https://github.com/massivedisaster/ADAL/wiki#configuring-file-header) for more detail in how to configure Android Studio to use the header.
 * See [Adding new module](https://github.com/massivedisaster/ADAL/wiki/Adding-a-new-Module) when theres is a need to add a new module.
 
 DO and DON'Ts
