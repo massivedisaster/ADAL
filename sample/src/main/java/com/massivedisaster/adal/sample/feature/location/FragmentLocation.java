@@ -29,8 +29,8 @@ import android.widget.TextView;
 import com.massivedisaster.adal.fragment.AbstractBaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.location.LocationManager;
-import com.massivedisaster.location.utils.LocationError;
 import com.massivedisaster.location.listener.OnLocationManager;
+import com.massivedisaster.location.utils.LocationError;
 
 public class FragmentLocation extends AbstractBaseFragment {
 
@@ -81,7 +81,7 @@ public class FragmentLocation extends AbstractBaseFragment {
                 if (v.isSelected()) {
                     mBtnGetLocationUpdates.setText(R.string.start_location_updates);
                     mBtnGetLocationUpdates.setSelected(false);
-                    mLocationManager.stopLocationUpdates();
+                    mLocationManager.stopRequestLocation();
                     mLocationUpdates = "";
                 } else {
                     mTxtInfoUpdates.setText("Getting location...");
@@ -112,6 +112,7 @@ public class FragmentLocation extends AbstractBaseFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         mLocationManager.onActivityResult(requestCode, resultCode);
     }
 
