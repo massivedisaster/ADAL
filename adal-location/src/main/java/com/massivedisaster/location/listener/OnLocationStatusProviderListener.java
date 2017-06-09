@@ -15,9 +15,20 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.location;
+package com.massivedisaster.location.listener;
 
-public enum LocationError {
-    TIMEOUT,
-    DISABLED
+/**
+ * Listener to provider status
+ */
+public interface OnLocationStatusProviderListener {
+
+    /**
+     * Called if provider is enabled
+     */
+    void onProviderEnabled();
+
+    /**
+     * Called if provider is disabled
+     */
+    void onProviderDisabled();
 }

@@ -17,6 +17,7 @@
 
 package com.massivedisaster.adal.sample.feature.location;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -27,25 +28,21 @@ import android.widget.TextView;
 
 import com.massivedisaster.adal.fragment.AbstractBaseFragment;
 import com.massivedisaster.adal.sample.R;
-import com.massivedisaster.location.LocationError;
 import com.massivedisaster.location.LocationManager;
-import com.massivedisaster.location.OnLocationManager;
+import com.massivedisaster.location.listener.OnLocationManager;
+import com.massivedisaster.location.utils.LocationError;
 
 public class FragmentLocation extends AbstractBaseFragment {
 
     private LocationManager mLocationManager;
 
-    private Button mBtnGetLocation;
-    private TextView mTxtInfo;
+    private Button mBtnGetLocation, mBtnGetLocationUpdates;
+    private TextView mTxtInfo, mTxtInfoUpdates;
+    private String mLocationUpdates = "";
 
     @Override
     protected void getFromBundle(Bundle bundle) {
         // Intended.
-    }
-
-    @Override
-    protected int layoutToInflate() {
-        return R.layout.fragment_location;
     }
 
     @Override
@@ -54,9 +51,17 @@ public class FragmentLocation extends AbstractBaseFragment {
     }
 
     @Override
+    protected int layoutToInflate() {
+        return R.layout.fragment_fused_location;
+    }
+
+    @Override
     protected void doOnCreated() {
         mBtnGetLocation = findViewById(R.id.btnGetLocation);
         mTxtInfo = findViewById(R.id.txtInfo);
+
+        mBtnGetLocationUpdates = findViewById(R.id.btnGetLocationUpdates);
+        mTxtInfoUpdates = findViewById(R.id.txtInfoUpdates);
 
         initialize();
     }
@@ -68,6 +73,21 @@ public class FragmentLocation extends AbstractBaseFragment {
                 mTxtInfo.setText("Getting location...");
                 v.setEnabled(false);
                 getLocation();
+            }
+        });
+        mBtnGetLocationUpdates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.isSelected()) {
+                    mBtnGetLocationUpdates.setText(R.string.start_location_updates);
+                    mBtnGetLocationUpdates.setSelected(false);
+                    mLocationManager.stopRequestLocation();
+                    mLocationUpdates = "";
+                } else {
+                    mTxtInfoUpdates.setText("Getting location...");
+                    v.setEnabled(false);
+                    getLocationUpdates();
+                }
             }
         });
     }
@@ -90,11 +110,18 @@ public class FragmentLocation extends AbstractBaseFragment {
         mLocationManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mLocationManager.onActivityResult(requestCode, resultCode);
+    }
+
     private void getLocation() {
-        mLocationManager.requestSingleLocation(android.location.LocationManager.NETWORK_PROVIDER, true, 10000, new OnLocationManager() {
+        mLocationManager.requestSingleLocation(false, new OnLocationManager() {
+
             @Override
             public void onLocationFound(Location location, boolean isLastKnowLocation) {
-                mTxtInfo.setText("Location found: " + location.toString());
+                mTxtInfo.setText(getLocation(location));
                 mBtnGetLocation.setEnabled(true);
             }
 
@@ -106,6 +133,9 @@ public class FragmentLocation extends AbstractBaseFragment {
                         break;
                     case TIMEOUT:
                         mTxtInfo.setText("Error: Timeout getting location");
+                        break;
+                    case UPDATES_ENABLED:
+                        mTxtInfo.setText("Error: Request Updates are enabled");
                         break;
                     default:
                         break;
@@ -121,14 +151,69 @@ public class FragmentLocation extends AbstractBaseFragment {
             }
 
             @Override
-            public void onProviderEnabled(String provider) {
+            public void onProviderEnabled() {
                 // Intended.
             }
 
             @Override
-            public void onProviderDisabled(String provider) {
+            public void onProviderDisabled() {
                 // Intended.
             }
         });
+    }
+
+
+    private void getLocationUpdates() {
+        mLocationManager.requestLocationUpdates(new OnLocationManager() {
+            @Override
+            public void onLocationFound(Location location, boolean isLastKnowLocation) {
+
+                if (!mBtnGetLocationUpdates.isSelected()) {
+                    mBtnGetLocationUpdates.setText(R.string.stop_location_updates);
+                    mBtnGetLocationUpdates.setSelected(true);
+                }
+
+                mLocationUpdates += getLocation(location) + "\n";
+
+                mTxtInfoUpdates.setText(mLocationUpdates);
+                mBtnGetLocationUpdates.setEnabled(true);
+            }
+
+            @Override
+            public void onLocationError(LocationError locationError) {
+                switch (locationError) {
+                    case DISABLED:
+                        mTxtInfoUpdates.setText("Error: Location disabled");
+                        break;
+                    case TIMEOUT:
+                        mTxtInfoUpdates.setText("Error: Timeout getting location");
+                        break;
+                    default:
+                        break;
+                }
+
+                mBtnGetLocationUpdates.setEnabled(true);
+            }
+
+            @Override
+            public void onPermissionsDenied() {
+                mTxtInfoUpdates.setText("Permissions Denied");
+                mBtnGetLocationUpdates.setEnabled(true);
+            }
+
+            @Override
+            public void onProviderEnabled() {
+                // Intended.
+            }
+
+            @Override
+            public void onProviderDisabled() {
+                // Intended.
+            }
+        });
+    }
+
+    private String getLocation(Location location) {
+        return "Location found " + location.getLatitude() + ", " + location.getLongitude();
     }
 }

@@ -25,10 +25,11 @@ import com.massivedisaster.adal.sample.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 public class AdapterExample extends AbstractLoadMoreBaseAdapter<String> {
 
-    public AdapterExample(HashMap<String, Class<? extends Fragment>> lstItems) {
+    public AdapterExample(TreeMap<String, Class<? extends Fragment>> lstItems) {
         super(R.layout.adapter_example, new ArrayList<>(lstItems.keySet()));
     }
 

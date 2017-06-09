@@ -38,6 +38,8 @@ import com.massivedisaster.adal.sample.feature.permissions.FragmentPermissions;
 import com.massivedisaster.adal.sample.feature.utils.FragmentUtils;
 
 import java.util.HashMap;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class FragmentHome extends AbstractBaseFragment {
 
@@ -78,8 +80,8 @@ public class FragmentHome extends AbstractBaseFragment {
         mRclItems.setAdapter(adapter);
     }
 
-    public HashMap<String, Class<? extends Fragment>> getExamples() {
-        return new HashMap<String, Class<? extends Fragment>>() {{
+    public TreeMap<String, Class<? extends Fragment>> getExamples() {
+        return new TreeMap<String, Class<? extends Fragment>>() {{
             put("Location", FragmentLocation.class);
             put("Permission", FragmentPermissions.class);
             put("Accounts", FragmentAccounts.class);

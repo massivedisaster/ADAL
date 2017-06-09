@@ -15,14 +15,16 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.location;
+package com.massivedisaster.location.listener;
 
 import android.location.Location;
+
+import com.massivedisaster.location.utils.LocationError;
 
 /**
  * Manages location.
  */
-public abstract class OnLocationManager {
+public interface OnLocationManager {
 
     /**
      * Called if location manager retrieve the user position
@@ -30,31 +32,27 @@ public abstract class OnLocationManager {
      * @param location           The user location
      * @param isLastKnowLocation True if a location its given from the last know position
      */
-    public abstract void onLocationFound(Location location, boolean isLastKnowLocation);
+    void onLocationFound(Location location, boolean isLastKnowLocation);
 
     /**
      * Called if the request gives an error
      *
      * @param locationError The location error
      */
-    public abstract void onLocationError(LocationError locationError);
+    void onLocationError(LocationError locationError);
 
     /**
      * Called if user don't permissions to get location
      */
-    public abstract void onPermissionsDenied();
+    void onPermissionsDenied();
 
     /**
-     * Called if provider change status
-     *
-     * @param provider the provider
+     * Called if provider is enabled
      */
-    public abstract void onProviderEnabled(String provider);
+    void onProviderEnabled();
 
     /**
-     * Called if provider change status
-     *
-     * @param provider the provider
+     * Called if provider is disabled
      */
-    public abstract void onProviderDisabled(String provider);
+    void onProviderDisabled();
 }
