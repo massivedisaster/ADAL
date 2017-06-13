@@ -1,7 +1,7 @@
 {
     "basePath": "../",
     "readmePath": "../README.md",
-    "version": "0.1.11",
+    "version": "0.1.12",
     "modules": [
         "adal",
         "adal-accounts",
@@ -15,7 +15,5 @@
         "adal-network",
         "adal-permissions",
         "adal-utils"
-    ],
-    "bintrayUsername": "{username}",
-    "bintrayKey": "{key}"
+    ]
 }
