@@ -19,35 +19,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:layout_margin="@dimen/normal_spacing"
               android:orientation="vertical">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_utils"/>
 
     <Button
         android:id="@+id/btnOpenSettings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_spacing"
         android:text="@string/open_settings"/>
 
     <Button
         android:id="@+id/btnCheckPlayservicesExists"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_spacing"
         android:text="@string/check_playservices_exists"/>
 
     <Button
         android:id="@+id/btnOpenDial"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_spacing"
         android:text="@string/open_dial"/>
 
     <Button
         android:id="@+id/btnOpenEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_spacing"
         android:text="@string/open_email"/>
 
 </LinearLayout>

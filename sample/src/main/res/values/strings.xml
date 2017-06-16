@@ -20,6 +20,15 @@
 
     <string name="app_name">ADAL sample</string>
 
+    <string name="sample_location">Location</string>
+    <string name="sample_permission">Permission</string>
+    <string name="sample_accounts">Accounts</string>
+    <string name="sample_bangbus">Bangbus</string>
+    <string name="sample_network">Network</string>
+    <string name="sample_adapter">Adapter</string>
+    <string name="sample_analytics">Analytics</string>
+    <string name="sample_utils">Utils</string>
+
     <string name="get_location">Get Location</string>
     <string name="get_permissions">Get permissions</string>
 
@@ -41,7 +50,6 @@
     <string name="analytics_message_events">After send an event you need to confirm this on your Google Analytics account.</string>
     <string name="analytics_edittext_hint">Label</string>
 
-    <string name="app_utils">App Utils</string>
     <string name="open_settings">Open Settings</string>
     <string name="check_playservices_exists">Check if Google PlayServices Exists</string>
     <string name="playservices_exists">Google Play Services exists</string>

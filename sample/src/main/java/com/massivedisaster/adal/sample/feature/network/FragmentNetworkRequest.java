@@ -57,6 +57,8 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
 
     @Override
     protected void doOnCreated() {
+        getActivity().setTitle(R.string.sample_network);
+
         mTxtMessage = findViewById(R.id.txtMessage);
         mRclItems = findViewById(R.id.rclItems);
 

@@ -20,6 +20,7 @@ package com.massivedisaster.adal.sample.feature.home;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -60,6 +61,10 @@ public class FragmentHome extends AbstractBaseFragment {
 
     @Override
     protected void doOnCreated() {
+        if (((AppCompatActivity)getActivity()).getSupportActionBar() != null) {
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
+
         mRclItems = findViewById(R.id.rclItems);
 
         initialize();
@@ -85,7 +90,6 @@ public class FragmentHome extends AbstractBaseFragment {
             put("Accounts", FragmentAccounts.class);
             put("Bangbus", FragmentA.class);
             put("Network", FragmentNetworkRequest.class);
-            put("Adapter", FragmentNetworkRequest.class);
             put("Analytics", FragmentAnalytics.class);
             put("Utils", FragmentUtils.class);
         }};

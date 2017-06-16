@@ -51,6 +51,8 @@ public class FragmentAnalytics extends AbstractBaseFragment {
 
     @Override
     protected void doOnCreated() {
+        getActivity().setTitle(R.string.sample_analytics);
+
         /*
          * You need to generate a json file
          *
