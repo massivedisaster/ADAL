@@ -1,5 +1,9 @@
 # adal-bus
 
+<div align="center">
+  <img src="art/adal-bus.gif" />
+</div>
+
 ### Download
 
 Gradle:

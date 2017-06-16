@@ -1,4 +1,5 @@
 # adal-analytics
+Android library that simplifies using Google Analytics.
 
 ### Download
 
@@ -10,7 +11,19 @@ dependencies {
 }
 ```
 ### Usage
+```java
+public class FragmentAnalytics extends AbstractBaseFragment {
+    @Override
+    protected void doOnCreated() {
+      // Send a screen to GA
+      AnalyticsManager.with(getContext()).sendScreen("FragmentAnalytics");
 
+      // Send an event to GA
+      AnalyticsManager.with(getContext()).sendEvent(
+              "Category",
+              "Action");
+}
+```
 ### Contributing
 [CONTRIBUTING](../CONTRIBUTING.md)
 
