@@ -117,7 +117,7 @@ public final class PermissionsManager {
 
             for (String permission : mPermissions) {
                 // When shouldShowRequestPermissionRationale returns false the user checked never ask me again.
-                if (!ActivityCompat.shouldShowRequestPermissionRationale(mActivity, permission)) {
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(mActivity, permission) && !PermissionUtils.hasPermissions(mActivity, permission)) {
                     mOnPermissionsListener.onDenied(true);
                     return;
                 }
