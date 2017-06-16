@@ -33,25 +33,13 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:elevation="0dp">
-
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:maxLines="2"
-                android:textColor="@android:color/white"/>
-
-
-        </android.support.v7.widget.Toolbar>
+            app:elevation="0dp"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout
         android:id="@+id/frmContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 </LinearLayout>

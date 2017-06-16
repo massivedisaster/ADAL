@@ -20,13 +20,17 @@ package com.massivedisaster.adal.sample.feature.utils;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.massivedisaster.adal.fragment.AbstractBaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.utils.AppUtils;
+import com.massivedisaster.adal.utils.SnackBuilder;
 
 public class FragmentUtils extends AbstractBaseFragment {
+
+    private Button mBtnCheckPlayservicesExists;
 
     @Override
     protected void getFromBundle(Bundle bundle) {
@@ -43,6 +47,10 @@ public class FragmentUtils extends AbstractBaseFragment {
 
     @Override
     protected void doOnCreated() {
+        getActivity().setTitle(R.string.sample_utils);
+
+        mBtnCheckPlayservicesExists = findViewById(R.id.btnCheckPlayservicesExists);
+
         findViewById(R.id.btnOpenSettings).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +61,7 @@ public class FragmentUtils extends AbstractBaseFragment {
         findViewById(R.id.btnCheckPlayservicesExists).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), AppUtils.checkPlayServicesExists(getActivity()) ? R.string.playservices_exists : R.string.playservices_dont_exists, Toast.LENGTH_SHORT).show();
+                SnackBuilder.show(mBtnCheckPlayservicesExists, AppUtils.checkPlayServicesExists(getActivity()) ? R.string.playservices_exists : R.string.playservices_dont_exists, R.color.colorAccent);
             }
         });
 

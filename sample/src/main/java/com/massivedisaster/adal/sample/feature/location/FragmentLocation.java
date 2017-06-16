@@ -55,6 +55,8 @@ public class FragmentLocation extends AbstractBaseFragment {
 
     @Override
     protected void doOnCreated() {
+        getActivity().setTitle(R.string.sample_location);
+
         mBtnGetLocation = findViewById(R.id.btnGetLocation);
         mTxtInfo = findViewById(R.id.txtInfo);
 

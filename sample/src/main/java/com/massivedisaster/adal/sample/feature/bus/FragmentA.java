@@ -55,6 +55,8 @@ public class FragmentA extends AbstractBaseFragment {
 
     @Override
     protected void doOnCreated() {
+        getActivity().setTitle(R.string.sample_bangbus);
+
         mBtnSubscribeOpenB = findViewById(R.id.btnSubscribeOpenB);
         mUnsubscribeBtnOpenB = findViewById(R.id.btnUnsubscribeOpenB);
         mTxtResult = findViewById(R.id.txtResult);

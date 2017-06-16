@@ -50,6 +50,8 @@ public class FragmentAccounts extends AbstractBaseFragment {
 
     @Override
     protected void doOnCreated() {
+        getActivity().setTitle(R.string.sample_accounts);
+
         mBtnGetAccount = findViewById(R.id.btnGetAccount);
         mBtnAddHardCodedAccount = findViewById(R.id.btnAddHardCodedAccount);
         mBtnClearAccount = findViewById(R.id.btnClearAccount);

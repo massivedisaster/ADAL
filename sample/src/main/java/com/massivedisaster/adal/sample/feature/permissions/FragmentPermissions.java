@@ -54,6 +54,8 @@ public class FragmentPermissions extends AbstractBaseFragment {
 
     @Override
     protected void doOnCreated() {
+        getActivity().setTitle(R.string.sample_permission);
+
         mBtnGetPermissions = findViewById(R.id.btnGetPermissions);
         mTxtInfo = findViewById(R.id.txtInfo);
 

@@ -23,6 +23,7 @@ import android.support.annotation.Nullable;
 import com.massivedisaster.activitymanager.ActivityFragmentManager;
 import com.massivedisaster.adal.fragment.AbstractSplashFragment;
 import com.massivedisaster.adal.sample.R;
+import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
 import com.massivedisaster.adal.sample.feature.home.FragmentHome;
 
 public class FragmentSplash extends AbstractSplashFragment {
@@ -56,7 +57,7 @@ public class FragmentSplash extends AbstractSplashFragment {
         return new OnFinishSplashScreen() {
             @Override
             public void onFinish() {
-                ActivityFragmentManager.open(getActivity(), ActivitySplashScreen.class, FragmentHome.class);
+                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, FragmentHome.class);
                 getActivity().finish();
             }
         };
