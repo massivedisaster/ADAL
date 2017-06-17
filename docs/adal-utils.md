@@ -37,4 +37,4 @@ AppUtils.openEmail(getActivity(), getString(R.string.send_email), "teste@teste.c
 [CONTRIBUTING](../CONTRIBUTING.md)
 
 ### License
-[GNU LESSER GENERAL PUBLIC LICENSE](../LICENSE.md)
+[MIT LICENSE](../LICENSE.md)
