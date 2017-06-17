@@ -46,4 +46,4 @@ public class FragmentAccounts extends AbstractBaseFragment {
 [CONTRIBUTING](../CONTRIBUTING.md)
 
 ### License
-[GNU LESSER GENERAL PUBLIC LICENSE](../LICENSE.md)
+[MIT LICENSE](../LICENSE.md)

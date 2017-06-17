@@ -57,4 +57,4 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
 [CONTRIBUTING](../CONTRIBUTING.md)
 
 ### License
-[GNU LESSER GENERAL PUBLIC LICENSE](../LICENSE.md)
+[MIT LICENSE](../LICENSE.md)

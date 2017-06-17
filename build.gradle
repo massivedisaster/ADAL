@@ -19,7 +19,7 @@
 ext {
     userOrgBase = 'massivedisaster'
     websiteBase = 'https://github.com/massivedisaster/ADAL'
-    licensesBase = ['LGPL-3.0']
+    licensesBase = ['MIT']
     packageBase = 'com.massivedisaster'
     adalModuleBase = packageBase + '.adal'
     isLibrary = true

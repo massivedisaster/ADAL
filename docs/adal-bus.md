@@ -64,4 +64,4 @@ BangBus.with(getContext())
 [CONTRIBUTING](../CONTRIBUTING.md)
 
 ### License
-[GNU LESSER GENERAL PUBLIC LICENSE](../LICENSE.md)
+[MIT LICENSE](../LICENSE.md)
