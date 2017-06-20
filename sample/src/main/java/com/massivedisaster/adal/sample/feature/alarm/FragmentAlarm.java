@@ -63,6 +63,8 @@ public class FragmentAlarm extends AbstractBaseFragment implements View.OnClickL
 
     @Override
     protected void doOnCreated() {
+        getActivity().setTitle(R.string.sample_alarm);
+
         mBtnAddAlarm = findViewById(R.id.btnAddAlarm);
         mBtnRemoveAlarm = findViewById(R.id.btnRemoveAlarm);
 
