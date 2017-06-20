@@ -1,6 +1,10 @@
 # adal-alarm
 Android library to add, remove alarms and verify if an alarm exist!
 
+<div align="center">
+  <img src="art/adal-alarm.gif" />
+</div>
+
 ### Download
 
 Gradle:
