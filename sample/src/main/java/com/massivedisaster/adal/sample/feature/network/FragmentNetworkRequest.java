@@ -37,7 +37,7 @@ import com.massivedisaster.adal.fragment.AbstractRequestFragment;
 import com.massivedisaster.adal.network.APIError;
 import com.massivedisaster.adal.network.APIRequestCallback;
 import com.massivedisaster.adal.sample.R;
-import com.massivedisaster.adal.sample.model.Post;
+import com.massivedisaster.adal.sample.model.Photo;
 import com.massivedisaster.adal.sample.network.APIRequests;
 import com.massivedisaster.adal.sample.network.ResponseList;
 
@@ -46,7 +46,7 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
     private TextView mTxtMessage;
     private RecyclerView mRclItems;
 
-    private AdapterPost mAdapterPost;
+    private AdapterPhoto mAdapterPhoto;
 
     @Override
     protected void getFromBundle(Bundle bundle) {
@@ -72,14 +72,14 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
 
         mRclItems.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mAdapterPost = new AdapterPost();
-        mAdapterPost.setOnLoadMoreListener(new OnLoadMoreListener() {
+        mAdapterPhoto = new AdapterPhoto();
+        mAdapterPhoto.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 request();
             }
         });
-        mRclItems.setAdapter(mAdapterPost);
+        mRclItems.setAdapter(mAdapterPhoto);
 
         request();
     }
@@ -87,20 +87,25 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
     private void request() {
 
         // Show the general loading if the adapter is empty
-        if (mAdapterPost.isEmpty()) {
+        if (mAdapterPhoto.isEmpty()) {
             showLoading();
         }
 
-        addRequest((APIRequests.getPosts(new APIRequestCallback<ResponseList<Post>>(getContext()) {
+        addRequest((APIRequests.getPhotos(new APIRequestCallback<ResponseList<Photo>>(getContext()) {
             @Override
-            public void onSuccess(ResponseList<Post> posts) {
+            public void onSuccess(ResponseList<Photo> photos) {
                 showContent();
-                mAdapterPost.addAll(posts);
+                mAdapterPhoto.addAll(photos);
             }
 
             @Override
             public void onError(APIError error, boolean isServerError) {
-                showError(error.getMessage());
+                if (!mAdapterPhoto.isEmpty()) {
+                    mAdapterPhoto.setLoadingError(true);
+                }
+                else {
+                    showError(error.getMessage());
+                }
             }
         })));
     }

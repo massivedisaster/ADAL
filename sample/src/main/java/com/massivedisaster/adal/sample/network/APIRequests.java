@@ -26,6 +26,7 @@
 package com.massivedisaster.adal.sample.network;
 
 import com.massivedisaster.adal.network.APIRequestCallback;
+import com.massivedisaster.adal.sample.model.Photo;
 import com.massivedisaster.adal.sample.model.Post;
 
 import retrofit2.Call;
@@ -39,6 +40,14 @@ public class APIRequests {
     public static Call getPosts(APIRequestCallback<ResponseList<Post>> callObject) {
 
         Call<ResponseList<Post>> call = getAdapter().getPosts();
+        call.enqueue(callObject);
+
+        return call;
+    }
+
+    public static Call getPhotos(APIRequestCallback<ResponseList<Photo>> callObject) {
+
+        Call<ResponseList<Photo>> call = getAdapter().getPhotos();
         call.enqueue(callObject);
 
         return call;
