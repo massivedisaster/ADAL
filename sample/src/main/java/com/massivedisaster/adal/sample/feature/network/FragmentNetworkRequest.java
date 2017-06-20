@@ -79,6 +79,13 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
                 request();
             }
         });
+        mAdapterPhoto.setOnErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAdapterPhoto.setLoadingError(false);
+                request();
+            }
+        });
         mRclItems.setAdapter(mAdapterPhoto);
 
         request();
@@ -102,8 +109,7 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
             public void onError(APIError error, boolean isServerError) {
                 if (!mAdapterPhoto.isEmpty()) {
                     mAdapterPhoto.setLoadingError(true);
-                }
-                else {
+                } else {
                     showError(error.getMessage());
                 }
             }

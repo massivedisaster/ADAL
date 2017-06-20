@@ -39,6 +39,8 @@ import java.util.ArrayList;
 
 public class AdapterPhoto extends AbstractLoadMoreBaseAdapter<Photo> {
 
+    View.OnClickListener mListener;
+
     public AdapterPhoto() {
         super(R.layout.adapter_photo, R.layout.adapter_loading, new ArrayList<Photo>());
     }
@@ -58,6 +60,8 @@ public class AdapterPhoto extends AbstractLoadMoreBaseAdapter<Photo> {
         LinearLayout lnlError = holder.getView(R.id.lnrError);
 
         if (loadingError) {
+            holder.getView(R.id.btnTryAgain).setOnClickListener(mListener);
+
             lnlLoading.setVisibility(View.GONE);
             lnlError.setVisibility(View.VISIBLE);
         }
@@ -65,5 +69,9 @@ public class AdapterPhoto extends AbstractLoadMoreBaseAdapter<Photo> {
             lnlLoading.setVisibility(View.VISIBLE);
             lnlError.setVisibility(View.GONE);
         }
+    }
+
+    public void setOnErrorClickListener(View.OnClickListener listener) {
+        mListener = listener;
     }
 }

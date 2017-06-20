@@ -55,6 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:orientation="vertical"
         android:visibility="gone">
 
         <TextView
@@ -63,6 +64,12 @@
             android:layout_marginLeft="@dimen/normal_spacing"
             android:layout_marginStart="@dimen/normal_spacing"
             android:text="@string/error_network_no_connection"/>
+
+        <Button
+            android:id="@+id/btnTryAgain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/try_again"/>
     </LinearLayout>
 
 </LinearLayout>
