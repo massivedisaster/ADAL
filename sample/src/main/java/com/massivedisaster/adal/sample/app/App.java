@@ -18,7 +18,7 @@
 package com.massivedisaster.adal.sample.app;
 
 import android.app.Application;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.massivedisaster.adal.applicationstate.ApplicationStateManager;
 
@@ -36,12 +36,12 @@ public class App extends Application implements ApplicationStateManager.BackAndF
 
     @Override
     public void onBackground() {
-        Log.d(TAG, "onBackground");
+        Toast.makeText(this, "onBackground called", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onForeground() {
-        Log.d(TAG, "onForeground");
+        Toast.makeText(this, "onForeground called", Toast.LENGTH_SHORT).show();
     }
 
     public boolean isBackground() {
