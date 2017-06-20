@@ -30,6 +30,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.massivedisaster.adal.adapter.OnLoadMoreListener;
@@ -44,6 +45,7 @@ import com.massivedisaster.adal.sample.network.ResponseList;
 public class FragmentNetworkRequest extends AbstractRequestFragment {
 
     private TextView mTxtMessage;
+    private Button mBtnTryAgain;
     private RecyclerView mRclItems;
 
     private AdapterPhoto mAdapterPhoto;
@@ -68,7 +70,15 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
         getActivity().setTitle(R.string.sample_network);
 
         mTxtMessage = findViewById(R.id.txtMessage);
+        mBtnTryAgain = findViewById(R.id.btnTryAgain);
         mRclItems = findViewById(R.id.rclItems);
+
+        mBtnTryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onTryAgain();
+            }
+        });
 
         mRclItems.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -82,12 +92,16 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
         mAdapterPhoto.setOnErrorClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAdapterPhoto.setLoadingError(false);
-                request();
+                onTryAgain();
             }
         });
         mRclItems.setAdapter(mAdapterPhoto);
 
+        request();
+    }
+
+    private void onTryAgain() {
+        mAdapterPhoto.setLoadingError(false);
         request();
     }
 
@@ -118,18 +132,22 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
 
     private void showLoading() {
         mRclItems.setVisibility(View.GONE);
+        mBtnTryAgain.setVisibility(View.GONE);
         mTxtMessage.setVisibility(View.VISIBLE);
         mTxtMessage.setText(R.string.loading);
     }
 
     private void showError(String error) {
         mRclItems.setVisibility(View.GONE);
+        mBtnTryAgain.setVisibility(View.VISIBLE);
         mTxtMessage.setVisibility(View.VISIBLE);
         mTxtMessage.setText(error);
     }
 
     private void showContent() {
-        mTxtMessage.setVisibility(View.GONE);
         mRclItems.setVisibility(View.VISIBLE);
+        mBtnTryAgain.setVisibility(View.GONE);
+        mTxtMessage.setVisibility(View.GONE);
+
     }
 }
