@@ -27,42 +27,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:padding="@dimen/medium_spacing">
+              android:orientation="horizontal"
+              android:padding="@dimen/normal_spacing">
+
+    <ImageView
+        android:id="@+id/imgThumbnail"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_vertical"/>
 
     <LinearLayout
-        android:id="@+id/lnrLoading"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center">
-
-        <ProgressBar
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"/>
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/normal_spacing"
+        android:paddingRight="@dimen/normal_spacing">
 
         <TextView
+            android:id="@+id/txtTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/normal_spacing"
-            android:layout_marginStart="@dimen/normal_spacing"
-            android:text="@string/loading"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lnrError"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:visibility="gone">
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textStyle="bold"/>
 
         <TextView
+            android:id="@+id/txtDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/normal_spacing"
-            android:layout_marginStart="@dimen/normal_spacing"
-            android:text="@string/error_network_no_connection"/>
+            android:maxLines="2"
+            android:ellipsize="end"/>
     </LinearLayout>
 
 </LinearLayout>

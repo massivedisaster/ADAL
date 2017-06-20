@@ -28,6 +28,7 @@ ext {
     espressoVersion = '2.2.2'
     jUnitVersion = '4.12'
     mockitoVersion = '2.8.9'
+    glideVersion = '3.7.0'
 
     dependencies {
         /** GENERAL **/
@@ -50,6 +51,9 @@ ext {
 
         /* ANALYTICS */
         compile "com.google.android.gms:play-services-analytics:$project.googlePlayServicesVersion"
+
+        /* GLIDE */
+        compile "com.github.bumptech.glide:glide:$glideVersion"
 
         /** TEST **/
 
