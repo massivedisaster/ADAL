@@ -76,6 +76,8 @@
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator"/>
         </service>
+
+        <receiver android:name=".feature.alarm.AlarmReceiver"/>
     </application>
 </manifest>
 

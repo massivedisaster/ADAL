@@ -39,6 +39,7 @@ import com.massivedisaster.adal.fragment.AbstractBaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
 import com.massivedisaster.adal.sample.feature.accounts.FragmentAccounts;
+import com.massivedisaster.adal.sample.feature.alarm.FragmentAlarm;
 import com.massivedisaster.adal.sample.feature.analytics.FragmentAnalytics;
 import com.massivedisaster.adal.sample.feature.bus.FragmentA;
 import com.massivedisaster.adal.sample.feature.location.FragmentLocation;
@@ -93,6 +94,7 @@ public class FragmentHome extends AbstractBaseFragment {
 
     public HashMap<String, Class<? extends Fragment>> getExamples() {
         return new HashMap<String, Class<? extends Fragment>>() {{
+            put("Alarm", FragmentAlarm.class);
             put("Location", FragmentLocation.class);
             put("Permission", FragmentPermissions.class);
             put("Accounts", FragmentAccounts.class);

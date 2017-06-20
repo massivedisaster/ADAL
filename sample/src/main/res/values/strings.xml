@@ -65,4 +65,6 @@
     <string name="open_dial">Open Dial</string>
     <string name="open_email">Open Email</string>
     <string name="send_email">Send Email</string>
+    <string name="add_alarm">Add Alarm</string>
+    <string name="remove_alarm">Remove Alarm</string>
 </resources>
