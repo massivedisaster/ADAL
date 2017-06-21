@@ -1,4 +1,9 @@
 # adal-network
+Android library that offers an retrofit callback with centralized error handling
+
+<div align="center">
+  <img src="art/adal-network.gif" />
+</div>
 
 ### Download
 
