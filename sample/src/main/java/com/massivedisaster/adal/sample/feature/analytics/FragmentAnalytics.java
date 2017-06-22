@@ -34,11 +34,11 @@ import android.widget.Button;
 
 import com.massivedisaster.activitymanager.ActivityFragmentManager;
 import com.massivedisaster.adal.analytics.AnalyticsManager;
-import com.massivedisaster.adal.fragment.AbstractBaseFragment;
+import com.massivedisaster.adal.fragment.BaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
 
-public class FragmentAnalytics extends AbstractBaseFragment {
+public class FragmentAnalytics extends BaseFragment {
 
     private AppCompatEditText mEdtAnalyticsEventLabel;
 

@@ -29,10 +29,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.massivedisaster.adal.analytics.AnalyticsManager;
-import com.massivedisaster.adal.fragment.AbstractBaseFragment;
+import com.massivedisaster.adal.fragment.BaseFragment;
 import com.massivedisaster.adal.sample.R;
 
-public class FragmentAnalyticsLabel extends AbstractBaseFragment {
+public class FragmentAnalyticsLabel extends BaseFragment {
 
     @Override
     protected void getFromBundle(Bundle bundle) {

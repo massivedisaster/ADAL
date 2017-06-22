@@ -16,7 +16,7 @@ dependencies {
 
 ### Usage
 ```java
-public class FragmentLocation extends AbstractBaseFragment {
+public class FragmentLocation extends BaseFragment {
 
     private LocationManager mLocationManager;
 

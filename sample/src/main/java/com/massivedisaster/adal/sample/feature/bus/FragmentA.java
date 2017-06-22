@@ -33,11 +33,11 @@ import android.widget.TextView;
 
 import com.massivedisaster.activitymanager.ActivityFragmentManager;
 import com.massivedisaster.adal.bus.BangBus;
-import com.massivedisaster.adal.fragment.AbstractBaseFragment;
+import com.massivedisaster.adal.fragment.BaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
 
-public class FragmentA extends AbstractBaseFragment {
+public class FragmentA extends BaseFragment {
 
     public static final String BANG_A = "BANG_A";
 

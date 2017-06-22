@@ -43,18 +43,20 @@ import com.massivedisaster.adal.utils.KeyboardUtils;
 /**
  * Base class for fragments.
  */
-public abstract class AbstractBaseFragment extends Fragment {
+public class BaseFragment extends Fragment {
 
     private static final int INVALID_RESOURCE_ID = -1;
 
-    private View mView = null;
+    private View mView;
 
     /**
      * <p>Used to get data from bundle</p>
      *
      * @param bundle Fragment Bundle
      */
-    protected abstract void getFromBundle(Bundle bundle);
+    protected void getFromBundle(Bundle bundle) {
+        // Intended.
+    }
 
     /**
      * <p>Used to specify fragment layout</p>
@@ -72,13 +74,17 @@ public abstract class AbstractBaseFragment extends Fragment {
      *
      * @param savedInstanceState Last instance state saved from this fragment
      */
-    protected abstract void restoreInstanceState(@Nullable Bundle savedInstanceState);
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+        // Intended.
+    }
 
     /**
      * <p>This method is called when the view is already created and is available to inflate
      * children views</p>
      */
-    protected abstract void doOnCreated();
+    protected void doOnCreated() {
+        // Intended.
+    }
 
     /**
      * <p>Request a view by id in case is there any root view inflated
@@ -153,13 +159,17 @@ public abstract class AbstractBaseFragment extends Fragment {
             anim.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-                    getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    if (getActivity() != null) {
+                        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    }
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    if (getActivity() != null) {
+                        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    }
                 }
 
                 @Override

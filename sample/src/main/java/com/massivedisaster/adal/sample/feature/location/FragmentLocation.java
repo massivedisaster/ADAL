@@ -33,13 +33,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.massivedisaster.adal.fragment.AbstractBaseFragment;
+import com.massivedisaster.adal.fragment.BaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.location.LocationError;
 import com.massivedisaster.location.LocationManager;
 import com.massivedisaster.location.OnLocationManager;
 
-public class FragmentLocation extends AbstractBaseFragment {
+public class FragmentLocation extends BaseFragment {
 
     private LocationManager mLocationManager;
 

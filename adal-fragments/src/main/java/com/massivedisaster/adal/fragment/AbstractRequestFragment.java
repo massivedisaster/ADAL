@@ -33,7 +33,7 @@ import retrofit2.Call;
 /**
  * Abstract class for fragments that do requests.
  */
-public abstract class AbstractRequestFragment extends AbstractBaseFragment {
+public abstract class AbstractRequestFragment extends BaseFragment {
 
     private final List<Call<?>> mLstCallbacks = new ArrayList<>();
 

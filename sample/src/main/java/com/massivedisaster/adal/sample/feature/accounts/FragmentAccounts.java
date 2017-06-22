@@ -33,11 +33,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.massivedisaster.adal.account.AccountHelper;
-import com.massivedisaster.adal.fragment.AbstractBaseFragment;
+import com.massivedisaster.adal.fragment.BaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.utils.SnackBuilder;
 
-public class FragmentAccounts extends AbstractBaseFragment {
+public class FragmentAccounts extends BaseFragment {
 
     private Button mBtnGetAccount, mBtnAddHardCodedAccount, mBtnClearAccount;
 
