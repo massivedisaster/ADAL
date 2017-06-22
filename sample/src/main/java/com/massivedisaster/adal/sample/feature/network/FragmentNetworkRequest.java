@@ -30,6 +30,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.massivedisaster.adal.adapter.OnLoadMoreListener;
@@ -37,16 +38,17 @@ import com.massivedisaster.adal.fragment.AbstractRequestFragment;
 import com.massivedisaster.adal.network.APIError;
 import com.massivedisaster.adal.network.APIRequestCallback;
 import com.massivedisaster.adal.sample.R;
-import com.massivedisaster.adal.sample.model.Post;
+import com.massivedisaster.adal.sample.model.Photo;
 import com.massivedisaster.adal.sample.network.APIRequests;
 import com.massivedisaster.adal.sample.network.ResponseList;
 
 public class FragmentNetworkRequest extends AbstractRequestFragment {
 
     private TextView mTxtMessage;
+    private Button mBtnTryAgain;
     private RecyclerView mRclItems;
 
-    private AdapterPost mAdapterPost;
+    private AdapterPhoto mAdapterPhoto;
 
     @Override
     protected void getFromBundle(Bundle bundle) {
@@ -68,57 +70,84 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
         getActivity().setTitle(R.string.sample_network);
 
         mTxtMessage = findViewById(R.id.txtMessage);
+        mBtnTryAgain = findViewById(R.id.btnTryAgain);
         mRclItems = findViewById(R.id.rclItems);
+
+        mBtnTryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onTryAgain();
+            }
+        });
 
         mRclItems.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mAdapterPost = new AdapterPost();
-        mAdapterPost.setOnLoadMoreListener(new OnLoadMoreListener() {
+        mAdapterPhoto = new AdapterPhoto();
+        mAdapterPhoto.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 request();
             }
         });
-        mRclItems.setAdapter(mAdapterPost);
+        mAdapterPhoto.setOnErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onTryAgain();
+            }
+        });
+        mRclItems.setAdapter(mAdapterPhoto);
 
+        request();
+    }
+
+    private void onTryAgain() {
+        mAdapterPhoto.setLoadingError(false);
         request();
     }
 
     private void request() {
 
         // Show the general loading if the adapter is empty
-        if (mAdapterPost.isEmpty()) {
+        if (mAdapterPhoto.isEmpty()) {
             showLoading();
         }
 
-        addRequest((APIRequests.getPosts(new APIRequestCallback<ResponseList<Post>>(getContext()) {
+        addRequest((APIRequests.getPhotos(new APIRequestCallback<ResponseList<Photo>>(getContext()) {
             @Override
-            public void onSuccess(ResponseList<Post> posts) {
+            public void onSuccess(ResponseList<Photo> photos) {
                 showContent();
-                mAdapterPost.addAll(posts);
+                mAdapterPhoto.addAll(photos);
             }
 
             @Override
             public void onError(APIError error, boolean isServerError) {
-                showError(error.getMessage());
+                if (!mAdapterPhoto.isEmpty()) {
+                    mAdapterPhoto.setLoadingError(true);
+                } else {
+                    showError(error.getMessage());
+                }
             }
         })));
     }
 
     private void showLoading() {
         mRclItems.setVisibility(View.GONE);
+        mBtnTryAgain.setVisibility(View.GONE);
         mTxtMessage.setVisibility(View.VISIBLE);
         mTxtMessage.setText(R.string.loading);
     }
 
     private void showError(String error) {
         mRclItems.setVisibility(View.GONE);
+        mBtnTryAgain.setVisibility(View.VISIBLE);
         mTxtMessage.setVisibility(View.VISIBLE);
         mTxtMessage.setText(error);
     }
 
     private void showContent() {
-        mTxtMessage.setVisibility(View.GONE);
         mRclItems.setVisibility(View.VISIBLE);
+        mBtnTryAgain.setVisibility(View.GONE);
+        mTxtMessage.setVisibility(View.GONE);
+
     }
 }

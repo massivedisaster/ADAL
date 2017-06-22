@@ -36,6 +36,7 @@
     <string name="sample_adapter">Adapter</string>
     <string name="sample_analytics">Analytics</string>
     <string name="sample_utils">Utils</string>
+    <string name="sample_alarm">Alarm</string>
 
     <string name="get_location">Get Location</string>
     <string name="get_permissions">Get permissions</string>
@@ -65,5 +66,7 @@
     <string name="open_dial">Open Dial</string>
     <string name="open_email">Open Email</string>
     <string name="send_email">Send Email</string>
-    <string name="splash_screen">Splash Screen</string>
+    <string name="add_alarm">Add Alarm</string>
+    <string name="remove_alarm">Remove Alarm</string>
+    <string name="try_again">Try Again</string>
 </resources>

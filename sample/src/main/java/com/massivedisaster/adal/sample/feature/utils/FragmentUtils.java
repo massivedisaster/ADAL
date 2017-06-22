@@ -29,7 +29,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.massivedisaster.adal.fragment.AbstractBaseFragment;
 import com.massivedisaster.adal.sample.R;
@@ -76,14 +75,14 @@ public class FragmentUtils extends AbstractBaseFragment {
         findViewById(R.id.btnOpenDial).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppUtils.openDial(getContext(), "00351910000000");
+                AppUtils.openDial(getActivity(), "00351910000000");
             }
         });
 
         findViewById(R.id.btnOpenEmail).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppUtils.openEmail(getContext(), getString(R.string.send_email), "teste@teste.com", "teste2@teste.com");
+                AppUtils.openEmail(getActivity(), getString(R.string.send_email), "teste@teste.com", "teste2@teste.com");
             }
         });
     }

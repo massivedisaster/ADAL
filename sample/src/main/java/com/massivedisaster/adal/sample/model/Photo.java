@@ -23,19 +23,60 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.massivedisaster.adal.sample.network;
+package com.massivedisaster.adal.sample.model;
 
-import com.massivedisaster.adal.sample.model.Photo;
-import com.massivedisaster.adal.sample.model.Post;
+import com.google.gson.annotations.SerializedName;
 
-import retrofit2.Call;
-import retrofit2.http.GET;
+public class Photo {
 
-public interface IRequests {
+    @SerializedName("albumId")
+    private int mUserId;
+    @SerializedName("id")
+    private int mId;
+    @SerializedName("title")
+    private String mTitle;
+    @SerializedName("url")
+    private String mUrl;
+    @SerializedName("thumbnailUrl")
+    private String mThumbnailUrl;
 
-    @GET("posts")
-    Call<ResponseList<Post>> getPosts();
+    public int getUserId() {
+        return mUserId;
+    }
 
-    @GET("albums/1/photos")
-    Call<ResponseList<Photo>> getPhotos();
+    public void setUserId(int userId) {
+        this.mUserId = userId;
+    }
+
+    public int getId() {
+        return mId;
+    }
+
+    public void setId(int id) {
+        this.mId = id;
+    }
+
+    public String getTitle() {
+        return mTitle;
+    }
+
+    public void setTitle(String title) {
+        this.mTitle = title;
+    }
+
+    public String getUrl() {
+        return mUrl;
+    }
+
+    public void setUrl(String url) {
+        this.mUrl = url;
+    }
+
+    public String getThumbnailUrl() {
+        return mThumbnailUrl;
+    }
+
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.mThumbnailUrl = thumbnailUrl;
+    }
 }
