@@ -47,6 +47,8 @@ public abstract class AbstractBaseFragment extends Fragment {
 
     private static final int INVALID_RESOURCE_ID = -1;
 
+    private View mView = null;
+
     /**
      * <p>Used to get data from bundle</p>
      *
@@ -88,7 +90,7 @@ public abstract class AbstractBaseFragment extends Fragment {
      */
     @SuppressWarnings("unchecked")
     protected <T extends View> T findViewById(@IdRes int viewId) {
-        View view = getView();
+        View view = mView == null ? getView() : mView;
         if (view == null) {
             return null;
         }
@@ -119,24 +121,17 @@ public abstract class AbstractBaseFragment extends Fragment {
 
         if (layoutToInflate() != INVALID_RESOURCE_ID) {
             view = inflater.inflate(layoutToInflate(), container, false);
+            mView = view;
         }
 
         restoreInstanceState(savedInstanceState);
-        return view;
-    }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         if (getArguments() != null) {
             getFromBundle(getArguments());
         }
 
         doOnCreated();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        return view;
     }
 
     @Override
