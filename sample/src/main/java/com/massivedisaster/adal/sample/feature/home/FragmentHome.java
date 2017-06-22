@@ -35,7 +35,7 @@ import android.view.View;
 
 import com.massivedisaster.activitymanager.ActivityFragmentManager;
 import com.massivedisaster.adal.adapter.OnChildClickListener;
-import com.massivedisaster.adal.fragment.AbstractBaseFragment;
+import com.massivedisaster.adal.fragment.BaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
 import com.massivedisaster.adal.sample.feature.accounts.FragmentAccounts;
@@ -48,7 +48,7 @@ import com.massivedisaster.adal.sample.feature.utils.FragmentUtils;
 
 import java.util.HashMap;
 
-public class FragmentHome extends AbstractBaseFragment {
+public class FragmentHome extends BaseFragment {
 
     private RecyclerView mRclItems;
 

@@ -33,12 +33,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.massivedisaster.adal.fragment.AbstractBaseFragment;
+import com.massivedisaster.adal.fragment.BaseFragment;
 import com.massivedisaster.adal.permissions.PermissionsManager;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.utils.AppUtils;
 
-public class FragmentPermissions extends AbstractBaseFragment {
+public class FragmentPermissions extends BaseFragment {
 
     private PermissionsManager mPermissionsManager;
 

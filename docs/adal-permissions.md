@@ -17,7 +17,7 @@ dependencies {
 
 ### Usage
 ```java
-public class FragmentPermissions extends AbstractBaseFragment {
+public class FragmentPermissions extends BaseFragment {
 
     private PermissionsManager mPermissionsManager;
 

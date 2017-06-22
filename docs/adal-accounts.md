@@ -12,7 +12,7 @@ dependencies {
 
 ### Usage
 ```java
-public class FragmentAccounts extends AbstractBaseFragment {
+public class FragmentAccounts extends BaseFragment {
 
     @Override
     protected void doOnCreated() {

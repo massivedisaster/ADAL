@@ -25,5 +25,5 @@
 
 package com.massivedisaster.adal.tests.instrumented.suite.fragments;
 
-public class AbstractBaseFragmentTests {
+public class BaseFragmentTests {
 }

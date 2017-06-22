@@ -31,10 +31,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.massivedisaster.adal.bus.BangBus;
-import com.massivedisaster.adal.fragment.AbstractBaseFragment;
+import com.massivedisaster.adal.fragment.BaseFragment;
 import com.massivedisaster.adal.sample.R;
 
-public class FragmentB extends AbstractBaseFragment {
+public class FragmentB extends BaseFragment {
 
     public static final String BANG_MESSAGE_WITH_ACTION = "received bang with action";
     public static final int BANG_NUMBER_WITHOUT_NUMBER = 666;

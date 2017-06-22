@@ -12,7 +12,7 @@ dependencies {
 ```
 ### Usage
 ```java
-public class FragmentAnalytics extends AbstractBaseFragment {
+public class FragmentAnalytics extends BaseFragment {
     @Override
     protected void doOnCreated() {
       // Send a screen to GA
