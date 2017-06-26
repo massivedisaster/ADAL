@@ -35,6 +35,7 @@
     <string name="sample_network">Network</string>
     <string name="sample_adapter">Adapter</string>
     <string name="sample_analytics">Analytics</string>
+    <string name="sample_firebase_analytics">Firebase Analytics</string>
     <string name="sample_utils">Utils</string>
     <string name="sample_alarm">Alarm</string>
 
@@ -58,6 +59,9 @@
     <string name="analytics_send_event_label">Send an event with label</string>
     <string name="analytics_message_events">After send an event you need to confirm this on your Google Analytics account.</string>
     <string name="analytics_edittext_hint">Label</string>
+    <string name="analytics_gender_title">Gender</string>
+    <string name="analytics_gender_male">Male</string>
+    <string name="analytics_gender_female">Female</string>
 
     <string name="open_settings">Open Settings</string>
     <string name="check_playservices_exists">Check if Google PlayServices Exists</string>

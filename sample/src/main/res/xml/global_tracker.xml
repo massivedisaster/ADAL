@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ ADAL - A set of Android libraries to help speed up Android development.
   ~
@@ -23,12 +24,6 @@
   ~ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<manifest package="com.massivedisaster.adal.analytics"
-          xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-
-</manifest>
-
+<resources>
+    <string name="ga_trackingId" translatable="false">UA-99717384-1</string>
+</resources>
