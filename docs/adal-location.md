@@ -120,6 +120,10 @@ public class FragmentLocation extends BaseFragment {
             }
         });
     }
+
+    private void stopLocationUpdates() {
+        mLocationManager.stopRequestLocation();
+    }
 }
 ```
 
