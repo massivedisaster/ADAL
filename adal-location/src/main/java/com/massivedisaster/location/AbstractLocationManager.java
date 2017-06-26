@@ -57,15 +57,15 @@ abstract class AbstractLocationManager implements LocationListener {
     private Context mContext;
     private Handler mHandler;
 
-    private final LocationStatusBroadcastReceiver mLocationStatusBroadcastReceiver = new LocationStatusBroadcastReceiver();
-
-    protected boolean mRequestingLocationUpdates;
-    protected boolean mLastKnowLocation;
-    protected long mTimeout;
     protected OnLocationManager mOnLocationManager;
     protected GoogleApiClient mGoogleApiClient;
-    protected Activity mActivity;
     protected android.location.LocationManager mLocationManager;
+    protected boolean mLastKnowLocation;
+
+    private Activity mActivity;
+    private long mTimeout;
+
+    private final LocationStatusBroadcastReceiver mLocationStatusBroadcastReceiver = new LocationStatusBroadcastReceiver();
 
     /**
      * Start the request location updates
@@ -185,6 +185,33 @@ abstract class AbstractLocationManager implements LocationListener {
         mHandler.removeCallbacksAndMessages(null);
 
         mOnLocationManager.onLocationFound(location, false);
+    }
+
+    /**
+     * Set Timeout
+     *
+     * @param timeout in milliseconds
+     */
+    public void setTimeout(long timeout) {
+        this.mTimeout = timeout;
+    }
+
+    /**
+     * Set true if user wants receive the last location
+     *
+     * @param lastKnowLocation the value
+     */
+    public void setLastKnowLocation(boolean lastKnowLocation) {
+        this.mLastKnowLocation = lastKnowLocation;
+    }
+
+    /**
+     * Get the actual activity
+     *
+     * @return the actual activity
+     */
+    public Activity getActivity() {
+        return mActivity;
     }
 
     /**

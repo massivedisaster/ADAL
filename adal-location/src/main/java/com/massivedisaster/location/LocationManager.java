@@ -50,6 +50,7 @@ public class LocationManager extends AbstractLocationManager {
     private static final long REQUEST_LOCATION_FASTEST_INTERVAL = 1000;
 
     private LocationRequest mLocationRequest;
+    protected boolean mRequestingLocationUpdates;
 
 
     /**
@@ -75,8 +76,8 @@ public class LocationManager extends AbstractLocationManager {
             return;
         }
 
-        mTimeout = timeOut;
-        mLastKnowLocation = lastKnowLocation;
+        setTimeout(timeOut);
+        setLastKnowLocation(lastKnowLocation);
         mOnLocationManager = onLocationManager;
 
         mLocationRequest = new LocationRequest();
@@ -117,8 +118,8 @@ public class LocationManager extends AbstractLocationManager {
      * @param onLocationManager callback
      */
     public void requestLocationUpdates(LocationRequest locationRequest, OnLocationManager onLocationManager) {
-        mTimeout = DEFAULT_TIMEOUT_LOCATION;
-        mLastKnowLocation = false;
+        setTimeout(DEFAULT_TIMEOUT_LOCATION);
+        setLastKnowLocation(false);
         mOnLocationManager = onLocationManager;
 
         mLocationRequest = locationRequest;
@@ -160,7 +161,7 @@ public class LocationManager extends AbstractLocationManager {
                         try {
                             // Show the dialog by calling startResolutionForResult(),
                             // and check the result in onActivityResult().
-                            status.startResolutionForResult(mActivity, REQUEST_CHECK_SETTINGS);
+                            status.startResolutionForResult(getActivity(), REQUEST_CHECK_SETTINGS);
                         } catch (IntentSender.SendIntentException e) {
                             Log.e(getClass().getSimpleName(), e.toString());
                         }

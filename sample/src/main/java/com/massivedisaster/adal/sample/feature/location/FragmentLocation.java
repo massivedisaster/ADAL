@@ -172,7 +172,6 @@ public class FragmentLocation extends BaseFragment {
         });
     }
 
-
     private void getLocationUpdates() {
         mLocationManager.requestLocationUpdates(new OnLocationManager() {
             @Override
