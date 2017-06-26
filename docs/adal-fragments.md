@@ -1,6 +1,7 @@
 # adal-fragments
-AbstractBaseFragment - To simplify an using of fragments.  
+BaseFragment - To simplify an using of fragments.  
 AbstractSplashFragment - An fragment with the splash screen logic implemented.
+AbstractRequestFragment - An fragment prepared to cancel retrofit requests.
 
 ### Download
 
@@ -13,9 +14,9 @@ dependencies {
 ```
 ### Usage
 
-AbstractBaseFragment:
+BaseFragment:
 ```java
-public class FragmentA extends AbstractBaseFragment {
+public class FragmentA extends BaseFragment {
     @Override
     protected int layoutToInflate() {
         return R.layout.fragment_a;
@@ -50,6 +51,23 @@ public class FragmentSplash extends AbstractSplashFragment {
                 getActivity().finish();
             }
         };
+    }
+}
+
+```
+
+AbstractRequestFragment:
+```java
+public class FragmentRequest extends AbstractRequestFragment {
+
+    @Override
+    protected int layoutToInflate() {
+        return R.layout.fragment_request;
+    }
+
+    @Override
+    protected void doOnCreated() {
+        addRequest(...);
     }
 }
 
