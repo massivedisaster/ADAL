@@ -1,4 +1,10 @@
 # adal-adapters
+Android library that helps and abstract the use of `RecyclerView.Adapter`.
+
+<div align="center">
+  <img src="art/adal-adapters.gif" />
+</div>
+
 
 ### Download
 
