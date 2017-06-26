@@ -1,6 +1,6 @@
 # adal-fragments
 BaseFragment - To simplify an using of fragments.  
-AbstractSplashFragment - An fragment with the splash screen logic implemented.
+AbstractSplashFragment - An fragment with the splash screen logic implemented.  
 AbstractRequestFragment - An fragment prepared to cancel retrofit requests.
 
 ### Download
