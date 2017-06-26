@@ -43,8 +43,14 @@ public class FragmentLocation extends BaseFragment {
         mLocationManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mLocationManager.onActivityResult(requestCode, resultCode);
+    }
+
     private void getLocation() {
-        mLocationManager.requestSingleLocation(android.location.LocationManager.NETWORK_PROVIDER, true, 10000, new OnLocationManager() {
+        mLocationManager.requestSingleLocation(true, new OnLocationManager() {
             @Override
             public void onLocationFound(Location location, boolean isLastKnowLocation) {
               // Use location here.
@@ -65,6 +71,52 @@ public class FragmentLocation extends BaseFragment {
             @Override
             public void onPermissionsDenied() {
                 // Permissions denied.
+            }
+
+            @Override
+            public void onProviderEnabled() {
+                // Provider enabled.
+            }
+
+            @Override
+            public void onProviderDisabled() {
+                // Provider disabled.
+            }
+        });
+    }
+
+    private void getLocationUpdates() {
+        mLocationManager.requestLocationUpdates(new OnLocationManager() {
+            @Override
+            public void onLocationFound(Location location, boolean isLastKnowLocation) {
+                // Use location here.
+            }
+
+            @Override
+            public void onLocationError(LocationError locationError) {
+                switch (locationError) {
+                    case DISABLED:
+                        // Location disabled.
+                        break;
+                    case TIMEOUT:
+                        // Location timeout.
+                        break;
+                }
+            }
+
+            @Override
+            public void onPermissionsDenied() {
+                // Permissions denied.
+            }
+
+            @Override
+            public void onProviderEnabled() {
+                // Provider enabled.
+            }
+
+            @Override
+            public void onProviderDisabled() {
+                // Provider disabled.
             }
         });
     }
