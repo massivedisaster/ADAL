@@ -1,18 +1,26 @@
 /*
  * ADAL - A set of Android libraries to help speed up Android development.
- * Copyright (C) 2017 ADAL.
  *
- * ADAL is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 3 of the License, or any later version.
+ * Copyright (c) 2017 ADAL
  *
- * ADAL is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
  *
- * You should have received a copy of the GNU Lesser General Public License along
- * with ADAL. If not, see <http://www.gnu.org/licenses/>.
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 package com.massivedisaster.adal.fragment;
@@ -35,16 +43,20 @@ import com.massivedisaster.adal.utils.KeyboardUtils;
 /**
  * Base class for fragments.
  */
-public abstract class AbstractBaseFragment extends Fragment {
+public class BaseFragment extends Fragment {
 
     private static final int INVALID_RESOURCE_ID = -1;
+
+    private View mView;
 
     /**
      * <p>Used to get data from bundle</p>
      *
      * @param bundle Fragment Bundle
      */
-    protected abstract void getFromBundle(Bundle bundle);
+    protected void getFromBundle(Bundle bundle) {
+        // Intended.
+    }
 
     /**
      * <p>Used to specify fragment layout</p>
@@ -62,13 +74,17 @@ public abstract class AbstractBaseFragment extends Fragment {
      *
      * @param savedInstanceState Last instance state saved from this fragment
      */
-    protected abstract void restoreInstanceState(@Nullable Bundle savedInstanceState);
+    protected void restoreInstanceState(@Nullable Bundle savedInstanceState) {
+        // Intended.
+    }
 
     /**
      * <p>This method is called when the view is already created and is available to inflate
      * children views</p>
      */
-    protected abstract void doOnCreated();
+    protected void doOnCreated() {
+        // Intended.
+    }
 
     /**
      * <p>Request a view by id in case is there any root view inflated
@@ -80,7 +96,7 @@ public abstract class AbstractBaseFragment extends Fragment {
      */
     @SuppressWarnings("unchecked")
     protected <T extends View> T findViewById(@IdRes int viewId) {
-        View view = getView();
+        View view = mView == null ? getView() : mView;
         if (view == null) {
             return null;
         }
@@ -111,24 +127,17 @@ public abstract class AbstractBaseFragment extends Fragment {
 
         if (layoutToInflate() != INVALID_RESOURCE_ID) {
             view = inflater.inflate(layoutToInflate(), container, false);
+            mView = view;
         }
 
         restoreInstanceState(savedInstanceState);
-        return view;
-    }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         if (getArguments() != null) {
             getFromBundle(getArguments());
         }
 
         doOnCreated();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        return view;
     }
 
     @Override
@@ -150,13 +159,17 @@ public abstract class AbstractBaseFragment extends Fragment {
             anim.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-                    getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    if (getActivity() != null) {
+                        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    }
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    if (getActivity() != null) {
+                        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                    }
                 }
 
                 @Override
