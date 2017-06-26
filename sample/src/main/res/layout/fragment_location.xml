@@ -25,22 +25,43 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:layout_margin="@dimen/normal_spacing">
+              android:layout_margin="@dimen/normal_spacing"
+              android:orientation="vertical">
 
     <Button
         android:id="@+id/btnGetLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/small_spacing"
-        android:text="@string/get_location" />
+        android:text="@string/get_location"/>
 
     <TextView
         android:id="@+id/txtInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/normal_spacing"/>
+        android:layout_marginBottom="@dimen/normal_spacing"
+        android:padding="@dimen/normal_spacing"/>
+
+    <Button
+        android:id="@+id/btnGetLocationUpdates"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_spacing"
+        android:text="@string/start_location_updates"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txtInfoUpdates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/normal_spacing"
+            android:padding="@dimen/normal_spacing"/>
+
+    </ScrollView>
 
 </LinearLayout>

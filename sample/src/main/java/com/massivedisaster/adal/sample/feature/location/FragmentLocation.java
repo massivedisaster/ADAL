@@ -60,7 +60,7 @@ public class FragmentLocation extends BaseFragment {
 
     @Override
     protected int layoutToInflate() {
-        return R.layout.fragment_fused_location;
+        return R.layout.fragment_location;
     }
 
     @Override
