@@ -59,7 +59,7 @@ hs_err_pid*
 # Track copyright configuration
 !.idea/copyright
 .idea/copyright/*
-!.idea/copyright/ADAL_GNU_LESSER_GENERAL_PUBLIC_LICENSE.xml
+!.idea/copyright/ADAL_MIT_LICENSE.xml
 !.idea/copyright/profiles_settings.xml
 
 # if you remove the above rule, at least ignore the following:

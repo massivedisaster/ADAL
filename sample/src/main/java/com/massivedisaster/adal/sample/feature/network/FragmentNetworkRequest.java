@@ -1,18 +1,26 @@
 /*
  * ADAL - A set of Android libraries to help speed up Android development.
- * Copyright (C) 2017 ADAL.
  *
- * ADAL is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 3 of the License, or any later version.
+ * Copyright (c) 2017 ADAL
  *
- * ADAL is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
  *
- * You should have received a copy of the GNU Lesser General Public License along
- * with ADAL. If not, see <http://www.gnu.org/licenses/>.
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 package com.massivedisaster.adal.sample.feature.network;
@@ -22,6 +30,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.massivedisaster.adal.adapter.OnLoadMoreListener;
@@ -29,16 +38,17 @@ import com.massivedisaster.adal.fragment.AbstractRequestFragment;
 import com.massivedisaster.adal.network.APIError;
 import com.massivedisaster.adal.network.APIRequestCallback;
 import com.massivedisaster.adal.sample.R;
-import com.massivedisaster.adal.sample.model.Post;
+import com.massivedisaster.adal.sample.model.Photo;
 import com.massivedisaster.adal.sample.network.APIRequests;
 import com.massivedisaster.adal.sample.network.ResponseList;
 
 public class FragmentNetworkRequest extends AbstractRequestFragment {
 
     private TextView mTxtMessage;
+    private Button mBtnTryAgain;
     private RecyclerView mRclItems;
 
-    private AdapterPost mAdapterPost;
+    private AdapterPhoto mAdapterPhoto;
 
     @Override
     protected void getFromBundle(Bundle bundle) {
@@ -57,58 +67,87 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
 
     @Override
     protected void doOnCreated() {
+        getActivity().setTitle(R.string.sample_network);
+
         mTxtMessage = findViewById(R.id.txtMessage);
+        mBtnTryAgain = findViewById(R.id.btnTryAgain);
         mRclItems = findViewById(R.id.rclItems);
+
+        mBtnTryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onTryAgain();
+            }
+        });
 
         mRclItems.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        mAdapterPost = new AdapterPost();
-        mAdapterPost.setOnLoadMoreListener(new OnLoadMoreListener() {
+        mAdapterPhoto = new AdapterPhoto();
+        mAdapterPhoto.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 request();
             }
         });
-        mRclItems.setAdapter(mAdapterPost);
+        mAdapterPhoto.setOnErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onTryAgain();
+            }
+        });
+        mRclItems.setAdapter(mAdapterPhoto);
 
+        request();
+    }
+
+    private void onTryAgain() {
+        mAdapterPhoto.setLoadingError(false);
         request();
     }
 
     private void request() {
 
         // Show the general loading if the adapter is empty
-        if (mAdapterPost.isEmpty()) {
+        if (mAdapterPhoto.isEmpty()) {
             showLoading();
         }
 
-        addRequest((APIRequests.getPosts(new APIRequestCallback<ResponseList<Post>>(getContext()) {
+        addRequest((APIRequests.getPhotos(new APIRequestCallback<ResponseList<Photo>>(getContext()) {
             @Override
-            public void onSuccess(ResponseList<Post> posts) {
+            public void onSuccess(ResponseList<Photo> photos) {
                 showContent();
-                mAdapterPost.addAll(posts);
+                mAdapterPhoto.addAll(photos);
             }
 
             @Override
             public void onError(APIError error, boolean isServerError) {
-                showError(error.getMessage());
+                if (!mAdapterPhoto.isEmpty()) {
+                    mAdapterPhoto.setLoadingError(true);
+                } else {
+                    showError(error.getMessage());
+                }
             }
         })));
     }
 
     private void showLoading() {
         mRclItems.setVisibility(View.GONE);
+        mBtnTryAgain.setVisibility(View.GONE);
         mTxtMessage.setVisibility(View.VISIBLE);
         mTxtMessage.setText(R.string.loading);
     }
 
     private void showError(String error) {
         mRclItems.setVisibility(View.GONE);
+        mBtnTryAgain.setVisibility(View.VISIBLE);
         mTxtMessage.setVisibility(View.VISIBLE);
         mTxtMessage.setText(error);
     }
 
     private void showContent() {
-        mTxtMessage.setVisibility(View.GONE);
         mRclItems.setVisibility(View.VISIBLE);
+        mBtnTryAgain.setVisibility(View.GONE);
+        mTxtMessage.setVisibility(View.GONE);
+
     }
 }

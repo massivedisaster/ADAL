@@ -1,234 +1,216 @@
 /*
  * ADAL - A set of Android libraries to help speed up Android development.
- * Copyright (C) 2017 ADAL.
  *
- * ADAL is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 3 of the License, or any later version.
+ * Copyright (c) 2017 ADAL
  *
- * ADAL is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
  *
- * You should have received a copy of the GNU Lesser General Public License along
- * with ADAL. If not, see <http://www.gnu.org/licenses/>.
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 package com.massivedisaster.location;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.os.Bundle;
-import android.os.Handler;
+import android.content.IntentSender;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
+import android.util.Log;
 
-import com.massivedisaster.adal.permissions.PermissionsManager;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.massivedisaster.location.listener.OnLocationManager;
+import com.massivedisaster.location.utils.LocationError;
 
 /**
- * Location manager.
+ * LocationManager requests single or multiple device locations.
  */
-public class LocationManager implements LocationListener {
+public class LocationManager extends AbstractLocationManager {
 
     private static final long DEFAULT_TIMEOUT_LOCATION = 20000;
-    protected android.location.LocationManager mLocationManager;
-    protected String mProvider;
-    protected boolean mLastKnowLocation;
-    protected OnLocationManager mOnLocationManager;
-    private Activity mActivity;
-    private Fragment mFragment;
-    private Context mContext;
-    private long mTimeout;
-    private PermissionsManager mPermissionsManager;
-    private Handler mHandler;
+    private static final long REQUEST_LOCATION_INTERVAL = 1000;
+    private static final long REQUEST_LOCATION_FASTEST_INTERVAL = 1000;
 
-    /**
-     * Initialize LocationManager
-     *
-     * @param activity to watch onRequestPermissionsResult
-     */
-    public void onCreate(Activity activity) {
-        mActivity = activity;
-        mContext = activity;
+    private LocationRequest mLocationRequest;
+    protected boolean mRequestingLocationUpdates;
 
-        initialize();
-    }
-
-    /**
-     * Initialize LocationManager
-     *
-     * @param fragment to watch onRequestPermissionsResult
-     */
-    public void onCreate(Fragment fragment) {
-        mFragment = fragment;
-        mContext = fragment.getContext();
-
-        initialize();
-    }
-
-    /**
-     * Stop and destroy location requests
-     */
-    public void onDestroy() {
-        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mLocationManager.removeUpdates(this);
-        }
-
-        mHandler.removeCallbacksAndMessages(null);
-    }
-
-    /**
-     * Callback for the result from requesting permissions. This method is invoked for every call
-     * on requestPermissions(android.app.Activity, String[], int).
-     *
-     * @param requestCode  The request code passed in requestPermissions(android.app.Activity, String[], int)
-     * @param permissions  The requested permissions. Never null.
-     * @param grantResults The grant results for the corresponding permissions which is either PERMISSION_GRANTED or PERMISSION_DENIED.
-     *                     Never null.
-     */
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int... grantResults) {
-        mPermissionsManager.onPermissionResult(requestCode);
-    }
-
-    /**
-     * Initialize location manager.
-     */
-    private void initialize() {
-        mLocationManager = (android.location.LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
-        mHandler = new Handler();
-
-        if (mActivity != null) {
-            mPermissionsManager = new PermissionsManager(mActivity);
-        } else {
-            mPermissionsManager = new PermissionsManager(mFragment);
-        }
-    }
-
-    /**
-     * Retrieve the LocationManager object
-     *
-     * @return The LocationManager
-     */
-    public android.location.LocationManager getLocationManager() {
-        return mLocationManager;
-    }
 
     /**
      * Request a single user location
      *
-     * @param provider          you want to request user location
      * @param lastKnowLocation  if you want to get last know location in case of timeout
      * @param onLocationManager callback
      */
-    public void requestSingleLocation(final String provider, boolean lastKnowLocation, OnLocationManager onLocationManager) {
-        requestSingleLocation(provider, lastKnowLocation, DEFAULT_TIMEOUT_LOCATION, onLocationManager);
+    public void requestSingleLocation(boolean lastKnowLocation, OnLocationManager onLocationManager) {
+        requestSingleLocation(lastKnowLocation, DEFAULT_TIMEOUT_LOCATION, onLocationManager);
     }
 
     /**
      * Request a single user location with a custom timeout
      *
-     * @param provider          you want to request user location
      * @param lastKnowLocation  if you want to get last know location in case of timeout
      * @param timeOut           to get the user location
      * @param onLocationManager callback
      */
-    public void requestSingleLocation(final String provider, boolean lastKnowLocation, long timeOut, OnLocationManager onLocationManager) {
-        mProvider = provider;
-        mTimeout = timeOut;
-        mLastKnowLocation = lastKnowLocation;
+    public void requestSingleLocation(boolean lastKnowLocation, long timeOut, OnLocationManager onLocationManager) {
+        if (mRequestingLocationUpdates && onLocationManager != null) {
+            onLocationManager.onLocationError(LocationError.UPDATES_ENABLED);
+            return;
+        }
+
+        setTimeout(timeOut);
+        setLastKnowLocation(lastKnowLocation);
         mOnLocationManager = onLocationManager;
 
-        mPermissionsManager.requestPermissions(
-                new PermissionsManager.OnPermissionsListener() {
-                    @Override
-                    public void onGranted() {
-                        if (LocationUtils.isLocationEnabled(mLocationManager)) {
-                            startRequestLocation();
-                        } else {
-                            mOnLocationManager.onLocationError(LocationError.DISABLED);
-                        }
-                    }
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setNumUpdates(1);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-                    @Override
-                    public void onDenied(boolean showRationale) {
-                        mOnLocationManager.onPermissionsDenied();
-                    }
-                },
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION);
+        connectGoogleAPI();
     }
 
     /**
-     * Stat the request location process.
+     * Request updated locations
+     *
+     * @param onLocationManager callback
      */
-    @SuppressWarnings("MissingPermission")
+    public void requestLocationUpdates(OnLocationManager onLocationManager) {
+        requestLocationUpdates(REQUEST_LOCATION_INTERVAL, onLocationManager);
+    }
+
+    /**
+     * Request updated locations
+     *
+     * @param interval          for active location updates in milliseconds
+     * @param onLocationManager callback
+     */
+    public void requestLocationUpdates(long interval, OnLocationManager onLocationManager) {
+        LocationRequest locationRequest = new LocationRequest();
+        locationRequest.setInterval(interval);
+        locationRequest.setFastestInterval(REQUEST_LOCATION_FASTEST_INTERVAL);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        requestLocationUpdates(locationRequest, onLocationManager);
+    }
+
+    /**
+     * Request updated locations
+     *
+     * @param locationRequest   to put settings to request location updates
+     * @param onLocationManager callback
+     */
+    public void requestLocationUpdates(LocationRequest locationRequest, OnLocationManager onLocationManager) {
+        setTimeout(DEFAULT_TIMEOUT_LOCATION);
+        setLastKnowLocation(false);
+        mOnLocationManager = onLocationManager;
+
+        mLocationRequest = locationRequest;
+
+        connectGoogleAPI();
+    }
+
+    /**
+     * Check the providers
+     */
+    @Override
     protected void startRequestLocation() {
-        mLocationManager.requestSingleUpdate(mProvider, this, null);
+        if (mLocationRequest == null) {
+            mOnLocationManager.onLocationError(LocationError.REQUEST_NEEDED);
+            return;
+        }
 
-        Runnable mRun = new Runnable() {
-            public void run() {
-                Location position = mLocationManager.getLastKnownLocation(mProvider);
-                mLocationManager.removeUpdates(LocationManager.this);
+        LocationSettingsRequest locationSettingsRequest =
+                new LocationSettingsRequest.Builder().addLocationRequest(mLocationRequest).build();
 
-                if (mLastKnowLocation && position != null) {
-                    mOnLocationManager.onLocationFound(position, true);
-                } else {
-                    mOnLocationManager.onLocationError(LocationError.TIMEOUT);
+        PendingResult<LocationSettingsResult> pendingResult =
+                LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, locationSettingsRequest);
+
+        pendingResult.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+            @Override
+            public void onResult(@NonNull LocationSettingsResult result) {
+                Status status = result.getStatus();
+                switch (status.getStatusCode()) {
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        // All location settings are satisfied. The client can
+                        // initialize location requests here.
+                        mRequestingLocationUpdates = true;
+                        startLocationUpdates();
+                        break;
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        // Location settings are not satisfied, but this can be fixed
+                        // by showing the user a dialog.
+                        mRequestingLocationUpdates = false;
+                        try {
+                            // Show the dialog by calling startResolutionForResult(),
+                            // and check the result in onActivityResult().
+                            status.startResolutionForResult(getActivity(), REQUEST_CHECK_SETTINGS);
+                        } catch (IntentSender.SendIntentException e) {
+                            Log.e(getClass().getSimpleName(), e.toString());
+                        }
+                        mOnLocationManager.onProviderDisabled();
+                        break;
+                    default:
+                        mRequestingLocationUpdates = false;
+                        mOnLocationManager.onLocationError(LocationError.DISABLED);
+                        break;
                 }
             }
-        };
-
-        mHandler.postDelayed(mRun, mTimeout);
+        });
     }
 
     /**
-     * Callend when location changes.
-     *
-     * @param location the location.
+     * Start the request location updates
      */
-    @Override
-    public void onLocationChanged(Location location) {
-        mHandler.removeCallbacksAndMessages(null);
+    protected void startLocationUpdates() {
+        if (!mGoogleApiClient.isConnected() || !mRequestingLocationUpdates) {
+            mOnLocationManager.onLocationError(LocationError.DISABLED);
+            return;
+        }
 
-        mOnLocationManager.onLocationFound(location, false);
+        try {
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+        } catch (SecurityException e) {
+            Log.e(getClass().getSimpleName(), e.toString());
+        }
+
+        showLastLocationAfterTimeout();
     }
 
     /**
-     * Called when status changes.
-     *
-     * @param provider the provider.
-     * @param status   the status.
-     * @param extras   the extras.
+     * Stop the updates from request location
      */
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-        // Intended.
-    }
+    public void stopRequestLocation() {
+        mRequestingLocationUpdates = false;
 
-    /**
-     * Called when provider is enabled.
-     *
-     * @param provider the provider.
-     */
-    @Override
-    public void onProviderEnabled(String provider) {
-        mOnLocationManager.onProviderEnabled(provider);
-    }
+        if (mGoogleApiClient == null) {
+            return;
+        }
 
-    /**
-     * Called when provider is disabled.
-     *
-     * @param provider the provider.
-     */
-    @Override
-    public void onProviderDisabled(String provider) {
-        mOnLocationManager.onProviderDisabled(provider);
+        if (mGoogleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this).setResultCallback(new ResultCallback<Status>() {
+                @Override
+                public void onResult(@NonNull Status status) {
+                    mGoogleApiClient.disconnect();
+                }
+            });
+        }
     }
 }
