@@ -62,7 +62,7 @@ public class FragmentFirebaseAnalytics extends BaseFragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, FragmentAnalyticsLabel.class);
+                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, FragmentFirebaseAnalyticsLabel.class);
             }
         });
 
