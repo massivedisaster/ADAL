@@ -23,6 +23,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+apply from: "$project.rootDir/deploy/updateReadme.gradle"
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 ext {
     userOrgBase = 'massivedisaster'
@@ -64,4 +66,10 @@ task clean(type: Delete) {
 
 task version {
     println "Current version: " + libraryVersionString()
+}
+
+task updateReadme() {
+    doLast {
+        processUpdateReadme file("$project.rootDir"), ".md", libraryVersionName
+    }
 }
