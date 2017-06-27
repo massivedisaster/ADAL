@@ -1,7 +1,9 @@
 {
     "basePath": "../",
-    "readmePath": "../README.md",
-    "version": "0.1.12",
+    "version": "0.1.13",
+    "extraTasks": [
+        "updateReadme"
+    ],
     "modules": [
         "adal",
         "adal-accounts",

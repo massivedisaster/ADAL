@@ -7,7 +7,7 @@ Gradle:
 
 ```gradle
 dependencies {
-  compile 'com.massivedisaster.adal:adal-analytics:0.1.12'
+  compile 'com.massivedisaster.adal:adal-analytics:0.1.13'
 }
 ```
 ### Usage
