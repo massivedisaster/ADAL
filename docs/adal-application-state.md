@@ -1,6 +1,10 @@
 # adal-application-state
 Android library that let you know if the application is in foreground or background via `getter` or `callback.` 
 
+<div align="center">
+  <img src="art/adal-application-state.gif" />
+</div>
+
 ### Download
 Gradle:
 

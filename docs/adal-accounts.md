@@ -1,6 +1,10 @@
 # adal-accounts
 Android library that helps store and retrieve an Account from Android [AccountManager](https://developer.android.com/reference/android/accounts/AccountManager.html).
 
+<div align="center">
+  <img src="art/adal-accounts.gif" />
+</div>
+
 ### Download
 Gradle:
 
