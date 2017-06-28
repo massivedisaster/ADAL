@@ -62,6 +62,8 @@
     <string name="analytics_gender_title">Gender</string>
     <string name="analytics_gender_male">Male</string>
     <string name="analytics_gender_female">Female</string>
+    <string name="firebase_analytics_message_screen">A screen was sended to Firebase Analytics after this fragment are opened.</string>
+    <string name="firebase_analytics_message_screen_label">A screen with a label was sended to Firebase Analytics after this fragment are opened.\n\nThe screen must have a formmatted string to put your label</string>
 
     <string name="open_settings">Open Settings</string>
     <string name="check_playservices_exists">Check if Google PlayServices Exists</string>

@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/large_spacing"
-            android:text="@string/analytics_message_screen"/>
+            android:text="@string/firebase_analytics_message_screen"/>
 
         <Button
             android:id="@+id/btnAnalyticsNewFragment"
