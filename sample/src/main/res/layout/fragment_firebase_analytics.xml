@@ -25,7 +25,6 @@
   -->
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -33,6 +32,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <TextView
@@ -84,15 +85,6 @@
             android:layout_marginRight="@dimen/normal_spacing"
             android:layout_marginTop="@dimen/extra_small_spacing"
             android:text="@string/analytics_send_event_label"/>
-
-        <TextView
-            android:id="@+id/txtAnalyticsSendEventMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/large_spacing"
-            android:text="@string/analytics_message_events"
-            android:visibility="gone"
-            tools:visibility="visible"/>
 
         <View
             android:layout_width="match_parent"

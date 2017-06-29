@@ -27,6 +27,7 @@ package com.massivedisaster.adal.sample.feature.analytics;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.TextView;
 
 import com.massivedisaster.adal.analytics.FirebaseAnalyticsManager;
 import com.massivedisaster.adal.fragment.BaseFragment;
@@ -51,6 +52,9 @@ public class FragmentFirebaseAnalyticsLabel extends BaseFragment {
 
     @Override
     protected void doOnCreated() {
+
+        TextView txtAnalyticsLabel = findViewById(R.id.txtAnalyticsLabel);
+        txtAnalyticsLabel.setText(R.string.firebase_analytics_message_screen_label);
 
         /*
          * Send a screen with a label to FA

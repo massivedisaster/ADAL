@@ -57,13 +57,15 @@
     <string name="analytics_message_screen_label">A screen with a label was sended to Google Analytics after this fragment are opened.\n\nThe screen must have a formmatted string to put your label</string>
     <string name="analytics_send_event">Send an event</string>
     <string name="analytics_send_event_label">Send an event with label</string>
-    <string name="analytics_message_events">After send an event you need to confirm this on your Google Analytics account.</string>
+    <string name="analytics_message_events">Go to Google Analytics Console to see this Event.</string>
     <string name="analytics_edittext_hint">Label</string>
     <string name="analytics_gender_title">Gender</string>
     <string name="analytics_gender_male">Male</string>
     <string name="analytics_gender_female">Female</string>
     <string name="firebase_analytics_message_screen">A screen was sended to Firebase Analytics after this fragment are opened.</string>
     <string name="firebase_analytics_message_screen_label">A screen with a label was sended to Firebase Analytics after this fragment are opened.\n\nThe screen must have a formmatted string to put your label</string>
+    <string name="firebase_analytics_message_events">Go to Firebase Analytics Console to see this Event.</string>
+    <string name="firebase_analytics_message_user_property">Go to Firebase Analytics Console to see this User Property.</string>
 
     <string name="open_settings">Open Settings</string>
     <string name="check_playservices_exists">Check if Google PlayServices Exists</string>

@@ -37,6 +37,7 @@ import com.massivedisaster.adal.analytics.FirebaseAnalyticsManager;
 import com.massivedisaster.adal.fragment.BaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
+import com.massivedisaster.adal.utils.SnackBuilder;
 
 import java.util.HashMap;
 
@@ -120,12 +121,14 @@ public class FragmentFirebaseAnalytics extends BaseFragment {
                                 getActivity(),
                                 R.string.analytics_gender_title,
                                 R.string.analytics_gender_male);
+                        showUserPropertyMessage();
                         break;
                     case R.id.rdbAnalyticsGenderF:
                         FirebaseAnalyticsManager.sendUserProperty(
                                 getActivity(),
                                 R.string.analytics_gender_title,
                                 R.string.analytics_gender_female);
+                        showUserPropertyMessage();
                         break;
                 }
             }
@@ -134,6 +137,10 @@ public class FragmentFirebaseAnalytics extends BaseFragment {
     }
 
     private void showEventMessage() {
-        findViewById(R.id.txtAnalyticsSendEventMessage).setVisibility(View.VISIBLE);
+        SnackBuilder.show(getView(), R.string.firebase_analytics_message_events, R.color.colorAccent);
+    }
+
+    private void showUserPropertyMessage() {
+        SnackBuilder.show(getView(), R.string.firebase_analytics_message_user_property, R.color.colorAccent);
     }
 }

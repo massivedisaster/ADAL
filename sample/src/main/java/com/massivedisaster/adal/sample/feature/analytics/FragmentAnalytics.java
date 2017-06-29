@@ -35,6 +35,7 @@ import com.massivedisaster.adal.analytics.AnalyticsManager;
 import com.massivedisaster.adal.fragment.BaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
+import com.massivedisaster.adal.utils.SnackBuilder;
 
 public class FragmentAnalytics extends BaseFragment {
 
@@ -108,6 +109,6 @@ public class FragmentAnalytics extends BaseFragment {
     }
 
     private void showEventMessage() {
-        findViewById(R.id.txtAnalyticsSendEventMessage).setVisibility(View.VISIBLE);
+        SnackBuilder.show(getView(), R.string.analytics_message_events, R.color.colorAccent);
     }
 }
