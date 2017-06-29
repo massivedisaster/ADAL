@@ -1,6 +1,11 @@
 # adal-analytics
 Android library that simplifies using Google Analytics or Firebase Analytics.
 
+<div align="center">
+  <img src="art/adal-google-analytics.gif" />
+  <img src="art/adal-firebase-analytics.gif" />
+</div>
+
 ### Download
 
 Gradle:
