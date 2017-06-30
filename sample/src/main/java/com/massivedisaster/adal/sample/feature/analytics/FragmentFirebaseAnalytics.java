@@ -25,47 +25,45 @@
 
 package com.massivedisaster.adal.sample.feature.analytics;
 
+import android.support.annotation.IdRes;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioGroup;
 
 import com.massivedisaster.activitymanager.ActivityFragmentManager;
-import com.massivedisaster.adal.analytics.AnalyticsManager;
+import com.massivedisaster.adal.analytics.FirebaseAnalyticsManager;
 import com.massivedisaster.adal.fragment.BaseFragment;
 import com.massivedisaster.adal.sample.R;
 import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
 import com.massivedisaster.adal.utils.SnackBuilder;
 
-public class FragmentAnalytics extends BaseFragment {
+import java.util.HashMap;
+
+public class FragmentFirebaseAnalytics extends BaseFragment {
 
     private AppCompatEditText mEdtAnalyticsEventLabel;
 
     @Override
     protected int layoutToInflate() {
-        return R.layout.fragment_analytics;
+        return R.layout.fragment_firebase_analytics;
     }
 
     @Override
     protected void doOnCreated() {
-        getActivity().setTitle(R.string.sample_analytics);
+        getActivity().setTitle(R.string.sample_firebase_analytics);
 
         /*
-         * You need to generate a json file
-         *
-         * https://developers.google.com/mobile/add?platform=android&cntapi=signin&cnturl=https:%2F%2Fdevelopers.google.com%2Fidentity%2Fsign-in%2Fandroid%2Fsign-in%3Fconfigured%3Dtrue&cntlbl=Continue%20Adding%20Sign-In
+         * Send a screen to FA
          */
-
-        /*
-         * Send a screen to GA
-         */
-        AnalyticsManager.with(getContext()).sendScreen(R.string.analytics_screen_main);
+        FirebaseAnalyticsManager.sendScreen(getActivity(), R.string.analytics_screen_main);
 
         Button button = findViewById(R.id.btnAnalyticsNewFragment);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, FragmentAnalyticsLabel.class);
+                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, FragmentFirebaseAnalyticsLabel.class);
             }
         });
 
@@ -74,11 +72,14 @@ public class FragmentAnalytics extends BaseFragment {
             @Override
             public void onClick(View v) {
                 /*
-                 * Send an event to GA
+                 * Send an event to FA
                  */
-                AnalyticsManager.with(getContext()).sendEvent(
-                        R.string.analytics_event_category,
-                        R.string.analytics_event_action);
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("event_category", getString(R.string.analytics_event_category));
+                hashMap.put("event_action", getString(R.string.analytics_event_action));
+
+                FirebaseAnalyticsManager.sendEvent(getActivity(), R.string.analytics_event_name, hashMap);
+
                 showEventMessage();
             }
         });
@@ -97,18 +98,49 @@ public class FragmentAnalytics extends BaseFragment {
                 }
 
                 /*
-                 * Send an event with a label to GA
+                 * Send an event with a label to FA
                  */
-                AnalyticsManager.with(getContext()).sendEvent(
-                        R.string.analytics_event_category,
-                        R.string.analytics_event_action,
-                        label);
+                HashMap<String, String> hashMap = new HashMap<>();
+                hashMap.put("event_category", getString(R.string.analytics_event_category));
+                hashMap.put("event_action", getString(R.string.analytics_event_action));
+                hashMap.put("event_label", label);
+
+                FirebaseAnalyticsManager.sendEvent(getActivity(), R.string.analytics_event_name, hashMap);
+
                 showEventMessage();
             }
         });
+
+        RadioGroup rdgAnalyticsGender = findViewById(R.id.rdgAnalyticsGender);
+        rdgAnalyticsGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                switch (checkedId){
+                    case R.id.rdbAnalyticsGenderM:
+                        FirebaseAnalyticsManager.sendUserProperty(
+                                getActivity(),
+                                R.string.analytics_gender_title,
+                                R.string.analytics_gender_male);
+                        showUserPropertyMessage();
+                        break;
+                    case R.id.rdbAnalyticsGenderF:
+                        FirebaseAnalyticsManager.sendUserProperty(
+                                getActivity(),
+                                R.string.analytics_gender_title,
+                                R.string.analytics_gender_female);
+                        showUserPropertyMessage();
+                        break;
+                }
+            }
+        });
+
     }
 
     private void showEventMessage() {
-        SnackBuilder.show(getView(), R.string.analytics_message_events, R.color.colorAccent);
+        SnackBuilder.show(getView(), R.string.firebase_analytics_message_events, R.color.colorAccent);
+    }
+
+    private void showUserPropertyMessage() {
+        SnackBuilder.show(getView(), R.string.firebase_analytics_message_user_property, R.color.colorAccent);
     }
 }
