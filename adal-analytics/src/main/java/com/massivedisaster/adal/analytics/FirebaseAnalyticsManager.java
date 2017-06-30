@@ -34,7 +34,6 @@ import android.util.Log;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Firebase Analytics Manager
@@ -50,21 +49,17 @@ public final class FirebaseAnalyticsManager {
     /**
      * Send a screen with screenId
      *
-     * @param activity     the activity the activity
+     * @param activity     the activity
      * @param screenNameId from strings resources
      */
     public static void sendScreen(Activity activity, @StringRes int screenNameId) {
-        if (screenNameId == 0) {
-            Log.w(FirebaseAnalyticsManager.class.getCanonicalName(), "You need a screenName to send the Screen");
-            return;
-        }
-        sendScreen(activity, activity.getString(screenNameId));
+        sendScreen(activity, screenNameId, null);
     }
 
     /**
      * Send a screen with screenId
      *
-     * @param activity     the activity the activity
+     * @param activity     the activity
      * @param screenNameId from strings resources
      * @param label        label to format arguments in string resource
      */
@@ -94,7 +89,7 @@ public final class FirebaseAnalyticsManager {
         }
 
         if (BuildConfig.DEBUG) {
-            Log.i(FirebaseAnalyticsManager.class.getCanonicalName(), "Setting Screen name: " + screenName);
+            Log.d(FirebaseAnalyticsManager.class.getCanonicalName(), "Setting Screen name: " + screenName);
         }
 
         FirebaseAnalytics.getInstance(activity).setCurrentScreen(activity, screenName, null);
@@ -109,7 +104,7 @@ public final class FirebaseAnalyticsManager {
      */
     public static void sendEvent(Activity activity, @StringRes int eventNameId, Map<String, String> eventInfo) {
         if (eventNameId == 0) {
-            Log.w(FirebaseAnalyticsManager.class.getCanonicalName(), "You need a eventName to send the Event");
+            Log.w(FirebaseAnalyticsManager.class.getCanonicalName(), "You need a eventNameId to send the Event");
             return;
         }
         sendEvent(activity, activity.getString(eventNameId), eventInfo);
@@ -133,8 +128,7 @@ public final class FirebaseAnalyticsManager {
         }
 
         Bundle bundle = new Bundle();
-        Set<Map.Entry<String, String>> setEntry = eventInfo.entrySet();
-        for (Map.Entry<String, String> entry : setEntry) {
+        for (Map.Entry<String, String> entry : eventInfo.entrySet()) {
             bundle.putString(entry.getKey(), entry.getValue());
         }
 
@@ -149,15 +143,11 @@ public final class FirebaseAnalyticsManager {
      * @param valueId    resource id to value string
      */
     public static void sendUserProperty(Activity activity, @StringRes int propertyId, @StringRes int valueId) {
-        if (propertyId == 0) {
-            Log.w(FirebaseAnalyticsManager.class.getCanonicalName(), "You need a propertyId to send the User Property");
-            return;
-        }
         if (valueId == 0) {
             Log.w(FirebaseAnalyticsManager.class.getCanonicalName(), "You need a valueId to send the User Property");
             return;
         }
-        sendUserProperty(activity, activity.getString(propertyId), activity.getString(valueId));
+        sendUserProperty(activity, propertyId, activity.getString(valueId));
     }
 
     /**
