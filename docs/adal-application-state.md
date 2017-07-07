@@ -48,7 +48,7 @@ public class App extends Application implements ApplicationStateManager.BackAndF
 }
 ```
 
-Another way of using within a `Fragment` or `Activity`.
+Another way of using `ApplicationStateManager` with a `context` reference.
 ```java
 Application application = (Application) context.getApplicationContext();
 application.registerActivityLifecycleCallbacks(new ApplicationStateManager() {
