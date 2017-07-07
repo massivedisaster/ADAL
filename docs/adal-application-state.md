@@ -48,6 +48,22 @@ public class App extends Application implements ApplicationStateManager.BackAndF
 }
 ```
 
+Another way of using `ApplicationStateManager` with a `context` reference.
+```java
+Application application = (Application) context.getApplicationContext();
+application.registerActivityLifecycleCallbacks(new ApplicationStateManager() {
+    @Override
+    public void onActivityResumed(Activity activity) {
+        doOnActivityResumed(activity);
+    }
+
+    @Override
+    public void onActivityPaused(Activity activity) {
+        doOnActivityPaused(activity);
+    }
+});
+```
+
 ### Contributing
 [CONTRIBUTING](../CONTRIBUTING.md)
 
