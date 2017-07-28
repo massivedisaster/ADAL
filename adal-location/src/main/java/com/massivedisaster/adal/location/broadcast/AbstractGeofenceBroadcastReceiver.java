@@ -30,13 +30,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+/**
+ * Abstract Broadcast Receiver to handle Geofence messages
+ */
 public abstract class AbstractGeofenceBroadcastReceiver extends BroadcastReceiver {
 
     public static final String ACTION_RECEIVE_GEOFENCE = "com.massivedisaster.adal.location.ACTION_RECEIVE_GEOFENCE";
 
-    private static final String sNullActionException = "You must define an action on your pending intent";
-    private static final String sBootCompleteMessage = "::: ::: ::: BOOT - ON RECEIVE";
-    private static final String sGeofenceReceivedMessage = "::: ::: ::: GEOFENCE - ON RECEIVE";
+    private static final String ILLEGAL_ACTION_EXCEPTION = "You must define an action on your pending intent";
+    private static final String BOOT_COMPLETE_MESSAGE = "::: ::: ::: BOOT - ON RECEIVE";
+    private static final String GEOFENCE_RECEIVED_MESSAGE = "::: ::: ::: GEOFENCE - ON RECEIVE";
 
     /**
      * Handles broadcast message when action
@@ -62,15 +65,15 @@ public abstract class AbstractGeofenceBroadcastReceiver extends BroadcastReceive
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        if(action == null) {
-            throw new NullPointerException(sNullActionException);
+        if (action == null) {
+            throw new IllegalArgumentException(ILLEGAL_ACTION_EXCEPTION);
         }
 
-        if(action.equals(Intent.ACTION_BOOT_COMPLETED)) {
-            Log.d(AbstractGeofenceBroadcastReceiver.class.getSimpleName(), sBootCompleteMessage );
+        if (action.equals(Intent.ACTION_BOOT_COMPLETED)) {
+            Log.d(AbstractGeofenceBroadcastReceiver.class.getSimpleName(), BOOT_COMPLETE_MESSAGE);
             onBootCompleted(context, intent);
-        } else if(action.equals(ACTION_RECEIVE_GEOFENCE)) {
-            Log.d(AbstractGeofenceBroadcastReceiver.class.getSimpleName(), sGeofenceReceivedMessage);
+        } else if (action.equals(ACTION_RECEIVE_GEOFENCE)) {
+            Log.d(AbstractGeofenceBroadcastReceiver.class.getSimpleName(), GEOFENCE_RECEIVED_MESSAGE);
             onReceiveGeofence(context, intent);
         }
     }
