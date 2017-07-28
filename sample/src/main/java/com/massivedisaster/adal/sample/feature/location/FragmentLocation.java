@@ -36,9 +36,9 @@ import android.widget.TextView;
 
 import com.massivedisaster.adal.fragment.BaseFragment;
 import com.massivedisaster.adal.sample.R;
-import com.massivedisaster.location.LocationManager;
-import com.massivedisaster.location.listener.OnLocationManager;
-import com.massivedisaster.location.utils.LocationError;
+import com.massivedisaster.adal.location.LocationManager;
+import com.massivedisaster.adal.location.listener.OnLocationManager;
+import com.massivedisaster.adal.location.utils.LocationError;
 
 public class FragmentLocation extends BaseFragment {
 

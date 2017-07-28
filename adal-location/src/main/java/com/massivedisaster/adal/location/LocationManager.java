@@ -23,7 +23,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.massivedisaster.location;
+package com.massivedisaster.adal.location;
 
 import android.content.IntentSender;
 import android.support.annotation.NonNull;
@@ -37,8 +37,8 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.massivedisaster.location.listener.OnLocationManager;
-import com.massivedisaster.location.utils.LocationError;
+import com.massivedisaster.adal.location.listener.OnLocationManager;
+import com.massivedisaster.adal.location.utils.LocationError;
 
 /**
  * LocationManager requests single or multiple device locations.

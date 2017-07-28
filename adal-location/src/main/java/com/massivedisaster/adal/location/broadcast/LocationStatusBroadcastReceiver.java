@@ -15,16 +15,16 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.location.broadcast;
+package com.massivedisaster.adal.location.broadcast;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.massivedisaster.location.LocationManager;
-import com.massivedisaster.location.listener.OnLocationStatusProviderListener;
-import com.massivedisaster.location.utils.LocationUtils;
+import com.massivedisaster.adal.location.LocationManager;
+import com.massivedisaster.adal.location.listener.OnLocationStatusProviderListener;
+import com.massivedisaster.adal.location.utils.LocationUtils;
 
 
 /**
