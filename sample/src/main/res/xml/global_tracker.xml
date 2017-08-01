@@ -24,16 +24,6 @@
   ~ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/txtAnalyticsLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/large_spacing"
-        android:text="@string/firebase_analytics_message_screen_label" />
-
-</LinearLayout>
+<resources>
+    <string name="ga_trackingId" translatable="false">UA-99717384-1</string>
+</resources>

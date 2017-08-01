@@ -10,7 +10,7 @@ Gradle:
 
 ```gradle
 dependencies {
-  compile 'com.massivedisaster.adal:adal-application-state:0.1.13'
+  compile 'com.massivedisaster.adal:adal-application-state:0.1.14'
 }
 ```
 
@@ -46,6 +46,22 @@ public class App extends Application implements ApplicationStateManager.BackAndF
         return applicationStateManager.isForeground();
     }
 }
+```
+
+Another way of using `ApplicationStateManager` with a `context` reference.
+```java
+Application application = (Application) context.getApplicationContext();
+application.registerActivityLifecycleCallbacks(new ApplicationStateManager() {
+    @Override
+    public void onActivityResumed(Activity activity) {
+        doOnActivityResumed(activity);
+    }
+
+    @Override
+    public void onActivityPaused(Activity activity) {
+        doOnActivityPaused(activity);
+    }
+});
 ```
 
 ### Contributing

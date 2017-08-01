@@ -33,17 +33,17 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "com.google.gms:google-services:3.0.0"
+        classpath "com.google.gms:google-services:3.1.0"
     }
 }
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion project.compileSdkVersion.toInteger()
     buildToolsVersion project.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 25
+        minSdkVersion project.minSdkVersion.toInteger()
+        targetSdkVersion project.targetSdkVersion.toInteger()
         versionCode libraryVersionCode
         versionName libraryVersionName
     }
@@ -58,6 +58,7 @@ android {
 dependencies {
     /* ANALYTICS */
     compile "com.google.android.gms:play-services-analytics:$project.googlePlayServicesVersion"
+    compile "com.google.firebase:firebase-core:$project.firebaseVersion"
 }
 
 publish {

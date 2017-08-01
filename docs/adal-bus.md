@@ -10,7 +10,7 @@ Gradle:
 
 ```gradle
 dependencies {
-  compile 'com.massivedisaster.adal:adal-bus:0.1.13'
+  compile 'com.massivedisaster.adal:adal-bus:0.1.14'
 }
 ```
 

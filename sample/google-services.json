@@ -1,35 +1,39 @@
 {
   "project_info": {
-    "project_number": "462616930610",
-    "project_id": "firebase-adaltest"
+    "project_number": "698332537945",
+    "firebase_url": "https://adalsample.firebaseio.com",
+    "project_id": "adalsample",
+    "storage_bucket": "adalsample.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:462616930610:android:d2eca8bc104bd788",
+        "mobilesdk_app_id": "1:698332537945:android:d2eca8bc104bd788",
         "android_client_info": {
           "package_name": "com.massivedisaster.adal.sample"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "698332537945-kngktebjh1g9g6k3e1icun5696c25esg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyBwPqF2InyfrTCPaa8XAB3xPbz8oik4vdA"
+          "current_key": "AIzaSyBG29B6lWwts1zm3BZoeyL7fiQfaRb5pUI"
         }
       ],
       "services": {
         "analytics_service": {
-          "status": 2,
-          "analytics_property": {
-            "tracking_id": "UA-99717384-1"
-          }
+          "status": 1
         },
         "appinvite_service": {
           "status": 1,
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

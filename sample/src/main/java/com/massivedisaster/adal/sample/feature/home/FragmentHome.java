@@ -41,6 +41,7 @@ import com.massivedisaster.adal.sample.base.activity.ActivityToolbar;
 import com.massivedisaster.adal.sample.feature.accounts.FragmentAccounts;
 import com.massivedisaster.adal.sample.feature.alarm.FragmentAlarm;
 import com.massivedisaster.adal.sample.feature.analytics.FragmentAnalytics;
+import com.massivedisaster.adal.sample.feature.analytics.FragmentFirebaseAnalytics;
 import com.massivedisaster.adal.sample.feature.bus.FragmentA;
 import com.massivedisaster.adal.sample.feature.location.FragmentLocation;
 import com.massivedisaster.adal.sample.feature.network.FragmentNetworkRequest;
@@ -86,7 +87,8 @@ public class FragmentHome extends BaseFragment {
         adapter.setOnChildClickListener(new OnChildClickListener<String>() {
             @Override
             public void onChildClick(View view, String key, int position) {
-                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, getExamples().get(key));
+                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, getExamples().get(key))
+                        .commit();
             }
         });
 
@@ -103,6 +105,7 @@ public class FragmentHome extends BaseFragment {
             put("Bangbus", FragmentA.class);
             put("Network", FragmentNetworkRequest.class);
             put("Analytics", FragmentAnalytics.class);
+            put("Firebase Analytics", FragmentFirebaseAnalytics.class);
             put("Utils", FragmentUtils.class);
         }};
     }

@@ -29,11 +29,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
 
-import com.massivedisaster.adal.analytics.AnalyticsManager;
+import com.massivedisaster.adal.analytics.FirebaseAnalyticsManager;
 import com.massivedisaster.adal.fragment.BaseFragment;
 import com.massivedisaster.adal.sample.R;
 
-public class FragmentAnalyticsLabel extends BaseFragment {
+public class FragmentFirebaseAnalyticsLabel extends BaseFragment {
 
     @Override
     protected void getFromBundle(Bundle bundle) {
@@ -54,13 +54,13 @@ public class FragmentAnalyticsLabel extends BaseFragment {
     protected void doOnCreated() {
 
         TextView txtAnalyticsLabel = findViewById(R.id.txtAnalyticsLabel);
-        txtAnalyticsLabel.setText(R.string.analytics_message_screen_label);
+        txtAnalyticsLabel.setText(R.string.firebase_analytics_message_screen_label);
 
         /*
-         * Send a screen with a label to GA
+         * Send a screen with a label to FA
          *
          * The screen must have a formmatted string to put your label (see R.string.analytics_screen_label)
          */
-        AnalyticsManager.with(getContext()).sendScreen(R.string.analytics_screen_label, "MY LABEL");
+        FirebaseAnalyticsManager.sendScreen(getActivity(), R.string.analytics_screen_label, "My Label");
     }
 }
