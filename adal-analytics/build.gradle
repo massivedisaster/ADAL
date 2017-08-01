@@ -38,12 +38,12 @@ buildscript {
 }
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion project.compileSdkVersion.toInteger()
     buildToolsVersion project.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 25
+        minSdkVersion project.minSdkVersion.toInteger()
+        targetSdkVersion project.targetSdkVersion.toInteger()
         versionCode libraryVersionCode
         versionName libraryVersionName
     }

@@ -50,11 +50,11 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * <b>BangBusTests class</b>
- *
+ * <p>
  * <p>Test suite to evaluate BangBus class methods and behaviours</p>
- *
+ * <p>
  * <b>Implemented tests:</b>
- *
+ * <p>
  * # <p>({@link #testSendEventSubscribedWithAction() testSendEventSubscribed} method)</p>
  * # <p>({@link #testSendEventSubscribedWithoutAction() testSendEventSubscribed} method)</p>
  * # <p>({@link #testSendEventUnsubscribedWithAction() testSendEventUnsubscribed} method) throws {@link NoMatchingViewException}</p>
@@ -67,10 +67,7 @@ public class BangBusTests extends AbstractBaseTestSuite {
 
     @Override
     protected void setup() {
-        Intent intent = new Intent();
-
-        intent.putExtra(ActivityFragmentManager.ACTIVITY_MANAGER_FRAGMENT, FragmentA.class.getCanonicalName());
-        intent.putExtra(ActivityFragmentManager.ACTIVITY_MANAGER_FRAGMENT_TAG, FragmentA.class.getCanonicalName());
+        Intent intent = ActivityFragmentManager.open(activityTestRule.getActivity(), ActivityToolbar.class, FragmentA.class).getIntent();
 
         activityTestRule.launchActivity(intent);
     }

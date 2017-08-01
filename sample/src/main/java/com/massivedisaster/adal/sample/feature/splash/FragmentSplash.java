@@ -65,7 +65,8 @@ public class FragmentSplash extends AbstractSplashFragment {
         return new OnFinishSplashScreen() {
             @Override
             public void onFinish() {
-                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, FragmentHome.class);
+                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, FragmentHome.class)
+                        .commit();
                 getActivity().finish();
             }
         };

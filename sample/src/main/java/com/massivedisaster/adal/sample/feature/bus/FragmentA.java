@@ -81,7 +81,8 @@ public class FragmentA extends BaseFragment {
             public void onClick(View v) {
                 mTxtResult.setText("");
                 mBangBus.subscribe(FragmentA.this);
-                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, FragmentB.class);
+                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, FragmentB.class)
+                        .commit();
             }
         });
 
@@ -90,7 +91,8 @@ public class FragmentA extends BaseFragment {
             public void onClick(View v) {
                 mTxtResult.setText("");
                 mBangBus.unsubscribe();
-                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, FragmentB.class);
+                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, FragmentB.class)
+                        .commit();
             }
         });
     }

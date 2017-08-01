@@ -25,17 +25,14 @@
 
 package com.massivedisaster.adal.sample.feature.splash;
 
-import com.massivedisaster.activitymanager.ActivityFragmentManager;
+import android.support.v4.app.Fragment;
+
 import com.massivedisaster.adal.sample.base.activity.ActivityFullScreen;
 
 public class ActivitySplashScreen extends ActivityFullScreen {
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        if (getSupportFragmentManager().getBackStackEntryCount() == 0 && !getIntent().hasExtra(ActivityFragmentManager.ACTIVITY_MANAGER_FRAGMENT)) {
-            performTransaction(new FragmentSplash(), FragmentSplash.class.getCanonicalName());
-        }
+    protected Class<? extends Fragment> getDefaultFragment() {
+        return FragmentSplash.class;
     }
 }

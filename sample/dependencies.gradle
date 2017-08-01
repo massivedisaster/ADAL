@@ -24,7 +24,7 @@
  */
 
 ext {
-    afmVersion = '0.2.0'
+    afmVersion = '0.4.1'
     espressoVersion = '2.2.2'
     jUnitVersion = '4.12'
     mockitoVersion = '2.8.9'
