@@ -29,7 +29,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.massivedisaster.activitymanager.AbstractFragmentActivity;
+import com.massivedisaster.activitymanager.activity.AbstractFragmentActivity;
 import com.massivedisaster.adal.sample.R;
 
 public class ActivityToolbar extends AbstractFragmentActivity {
@@ -40,7 +40,7 @@ public class ActivityToolbar extends AbstractFragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
         if (getSupportActionBar() != null) {
@@ -49,12 +49,12 @@ public class ActivityToolbar extends AbstractFragmentActivity {
     }
 
     @Override
-    protected int getLayoutResId() {
+    public int getLayoutResId() {
         return R.layout.activity_toolbar;
     }
 
     @Override
-    protected int getContainerViewId() {
+    public int getContainerViewId() {
         return R.id.frmContainer;
     }
 

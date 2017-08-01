@@ -87,7 +87,8 @@ public class FragmentHome extends BaseFragment {
         adapter.setOnChildClickListener(new OnChildClickListener<String>() {
             @Override
             public void onChildClick(View view, String key, int position) {
-                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, getExamples().get(key));
+                ActivityFragmentManager.open(getActivity(), ActivityToolbar.class, getExamples().get(key))
+                        .commit();
             }
         });
 

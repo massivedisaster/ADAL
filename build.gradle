@@ -44,18 +44,20 @@ ext {
 
 buildscript {
     repositories {
+        google()
         jcenter()
-        mavenLocal()
     }
+    
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.2'
         classpath 'com.novoda:bintray-release:0.5.0'
-        classpath 'pt.simdea.verifier:verifier:3.5.5'
+        classpath 'pt.simdea.verifier:verifier:3.5.8'
     }
 }
 
 allprojects {
     repositories {
+        google()
         jcenter()
     }
 }
