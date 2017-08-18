@@ -10,7 +10,7 @@ Gradle:
 
 ```gradle
 dependencies {
-  compile 'com.massivedisaster.adal:adal-accounts:0.1.14'
+  compile 'com.massivedisaster.adal:adal-accounts:0.1.15'
 }
 ```
 

@@ -12,7 +12,7 @@ Gradle:
 
 ```gradle
 dependencies {
-  compile 'com.massivedisaster.adal:adal-adapters:0.1.14'
+  compile 'com.massivedisaster.adal:adal-adapters:0.1.15'
 }
 ```
 ### Usage
