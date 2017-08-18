@@ -32,6 +32,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.Collection;
 import java.util.List;
 
@@ -274,6 +276,7 @@ public abstract class AbstractLoadMoreBaseAdapter<T> extends AbstractBaseAdapter
         return mResLoading != INVALID_RESOURCE_ID;
     }
 
+    @Retention(RetentionPolicy.SOURCE)
     @IntDef({VIEW_TYPE_ITEM, VIEW_TYPE_LOAD})
     @interface ViewType {
     }
