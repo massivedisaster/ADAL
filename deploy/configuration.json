@@ -16,6 +16,7 @@
         "adal-location",
         "adal-network",
         "adal-permissions",
-        "adal-utils"
+        "adal-utils",
+        "adal-connectivity"
     ]
 }

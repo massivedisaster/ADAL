@@ -23,4 +23,28 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-include ':adal', ':sample', ':adal-accounts', ':adal-analytics', ':adal-utils', ':adal-network', ':adal-adapters', ':adal-bus', ':adal-fragments', ':adal-location', ':adal-permissions', ':adal-alarm', ':adal-application-state', ':adal-connectivity', ':adal-connectivity'
+package com.massivedisaster.adal.connectivity;
+
+/** Utility class meant to hold all constants for the Network sub module. */
+@SuppressWarnings({"unused", "WeakerAccess"}) public class NetworkConstants {
+
+    /** ########## Misc. ########## */
+    static final String LOG_TAG = "CADL-Network";
+
+    /** ########## Exception Messages ########## */
+    static final String ASSERTION_ERROR = "Instantiating utility class.";
+
+    /** ########## Error Messages ########## */
+    static final String INVALID_CONTEXT_INSTANCE = "::Invalid Context instance: ";
+
+    /** ########## Information Messages ########## */
+    static final String CONNECTION_CHANGE_UNREGISTER_NOK = "::Unable to unregister receiver.";
+    static final String CONNECTION_CHANGE_UNREGISTER_OK = "::Unregistered receiver.";
+    static final String CONNECTION_CHANGE_REGISTER_OK = "::Registered receiver.";
+
+    /** Instantiates a new NetworkConstants. Private to prevent instantiation. */
+    private NetworkConstants() {
+        throw new AssertionError(ASSERTION_ERROR); // Throw an exception if this *is* ever called
+    }
+
+}
