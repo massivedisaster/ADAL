@@ -144,7 +144,7 @@ public class FragmentLocation extends BaseFragment {
                     case TIMEOUT:
                         mTxtInfo.setText("Error: Timeout getting location");
                         break;
-                    case UPDATES_ENABLED:
+                    case REQUEST_UPDATES_ENABLED:
                         mTxtInfo.setText("Error: Request Updates are enabled");
                         break;
                     default:

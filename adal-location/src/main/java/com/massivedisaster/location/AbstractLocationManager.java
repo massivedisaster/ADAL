@@ -103,6 +103,19 @@ abstract class AbstractLocationManager implements LocationListener {
     }
 
     /**
+     * Initialize LocationManager
+     * <p>
+     * Without fragment or activity the activityResult is losted
+     *
+     * @param context to request location
+     */
+    public void onCreate(Context context) {
+        mContext = context;
+
+        initialize();
+    }
+
+    /**
      * Stop and destroy location requests
      */
     public void onDestroy() {
@@ -113,7 +126,9 @@ abstract class AbstractLocationManager implements LocationListener {
 
         mHandler.removeCallbacksAndMessages(null);
 
-        mActivity.unregisterReceiver(mLocationStatusBroadcastReceiver);
+        if (mActivity != null) {
+            mActivity.unregisterReceiver(mLocationStatusBroadcastReceiver);
+        }
     }
 
     /**
@@ -123,26 +138,33 @@ abstract class AbstractLocationManager implements LocationListener {
         mLocationManager = (android.location.LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         mHandler = new Handler();
 
-        mLocationStatusBroadcastReceiver.setOnLocationStatusProviderListener(new OnLocationStatusProviderListener() {
-            @Override
-            public void onProviderEnabled() {
-                Log.i(getClass().getSimpleName(), "PROVIDER PROVIDER_ENABLED");
-                mOnLocationManager.onProviderEnabled();
-            }
+        if (mActivity != null) {
+            mLocationStatusBroadcastReceiver.setOnLocationStatusProviderListener(new OnLocationStatusProviderListener() {
+                @Override
+                public void onProviderEnabled() {
+                    Log.i(getClass().getSimpleName(), "PROVIDER PROVIDER_ENABLED");
+                    if (mOnLocationManager != null) {
+                        mOnLocationManager.onProviderEnabled();
+                    }
+                }
 
-            @Override
-            public void onProviderDisabled() {
-                Log.i(getClass().getSimpleName(), "PROVIDER PROVIDER_DISABLED");
-                mOnLocationManager.onProviderDisabled();
-            }
-        });
+                @Override
+                public void onProviderDisabled() {
+                    Log.i(getClass().getSimpleName(), "PROVIDER PROVIDER_DISABLED");
+                    if (mOnLocationManager != null) {
+                        mOnLocationManager.onProviderDisabled();
+                    }
+                }
+            });
+            mActivity.registerReceiver(mLocationStatusBroadcastReceiver, new IntentFilter("android.location.PROVIDERS_CHANGED"));
+        }
 
-        mActivity.registerReceiver(mLocationStatusBroadcastReceiver, new IntentFilter("android.location.PROVIDERS_CHANGED"));
-
-        if (mFragment == null) {
+        if (mFragment != null) {
+            mPermissionsManager = new PermissionsManager(mFragment);
+        } else if (mActivity != null) {
             mPermissionsManager = new PermissionsManager(mActivity);
         } else {
-            mPermissionsManager = new PermissionsManager(mFragment);
+            onGrantedPermission();
         }
     }
 
@@ -184,7 +206,9 @@ abstract class AbstractLocationManager implements LocationListener {
     public void onLocationChanged(Location location) {
         mHandler.removeCallbacksAndMessages(null);
 
-        mOnLocationManager.onLocationFound(location, false);
+        if (mOnLocationManager != null) {
+            mOnLocationManager.onLocationFound(location, false);
+        }
     }
 
     /**
@@ -227,13 +251,17 @@ abstract class AbstractLocationManager implements LocationListener {
 
                     @Override
                     public void onConnectionSuspended(int i) {
-                        mOnLocationManager.onLocationError(LocationError.DISABLED);
+                        if (mOnLocationManager != null) {
+                            mOnLocationManager.onLocationError(LocationError.DISABLED);
+                        }
                     }
                 })
                 .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
                     @Override
                     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        mOnLocationManager.onLocationError(LocationError.DISABLED);
+                        if (mOnLocationManager != null) {
+                            mOnLocationManager.onLocationError(LocationError.DISABLED);
+                        }
                     }
                 })
                 .addApi(LocationServices.API)
@@ -245,24 +273,44 @@ abstract class AbstractLocationManager implements LocationListener {
      * Request permissions to request locations
      */
     protected void requestPermissions() {
+        if (mPermissionsManager == null) {
+            onGrantedPermission();
+            return;
+        }
         mPermissionsManager.requestPermissions(
                 new PermissionsManager.OnPermissionsListener() {
                     @Override
                     public void onGranted() {
-                        if (LocationUtils.isLocationEnabled(mLocationManager)) {
-                            startRequestLocation();
-                        } else {
-                            mOnLocationManager.onLocationError(LocationError.DISABLED);
-                        }
+                        onGrantedPermission();
                     }
 
                     @Override
                     public void onDenied(boolean showRationale) {
-                        mOnLocationManager.onPermissionsDenied();
+                        if (mOnLocationManager != null) {
+                            mOnLocationManager.onPermissionsDenied();
+                        }
                     }
                 },
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION);
+    }
+
+    /**
+     * When permissions were granted
+     */
+    private void onGrantedPermission() {
+        try {
+            if (LocationUtils.isLocationEnabled(mLocationManager)) {
+                startRequestLocation();
+            } else if (mOnLocationManager != null) {
+                mOnLocationManager.onLocationError(LocationError.DISABLED);
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            if (mOnLocationManager != null) {
+                mOnLocationManager.onPermissionsDenied();
+            }
+        }
     }
 
     /**
@@ -274,14 +322,18 @@ abstract class AbstractLocationManager implements LocationListener {
                 try {
                     Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
                     stopRequestLocation();
-                    if (mLastKnowLocation && lastLocation != null) {
-                        mOnLocationManager.onLocationFound(lastLocation, true);
-                    } else {
-                        mOnLocationManager.onLocationError(LocationError.TIMEOUT);
+                    if (mOnLocationManager != null) {
+                        if (mLastKnowLocation && lastLocation != null) {
+                            mOnLocationManager.onLocationFound(lastLocation, true);
+                        } else {
+                            mOnLocationManager.onLocationError(LocationError.TIMEOUT);
+                        }
                     }
                 } catch (SecurityException e) {
                     Log.e(getClass().getSimpleName(), e.toString());
-                    mOnLocationManager.onLocationError(LocationError.TIMEOUT);
+                    if (mOnLocationManager != null) {
+                        mOnLocationManager.onLocationError(LocationError.TIMEOUT);
+                    }
                 }
             }
         };

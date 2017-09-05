@@ -47,7 +47,6 @@ public class LocationManager extends AbstractLocationManager {
 
     private static final long DEFAULT_TIMEOUT_LOCATION = 20000;
     private static final long REQUEST_LOCATION_INTERVAL = 1000;
-    private static final long REQUEST_LOCATION_FASTEST_INTERVAL = 1000;
 
     private LocationRequest mLocationRequest;
     protected boolean mRequestingLocationUpdates;
@@ -72,7 +71,7 @@ public class LocationManager extends AbstractLocationManager {
      */
     public void requestSingleLocation(boolean lastKnowLocation, long timeOut, OnLocationManager onLocationManager) {
         if (mRequestingLocationUpdates && onLocationManager != null) {
-            onLocationManager.onLocationError(LocationError.UPDATES_ENABLED);
+            onLocationManager.onLocationError(LocationError.REQUEST_UPDATES_ENABLED);
             return;
         }
 
@@ -105,7 +104,7 @@ public class LocationManager extends AbstractLocationManager {
     public void requestLocationUpdates(long interval, OnLocationManager onLocationManager) {
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setInterval(interval);
-        locationRequest.setFastestInterval(REQUEST_LOCATION_FASTEST_INTERVAL);
+        locationRequest.setFastestInterval(interval);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         requestLocationUpdates(locationRequest, onLocationManager);
@@ -133,7 +132,9 @@ public class LocationManager extends AbstractLocationManager {
     @Override
     protected void startRequestLocation() {
         if (mLocationRequest == null) {
-            mOnLocationManager.onLocationError(LocationError.REQUEST_NEEDED);
+            if (mOnLocationManager != null) {
+                mOnLocationManager.onLocationError(LocationError.REQUEST_NEEDED);
+            }
             return;
         }
 
@@ -165,11 +166,15 @@ public class LocationManager extends AbstractLocationManager {
                         } catch (IntentSender.SendIntentException e) {
                             Log.e(getClass().getSimpleName(), e.toString());
                         }
-                        mOnLocationManager.onProviderDisabled();
+                        if (mOnLocationManager != null) {
+                            mOnLocationManager.onProviderDisabled();
+                        }
                         break;
                     default:
                         mRequestingLocationUpdates = false;
-                        mOnLocationManager.onLocationError(LocationError.DISABLED);
+                        if (mOnLocationManager != null) {
+                            mOnLocationManager.onLocationError(LocationError.DISABLED);
+                        }
                         break;
                 }
             }
@@ -181,7 +186,9 @@ public class LocationManager extends AbstractLocationManager {
      */
     protected void startLocationUpdates() {
         if (!mGoogleApiClient.isConnected() || !mRequestingLocationUpdates) {
-            mOnLocationManager.onLocationError(LocationError.DISABLED);
+            if (mOnLocationManager != null) {
+                mOnLocationManager.onLocationError(LocationError.DISABLED);
+            }
             return;
         }
 
@@ -198,6 +205,20 @@ public class LocationManager extends AbstractLocationManager {
      * Stop the updates from request location
      */
     public void stopRequestLocation() {
+        stopRequestLocation(new ResultCallback<Status>() {
+            @Override
+            public void onResult(@NonNull Status status) {
+                mGoogleApiClient.disconnect();
+            }
+        });
+    }
+
+    /**
+     * Stop the updates from request location
+     *
+     * @param statusResultCallback callback
+     */
+    public void stopRequestLocation(final ResultCallback<Status> statusResultCallback) {
         mRequestingLocationUpdates = false;
 
         if (mGoogleApiClient == null) {
@@ -208,7 +229,7 @@ public class LocationManager extends AbstractLocationManager {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this).setResultCallback(new ResultCallback<Status>() {
                 @Override
                 public void onResult(@NonNull Status status) {
-                    mGoogleApiClient.disconnect();
+                    statusResultCallback.onResult(status);
                 }
             });
         }

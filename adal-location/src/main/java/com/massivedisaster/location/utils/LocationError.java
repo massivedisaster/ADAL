@@ -21,5 +21,5 @@ public enum LocationError {
     TIMEOUT,
     DISABLED,
     REQUEST_NEEDED,
-    UPDATES_ENABLED
+    REQUEST_UPDATES_ENABLED
 }
