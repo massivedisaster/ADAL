@@ -32,6 +32,7 @@ android:
  components:
  - tools
  - platform-tools
+ - tools # appears twice as per Travis docs
  - build-tools-$ANDROID_BUILD_TOOLS
  - android-$ANDROID_API
  - android-$EMULATOR_API
