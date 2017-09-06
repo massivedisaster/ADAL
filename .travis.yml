@@ -16,9 +16,11 @@ cache:
 env:
  global:
  - ANDROID_API=26
- - EMULATOR_API=26
+ - EMULATOR_API=22
  - ANDROID_BUILD_TOOLS=26.0.1
  - ADB_INSTALL_TIMEOUT=5 # minutes
+ - ANDROID_ABI=armeabi-v7a
+ - ANDROID_TAG=google_apis
 
 android:
  components:
@@ -29,7 +31,7 @@ android:
  - android-$EMULATOR_API
  - extra-google-m2repository
  - extra-android-m2repository # for design library
- - addon-google_apis-google-19 # google play services
+ - extra-google-google_play_services
  - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API
  - sys-img-armeabi-v7a-addon-google_apis-google-$EMULATOR_API
  - sys-img-armeabi-v7a-android-$EMULATOR_API
@@ -49,7 +51,7 @@ before_install:
 
 before_script:
 - android list target
-- echo no | android create avd --force -n test -t android-26 --abi google_apis/armeabi-v7a
+- echo no | android create avd --force -n test -t "android-"$EMULATOR_API_LEVEL --abi $ANDROID_ABI --tag $ANDROID_TAG
 - emulator -avd test -no-skin -no-audio -no-window &
 - android-wait-for-emulator
 - adb shell input keyevent 82 &
