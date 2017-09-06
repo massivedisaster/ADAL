@@ -1,7 +1,7 @@
 # Tutorial here: https://medium.com/@harmittaa/travis-ci-android-example-357f6e632fc4
 
 language: android
-sudo: required
+sudo: false
 jdk: oraclejdk8
 
 before_cache:
@@ -16,7 +16,7 @@ cache:
 env:
  global:
  - ANDROID_API=26
- - EMULATOR_API=21
+ - EMULATOR_API=22
  - ANDROID_BUILD_TOOLS=26.0.1
  - ADB_INSTALL_TIMEOUT=5 # minutes
 
@@ -47,7 +47,8 @@ before_install:
 #Source: https://medium.com/@oldergod/constraint-layout-and-circleci-travis-d50342696d2
 
 before_script:
-- echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+- android list targets
+- echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
 - emulator -avd test -no-skin -no-audio -no-window &
 - android-wait-for-emulator
 - adb shell input keyevent 82 &
