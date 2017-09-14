@@ -25,7 +25,6 @@
 
 package com.massivedisaster.adal.connectivity;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
@@ -35,14 +34,15 @@ import android.util.Log;
  * Abstract class meant to offer connectivity change detection capabilities,
  * using the Android system's connection change system filter.
  */
-@SuppressWarnings("unused") public abstract class ConnectionChangeReceiver extends BroadcastReceiver {
+public abstract class ConnectionChangeReceiver extends BroadcastReceiver {
 
     public static final String CONNECTIVITY_CHANGE_FILTER = "android.net.conn.CONNECTIVITY_CHANGE";
 
     private Context mContext;
 
     /**
-     * Procedure meant to handle this {@link BroadcastReceiver}'s registration to any {@link Activity} instance.
+     * Register the {@link BroadcastReceiver}.
+     *
      * @param context the application's current {@link Context}.
      */
     public void registerConnectionChangeReceiver(final Context context) {
@@ -53,7 +53,9 @@ import android.util.Log;
         Log.d(NetworkConstants.LOG_TAG, NetworkConstants.CONNECTION_CHANGE_REGISTER_OK);
     }
 
-    /** Procedure meant to handle this {@link BroadcastReceiver}'s unregistration from any {@link Activity} instance. */
+    /**
+     * Unregister the {@link BroadcastReceiver}.
+     */
     public void unregisterConnectionChangeReceiver() {
         if (mContext != null) {
             mContext.unregisterReceiver(this);
@@ -65,4 +67,3 @@ import android.util.Log;
     }
 
 }
-

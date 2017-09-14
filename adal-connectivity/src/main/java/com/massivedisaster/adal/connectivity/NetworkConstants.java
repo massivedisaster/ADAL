@@ -1,4 +1,4 @@
-/*
+/**
  * ADAL - A set of Android libraries to help speed up Android development.
  *
  * Copyright (c) 2017 ADAL
@@ -25,26 +25,39 @@
 
 package com.massivedisaster.adal.connectivity;
 
-/** Utility class meant to hold all constants for the Network sub module. */
-@SuppressWarnings({"unused", "WeakerAccess"}) public class NetworkConstants {
+/**
+ * Utility class meant to hold all constants for the Network sub module.
+ */
+public final class NetworkConstants {
 
-    /** ########## Misc. ########## */
-    static final String LOG_TAG = "CADL-Network";
+    /**
+     *  Misc. Constants.
+     */
+    public static final String LOG_TAG = "CADL-Network";
 
-    /** ########## Exception Messages ########## */
-    static final String ASSERTION_ERROR = "Instantiating utility class.";
+    /**
+     * Exception Messages.
+     */
+    public static final String ASSERTION_ERROR = "Instantiating utility class.";
 
-    /** ########## Error Messages ########## */
-    static final String INVALID_CONTEXT_INSTANCE = "::Invalid Context instance: ";
+    /**
+     * Error Messages.
+     */
+    public static final String INVALID_CONTEXT_INSTANCE = "::Invalid Context instance: ";
 
-    /** ########## Information Messages ########## */
-    static final String CONNECTION_CHANGE_UNREGISTER_NOK = "::Unable to unregister receiver.";
-    static final String CONNECTION_CHANGE_UNREGISTER_OK = "::Unregistered receiver.";
-    static final String CONNECTION_CHANGE_REGISTER_OK = "::Registered receiver.";
+    /**
+     * Information Messages.
+     */
+    public static final String CONNECTION_CHANGE_UNREGISTER_NOK = "::Unable to unregister receiver.";
+    public static final String CONNECTION_CHANGE_UNREGISTER_OK = "::Unregistered receiver.";
+    public static final String CONNECTION_CHANGE_REGISTER_OK = "::Registered receiver.";
 
-    /** Instantiates a new NetworkConstants. Private to prevent instantiation. */
+    /**
+     * Instantiates a new NetworkConstants.
+     * Private to prevent instantiation.
+     */
     private NetworkConstants() {
-        throw new AssertionError(ASSERTION_ERROR); // Throw an exception if this *is* ever called
+        throw new AssertionError(ASSERTION_ERROR);
     }
 
 }

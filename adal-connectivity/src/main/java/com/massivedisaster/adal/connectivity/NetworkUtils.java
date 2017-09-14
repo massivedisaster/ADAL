@@ -29,21 +29,26 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-/** Utility class for the Network sub module. */
-@SuppressWarnings({"unused", "WeakerAccess"}) public class NetworkUtils {
+/**
+ * Utility class for the Network sub module.
+ */
+public final class NetworkUtils {
 
     public static final int TYPE_NOT_CONNECTED = 0;
     public static final int TYPE_WIFI = 1;
     public static final int TYPE_MOBILE = 2;
 
-    /** Instantiates a new NetworkUtils. Private to prevent instantiation. */
+    /**
+     * Instantiates a new NetworkUtils.
+     * Private to prevent instantiation.
+     */
     private NetworkUtils() {
-        // Throw an exception if this *is* ever called
         throw new AssertionError(NetworkConstants.ASSERTION_ERROR);
     }
 
     /**
-     * Procedure meant to check whether the device has Internet connectivity or not.
+     * Check if the device has Internet connectivity or not.
+     *
      * @param context the application's current context.
      * @return boolean title representing whether the device has Internet connectivity or not.
      */
@@ -54,7 +59,8 @@ import android.net.NetworkInfo;
     }
 
     /**
-     * Procedure meant to check what type of Internet connectivity the device is currently using.
+     * Check what type of Internet connectivity the device is currently using.
+     *
      * @param context the application's current context.
      * @return Integer title representing the type of Internet connectivity the device is currently using.
      */
