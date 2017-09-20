@@ -25,6 +25,8 @@
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'pt.simdea.verifier'
+apply from: "$project.rootDir/quality/quality.gradle"
 
 android {
     compileSdkVersion project.compileSdkVersion.toInteger()
@@ -42,32 +44,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    lintOptions {
-        disable 'InvalidPackage'
-    }
-}
-
-dependencies {
-    compile project(':adal-location')
-    compile project(':adal-accounts')
-    compile project(':adal-adapters')
-    compile project(':adal-analytics')
-    compile project(':adal-bus')
-    compile project(':adal-fragments')
-    compile project(':adal-network')
-    compile project(':adal-utils')
-    compile project(':adal-permissions')
-    compile project(':adal-alarm')
-    compile project(':adal-application-state')
-    compile project(':adal-connectivity')
 }
 
 publish {
     userOrg = userOrgBase
     groupId = adalModuleBase
-    artifactId = 'adal'
+    artifactId = 'adal-connectivity'
     publishVersion = libraryVersionString()
-    desc = 'ADAL'
+    desc = 'ADAL connectivity module'
     website = websiteBase
     licences = licensesBase
 }

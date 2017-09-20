@@ -79,4 +79,8 @@
     <string name="add_alarm">Add Alarm</string>
     <string name="remove_alarm">Remove Alarm</string>
     <string name="try_again">Try Again</string>
+
+    <string name="connectivity_device_online">.: Device is online! :.</string>
+    <string name="connectivity_device_offline">.: Device is offline! :.</string>
+    <string name="check_connectivity">Check Connectivity</string>
 </resources>
