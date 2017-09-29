@@ -1,4 +1,4 @@
-/*
+/**
  * ADAL - A set of Android libraries to help speed up Android development.
  *
  * Copyright (c) 2017 ADAL
@@ -23,4 +23,41 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-include ':adal', ':sample', ':adal-accounts', ':adal-analytics', ':adal-utils', ':adal-network', ':adal-adapters', ':adal-bus', ':adal-fragments', ':adal-location', ':adal-permissions', ':adal-alarm', ':adal-application-state', ':adal-connectivity', ':adal-connectivity'
+package com.massivedisaster.adal.connectivity;
+
+/**
+ * Utility class meant to hold all constants for the Network sub module.
+ */
+public final class NetworkConstants {
+
+    /**
+     *  Misc. Constants.
+     */
+    public static final String LOG_TAG = "CADL-Network";
+
+    /**
+     * Exception Messages.
+     */
+    public static final String ASSERTION_ERROR = "Instantiating utility class.";
+
+    /**
+     * Error Messages.
+     */
+    public static final String INVALID_CONTEXT_INSTANCE = "::Invalid Context instance: ";
+
+    /**
+     * Information Messages.
+     */
+    public static final String CONNECTION_CHANGE_UNREGISTER_NOK = "::Unable to unregister receiver.";
+    public static final String CONNECTION_CHANGE_UNREGISTER_OK = "::Unregistered receiver.";
+    public static final String CONNECTION_CHANGE_REGISTER_OK = "::Registered receiver.";
+
+    /**
+     * Instantiates a new NetworkConstants.
+     * Private to prevent instantiation.
+     */
+    private NetworkConstants() {
+        throw new AssertionError(ASSERTION_ERROR);
+    }
+
+}
