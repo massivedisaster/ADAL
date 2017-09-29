@@ -169,6 +169,11 @@ public class FragmentLocation extends BaseFragment {
             public void onProviderDisabled() {
                 // Intended.
             }
+
+            @Override
+            public void onStopRequestUpdate() {
+
+            }
         });
     }
 
@@ -218,6 +223,12 @@ public class FragmentLocation extends BaseFragment {
             @Override
             public void onProviderDisabled() {
                 // Intended.
+            }
+
+            @Override
+            public void onStopRequestUpdate() {
+                mLocationUpdates += "STOP - Request Updates";
+                mTxtInfoUpdates.setText(mLocationUpdates);
             }
         });
     }

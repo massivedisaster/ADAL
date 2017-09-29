@@ -23,54 +23,47 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.massivedisaster.adal.permissions.PermissionsManager;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.massivedisaster.location.broadcast.LocationStatusBroadcastReceiver;
-import com.massivedisaster.location.listener.OnLocationManager;
 import com.massivedisaster.location.listener.OnLocationStatusProviderListener;
 import com.massivedisaster.location.utils.LocationError;
-import com.massivedisaster.location.utils.LocationUtils;
 
 /**
  * AbstractLocationManager contains the base methods to request device location
  * <p>
  * PermissionsManager implemented in all requests.
  */
-abstract class AbstractLocationManager implements LocationListener {
+abstract class AbstractLocationManager extends AbstractPermissionsLocationManager {
 
     protected static final int REQUEST_CHECK_SETTINGS = 909;
 
-    private PermissionsManager mPermissionsManager;
+    protected FusedLocationProviderClient mFusedLocationClient;
+    protected SettingsClient mSettingsClient;
 
-    private Fragment mFragment;
-    private Context mContext;
-    private Handler mHandler;
+    protected LocationSettingsRequest mLocationSettingsRequest;
+    protected LocationCallback mLocationCallback;
 
-    protected OnLocationManager mOnLocationManager;
-    protected GoogleApiClient mGoogleApiClient;
-    protected android.location.LocationManager mLocationManager;
     protected boolean mLastKnowLocation;
 
-    private Activity mActivity;
+    protected Handler mHandler;
     private long mTimeout;
 
     private final LocationStatusBroadcastReceiver mLocationStatusBroadcastReceiver = new LocationStatusBroadcastReceiver();
-
-    /**
-     * Start the request location updates
-     */
-    protected abstract void startRequestLocation();
 
     /**
      * Start the request location updates
@@ -135,7 +128,6 @@ abstract class AbstractLocationManager implements LocationListener {
      * Initialize location manager.
      */
     private void initialize() {
-        mLocationManager = (android.location.LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
         mHandler = new Handler();
 
         if (mActivity != null) {
@@ -157,28 +149,41 @@ abstract class AbstractLocationManager implements LocationListener {
                 }
             });
             mActivity.registerReceiver(mLocationStatusBroadcastReceiver, new IntentFilter("android.location.PROVIDERS_CHANGED"));
+
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(mActivity);
+            mSettingsClient = LocationServices.getSettingsClient(mActivity);
+        } else {
+            mFusedLocationClient = LocationServices.getFusedLocationProviderClient(mContext);
+            mSettingsClient = LocationServices.getSettingsClient(mContext);
         }
 
-        if (mFragment != null) {
-            mPermissionsManager = new PermissionsManager(mFragment);
-        } else if (mActivity != null) {
-            mPermissionsManager = new PermissionsManager(mActivity);
-        } else {
-            onGrantedPermission();
-        }
+        initLocationCallback();
+
+        initPermissionsManager();
     }
 
     /**
-     * Callback for the result from requesting permissions. This method is invoked for every call
-     * on requestPermissions(android.app.Activity, String[], int).
-     *
-     * @param requestCode  The request code passed in requestPermissions(android.app.Activity, String[], int)
-     * @param permissions  The requested permissions. Never null.
-     * @param grantResults The grant results for the corresponding permissions which is either PERMISSION_GRANTED or PERMISSION_DENIED.
-     *                     Never null.
+     * Initialize Location Callback
      */
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int... grantResults) {
-        mPermissionsManager.onPermissionResult(requestCode);
+    protected void initLocationCallback() {
+        mLocationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+
+                mHandler.removeCallbacksAndMessages(null);
+
+                if (mOnLocationManager != null) {
+                    mOnLocationManager.onLocationFound(locationResult.getLastLocation(), false);
+                }
+            }
+
+            @Override
+            public void onLocationAvailability(LocationAvailability locationAvailability) {
+                if (!locationAvailability.isLocationAvailable() && mOnLocationManager != null) {
+                    mOnLocationManager.onLocationError(LocationError.DISABLED);
+                }
+            }
+        };
     }
 
     /**
@@ -194,20 +199,6 @@ abstract class AbstractLocationManager implements LocationListener {
     public void onActivityResult(int requestCode, int resultCode) {
         if (requestCode == REQUEST_CHECK_SETTINGS && resultCode == Activity.RESULT_OK) {
             startRequestLocation();
-        }
-    }
-
-    /**
-     * Callend when location changes.
-     *
-     * @param location the location.
-     */
-    @Override
-    public void onLocationChanged(Location location) {
-        mHandler.removeCallbacksAndMessages(null);
-
-        if (mOnLocationManager != null) {
-            mOnLocationManager.onLocationFound(location, false);
         }
     }
 
@@ -239,78 +230,16 @@ abstract class AbstractLocationManager implements LocationListener {
     }
 
     /**
-     * Connect Gooogle API Client
+     * Create builder to request
+     *
+     * @param locationRequest the request
      */
-    protected void connectGoogleAPI() {
-        mGoogleApiClient = new GoogleApiClient.Builder(mContext)
-                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
-                    @Override
-                    public void onConnected(@Nullable Bundle bundle) {
-                        requestPermissions();
-                    }
+    protected void buildRequest(LocationRequest locationRequest) {
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder();
+        builder.addLocationRequest(locationRequest);
+        mLocationSettingsRequest = builder.build();
 
-                    @Override
-                    public void onConnectionSuspended(int i) {
-                        if (mOnLocationManager != null) {
-                            mOnLocationManager.onLocationError(LocationError.DISABLED);
-                        }
-                    }
-                })
-                .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                        if (mOnLocationManager != null) {
-                            mOnLocationManager.onLocationError(LocationError.DISABLED);
-                        }
-                    }
-                })
-                .addApi(LocationServices.API)
-                .build();
-        mGoogleApiClient.connect();
-    }
-
-    /**
-     * Request permissions to request locations
-     */
-    protected void requestPermissions() {
-        if (mPermissionsManager == null) {
-            onGrantedPermission();
-            return;
-        }
-        mPermissionsManager.requestPermissions(
-                new PermissionsManager.OnPermissionsListener() {
-                    @Override
-                    public void onGranted() {
-                        onGrantedPermission();
-                    }
-
-                    @Override
-                    public void onDenied(boolean showRationale) {
-                        if (mOnLocationManager != null) {
-                            mOnLocationManager.onPermissionsDenied();
-                        }
-                    }
-                },
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION);
-    }
-
-    /**
-     * When permissions were granted
-     */
-    private void onGrantedPermission() {
-        try {
-            if (LocationUtils.isLocationEnabled(mLocationManager)) {
-                startRequestLocation();
-            } else if (mOnLocationManager != null) {
-                mOnLocationManager.onLocationError(LocationError.DISABLED);
-            }
-        } catch (SecurityException e) {
-            e.printStackTrace();
-            if (mOnLocationManager != null) {
-                mOnLocationManager.onPermissionsDenied();
-            }
-        }
+        requestPermissions();
     }
 
     /**
@@ -320,15 +249,28 @@ abstract class AbstractLocationManager implements LocationListener {
         Runnable mRun = new Runnable() {
             public void run() {
                 try {
-                    Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-                    stopRequestLocation();
-                    if (mOnLocationManager != null) {
-                        if (mLastKnowLocation && lastLocation != null) {
-                            mOnLocationManager.onLocationFound(lastLocation, true);
-                        } else {
-                            mOnLocationManager.onLocationError(LocationError.TIMEOUT);
-                        }
-                    }
+                    mFusedLocationClient.getLastLocation()
+                            .addOnSuccessListener(new OnSuccessListener<Location>() {
+                                @Override
+                                public void onSuccess(Location lastLocation) {
+                                    stopRequestLocation();
+                                    if (mOnLocationManager != null) {
+                                        if (mLastKnowLocation && lastLocation != null) {
+                                            mOnLocationManager.onLocationFound(lastLocation, true);
+                                        } else {
+                                            mOnLocationManager.onLocationError(LocationError.TIMEOUT);
+                                        }
+                                    }
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    if (mOnLocationManager != null) {
+                                        mOnLocationManager.onLocationError(LocationError.TIMEOUT);
+                                    }
+                                }
+                            });
                 } catch (SecurityException e) {
                     Log.e(getClass().getSimpleName(), e.toString());
                     if (mOnLocationManager != null) {
