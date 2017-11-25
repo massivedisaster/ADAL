@@ -15,12 +15,36 @@
  * with ADAL. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.massivedisaster.location.listener;
+package com.massivedisaster.adal.location.listener;
+
+import android.location.Location;
+
+import com.massivedisaster.adal.location.utils.LocationError;
 
 /**
- * Listener to provider status
+ * Manages location.
  */
-public interface OnLocationStatusProviderListener {
+public interface OnLocationManager {
+
+    /**
+     * Called if location manager retrieve the user position
+     *
+     * @param location           The user location
+     * @param isLastKnowLocation True if a location its given from the last know position
+     */
+    void onLocationFound(Location location, boolean isLastKnowLocation);
+
+    /**
+     * Called if the request gives an error
+     *
+     * @param locationError The location error
+     */
+    void onLocationError(LocationError locationError);
+
+    /**
+     * Called if user don't permissions to get location
+     */
+    void onPermissionsDenied();
 
     /**
      * Called if provider is enabled
