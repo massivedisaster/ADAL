@@ -55,4 +55,9 @@ public interface OnLocationManager {
      * Called if provider is disabled
      */
     void onProviderDisabled();
+
+    /**
+     * Called if location manager stop request update
+     */
+    void onStopRequestUpdate();
 }

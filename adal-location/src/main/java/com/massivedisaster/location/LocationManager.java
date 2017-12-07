@@ -26,17 +26,17 @@
 package com.massivedisaster.location;
 
 import android.content.IntentSender;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.massivedisaster.location.listener.OnLocationManager;
 import com.massivedisaster.location.utils.LocationError;
 
@@ -47,9 +47,8 @@ public class LocationManager extends AbstractLocationManager {
 
     private static final long DEFAULT_TIMEOUT_LOCATION = 20000;
     private static final long REQUEST_LOCATION_INTERVAL = 1000;
-    private static final long REQUEST_LOCATION_FASTEST_INTERVAL = 1000;
 
-    private LocationRequest mLocationRequest;
+    protected LocationRequest mLocationRequest;
     protected boolean mRequestingLocationUpdates;
 
 
@@ -72,7 +71,7 @@ public class LocationManager extends AbstractLocationManager {
      */
     public void requestSingleLocation(boolean lastKnowLocation, long timeOut, OnLocationManager onLocationManager) {
         if (mRequestingLocationUpdates && onLocationManager != null) {
-            onLocationManager.onLocationError(LocationError.UPDATES_ENABLED);
+            onLocationManager.onLocationError(LocationError.REQUEST_UPDATES_ENABLED);
             return;
         }
 
@@ -84,7 +83,7 @@ public class LocationManager extends AbstractLocationManager {
         mLocationRequest.setNumUpdates(1);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-        connectGoogleAPI();
+        buildRequest(mLocationRequest);
     }
 
     /**
@@ -105,7 +104,7 @@ public class LocationManager extends AbstractLocationManager {
     public void requestLocationUpdates(long interval, OnLocationManager onLocationManager) {
         LocationRequest locationRequest = new LocationRequest();
         locationRequest.setInterval(interval);
-        locationRequest.setFastestInterval(REQUEST_LOCATION_FASTEST_INTERVAL);
+        locationRequest.setFastestInterval(interval);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         requestLocationUpdates(locationRequest, onLocationManager);
@@ -124,72 +123,66 @@ public class LocationManager extends AbstractLocationManager {
 
         mLocationRequest = locationRequest;
 
-        connectGoogleAPI();
-    }
-
-    /**
-     * Check the providers
-     */
-    @Override
-    protected void startRequestLocation() {
-        if (mLocationRequest == null) {
-            mOnLocationManager.onLocationError(LocationError.REQUEST_NEEDED);
-            return;
-        }
-
-        LocationSettingsRequest locationSettingsRequest =
-                new LocationSettingsRequest.Builder().addLocationRequest(mLocationRequest).build();
-
-        PendingResult<LocationSettingsResult> pendingResult =
-                LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, locationSettingsRequest);
-
-        pendingResult.setResultCallback(new ResultCallback<LocationSettingsResult>() {
-            @Override
-            public void onResult(@NonNull LocationSettingsResult result) {
-                Status status = result.getStatus();
-                switch (status.getStatusCode()) {
-                    case LocationSettingsStatusCodes.SUCCESS:
-                        // All location settings are satisfied. The client can
-                        // initialize location requests here.
-                        mRequestingLocationUpdates = true;
-                        startLocationUpdates();
-                        break;
-                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                        // Location settings are not satisfied, but this can be fixed
-                        // by showing the user a dialog.
-                        mRequestingLocationUpdates = false;
-                        try {
-                            // Show the dialog by calling startResolutionForResult(),
-                            // and check the result in onActivityResult().
-                            status.startResolutionForResult(getActivity(), REQUEST_CHECK_SETTINGS);
-                        } catch (IntentSender.SendIntentException e) {
-                            Log.e(getClass().getSimpleName(), e.toString());
-                        }
-                        mOnLocationManager.onProviderDisabled();
-                        break;
-                    default:
-                        mRequestingLocationUpdates = false;
-                        mOnLocationManager.onLocationError(LocationError.DISABLED);
-                        break;
-                }
-            }
-        });
+        buildRequest(mLocationRequest);
     }
 
     /**
      * Start the request location updates
      */
-    protected void startLocationUpdates() {
-        if (!mGoogleApiClient.isConnected() || !mRequestingLocationUpdates) {
-            mOnLocationManager.onLocationError(LocationError.DISABLED);
+    @Override
+    protected void startRequestLocation() {
+        if (mLocationSettingsRequest == null || mLocationRequest == null) {
+            if (mOnLocationManager != null) {
+                mOnLocationManager.onLocationError(LocationError.REQUEST_NEEDED);
+            }
             return;
         }
 
-        try {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-        } catch (SecurityException e) {
-            Log.e(getClass().getSimpleName(), e.toString());
-        }
+        mSettingsClient.checkLocationSettings(mLocationSettingsRequest)
+                .addOnSuccessListener(new OnSuccessListener<LocationSettingsResponse>() {
+                    @Override
+                    public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                        try {
+                            if (mLocationRequest.getNumUpdates() != 1) {
+                                mRequestingLocationUpdates = true;
+                            }
+                            mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+                        } catch (SecurityException e) {
+                            mRequestingLocationUpdates = false;
+                            if (mOnLocationManager != null) {
+                                mOnLocationManager.onLocationError(LocationError.DISABLED);
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        int statusCode = ((ApiException) e).getStatusCode();
+                        switch (statusCode) {
+                            case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                                try {
+                                    if (getActivity() != null) {
+                                        ResolvableApiException rae = (ResolvableApiException) e;
+                                        rae.startResolutionForResult(getActivity(), REQUEST_CHECK_SETTINGS);
+                                    }
+                                } catch (IntentSender.SendIntentException e1) {
+                                    Log.e(getClass().getSimpleName(), e1.toString());
+                                }
+                                mRequestingLocationUpdates = false;
+                                if (mOnLocationManager != null) {
+                                    mOnLocationManager.onProviderDisabled();
+                                }
+                                break;
+                            default:
+                                mRequestingLocationUpdates = false;
+                                if (mOnLocationManager != null) {
+                                    mOnLocationManager.onLocationError(LocationError.DISABLED);
+                                }
+                                break;
+                        }
+                    }
+                });
 
         showLastLocationAfterTimeout();
     }
@@ -197,20 +190,14 @@ public class LocationManager extends AbstractLocationManager {
     /**
      * Stop the updates from request location
      */
+    @Override
     public void stopRequestLocation() {
-        mRequestingLocationUpdates = false;
-
-        if (mGoogleApiClient == null) {
-            return;
-        }
-
-        if (mGoogleApiClient.isConnected()) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this).setResultCallback(new ResultCallback<Status>() {
-                @Override
-                public void onResult(@NonNull Status status) {
-                    mGoogleApiClient.disconnect();
-                }
-            });
+        boolean isSuccessfull = mFusedLocationClient.removeLocationUpdates(mLocationCallback).isSuccessful();
+        if (!isSuccessfull) {
+            mRequestingLocationUpdates = false;
+            if (mOnLocationManager != null) {
+                mOnLocationManager.onStopRequestUpdate();
+            }
         }
     }
 }
