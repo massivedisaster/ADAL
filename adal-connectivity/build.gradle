@@ -44,21 +44,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '26.0.2'
-}
-
-dependencies {
-    compile "com.android.support:recyclerview-v7:$project.supportVersion"
-    compile "com.android.support:appcompat-v7:$project.supportVersion"
-    compile project(path: ':adal-utils')
 }
 
 publish {
     userOrg = userOrgBase
     groupId = adalModuleBase
-    artifactId = 'adal-adapters'
+    artifactId = 'adal-connectivity'
     publishVersion = libraryVersionString()
-    desc = 'ADAL adapter module'
+    desc = 'ADAL connectivity module'
     website = websiteBase
     licences = licensesBase
 }

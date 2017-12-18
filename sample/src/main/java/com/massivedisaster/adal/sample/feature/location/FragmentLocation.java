@@ -144,7 +144,7 @@ public class FragmentLocation extends BaseFragment {
                     case TIMEOUT:
                         mTxtInfo.setText("Error: Timeout getting location");
                         break;
-                    case UPDATES_ENABLED:
+                    case REQUEST_UPDATES_ENABLED:
                         mTxtInfo.setText("Error: Request Updates are enabled");
                         break;
                     default:
@@ -168,6 +168,11 @@ public class FragmentLocation extends BaseFragment {
             @Override
             public void onProviderDisabled() {
                 // Intended.
+            }
+
+            @Override
+            public void onStopRequestUpdate() {
+
             }
         });
     }
@@ -218,6 +223,12 @@ public class FragmentLocation extends BaseFragment {
             @Override
             public void onProviderDisabled() {
                 // Intended.
+            }
+
+            @Override
+            public void onStopRequestUpdate() {
+                mLocationUpdates += "STOP - Request Updates";
+                mTxtInfoUpdates.setText(mLocationUpdates);
             }
         });
     }

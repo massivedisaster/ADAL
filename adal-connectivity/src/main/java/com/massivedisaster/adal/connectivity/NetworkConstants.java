@@ -1,4 +1,4 @@
-/*
+/**
  * ADAL - A set of Android libraries to help speed up Android development.
  *
  * Copyright (c) 2017 ADAL
@@ -23,42 +23,41 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
-apply plugin: 'pt.simdea.verifier'
-apply from: "$project.rootDir/quality/quality.gradle"
+package com.massivedisaster.adal.connectivity;
 
-android {
-    compileSdkVersion project.compileSdkVersion.toInteger()
-    buildToolsVersion project.buildToolsVersion
+/**
+ * Utility class meant to hold all constants for the Network sub module.
+ */
+public final class NetworkConstants {
 
-    defaultConfig {
-        minSdkVersion project.minSdkVersion.toInteger()
-        targetSdkVersion project.targetSdkVersion.toInteger()
-        versionCode libraryVersionCode
-        versionName libraryVersionName
+    /**
+     *  Misc. Constants.
+     */
+    public static final String LOG_TAG = "CADL-Network";
+
+    /**
+     * Exception Messages.
+     */
+    public static final String ASSERTION_ERROR = "Instantiating utility class.";
+
+    /**
+     * Error Messages.
+     */
+    public static final String INVALID_CONTEXT_INSTANCE = "::Invalid Context instance: ";
+
+    /**
+     * Information Messages.
+     */
+    public static final String CONNECTION_CHANGE_UNREGISTER_NOK = "::Unable to unregister receiver.";
+    public static final String CONNECTION_CHANGE_UNREGISTER_OK = "::Unregistered receiver.";
+    public static final String CONNECTION_CHANGE_REGISTER_OK = "::Registered receiver.";
+
+    /**
+     * Instantiates a new NetworkConstants.
+     * Private to prevent instantiation.
+     */
+    private NetworkConstants() {
+        throw new AssertionError(ASSERTION_ERROR);
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-    buildToolsVersion '26.0.2'
-}
 
-dependencies {
-    compile "com.android.support:recyclerview-v7:$project.supportVersion"
-    compile "com.android.support:appcompat-v7:$project.supportVersion"
-    compile project(path: ':adal-utils')
-}
-
-publish {
-    userOrg = userOrgBase
-    groupId = adalModuleBase
-    artifactId = 'adal-adapters'
-    publishVersion = libraryVersionString()
-    desc = 'ADAL adapter module'
-    website = websiteBase
-    licences = licensesBase
 }
