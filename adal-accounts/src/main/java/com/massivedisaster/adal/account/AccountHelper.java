@@ -138,52 +138,73 @@ public final class AccountHelper {
     }
 
     /**
-     * Verify if the application has account added.
+     * Verify if the application  have a com.clubefashion.services.account and retrieve The account
      *
      * @param context The application context.
-     * @return True if the application has a account added.
+     * @return The current com.clubefashion.services.account, null if no
+     * accounts of the specified type have been added..
      */
     @SuppressWarnings(MISSING_PERMISSION)
-    public static boolean hasAccount(Context context) {
-        validateAccountManager();
-        return sManager.getAccountsByType(context.getPackageName()).length > 0;
-    }
-
-    /**
-     * Verify if the application  have a account and retrieve the account
-     *
-     * @param context The application context.
-     * @return The current account.
-     */
-    @SuppressWarnings(MISSING_PERMISSION)
+    @Nullable
     public static Account getCurrentAccount(Context context) {
         validateAccountManager();
-        return sManager.getAccountsByType(context.getPackageName())[0];
+
+        final Account[] accounts = sManager.getAccountsByType(context.getPackageName());
+
+        if (accounts.length > 0) {
+            return accounts[0];
+        }
+
+        return null;
     }
 
     /**
-     * Verify if the application have an account and retrieve the account password
+     * Verify if the application have an com.clubefashion.services.account and retrieve The account password
      *
      * @param account The account.
      * @return The user password.
      */
     @SuppressWarnings(MISSING_PERMISSION)
-    public static String getAccountPassword(Account account) {
+    public static String getAccountPassword(@NonNull Account account) {
         validateAccountManager();
         return sManager.getPassword(account);
     }
 
     /**
-     * Verify if the application have an account and retrieve the account token
+     * Verify if the application have an account and retrieve The account token
      *
      * @param context The application context.
-     * @return The account token.
+     * @return The account token .
      */
     @SuppressWarnings(MISSING_PERMISSION)
-    public static String getCurrentToken(Context context) {
+    @Nullable
+    public static String getCurrentToken(@NonNull Account account, Context context) {
         validateAccountManager();
-        Account account = sManager.getAccountsByType(context.getPackageName())[0];
         return sManager.peekAuthToken(account, context.getPackageName());
+    }
+
+    /**
+     * Method to associate information to the user.
+     *
+     * @param account The account.
+     * @param key     Key of the information.
+     * @param value   The information to be associated.
+     */
+    public static void setUserData(@NonNull Account account, String key, String value) {
+        validateAccountManager();
+        sManager.setUserData(account, key, value);
+    }
+
+    /**
+     * Method to get previous associated information to the user.
+     *
+     * @param account The account.
+     * @param key     Key of the information.
+     * @return The information associated.
+     */
+    public static String getUserData(@NonNull Account account, String key) {
+        validateAccountManager();
+        return sManager.getUserData(account, key);
     }
 
     /**
