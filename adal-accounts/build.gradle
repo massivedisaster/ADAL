@@ -44,7 +44,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '26.0.2'
+}
+
+dependencies {
+    compile "com.android.support:support-v4:$project.supportVersion"
 }
 
 publish {
