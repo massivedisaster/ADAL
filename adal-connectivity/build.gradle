@@ -46,17 +46,12 @@ android {
     }
 }
 
-dependencies {
-    compile "com.android.support:support-v4:$project.supportVersion"
-}
-
 publish {
     userOrg = userOrgBase
     groupId = adalModuleBase
-    artifactId = 'adal-accounts'
+    artifactId = 'adal-connectivity'
     publishVersion = libraryVersionString()
-    desc = 'ADAL account module'
+    desc = 'ADAL connectivity module'
     website = websiteBase
     licences = licensesBase
 }
-

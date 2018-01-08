@@ -43,13 +43,12 @@ import com.massivedisaster.adal.sample.feature.alarm.FragmentAlarm;
 import com.massivedisaster.adal.sample.feature.analytics.FragmentAnalytics;
 import com.massivedisaster.adal.sample.feature.analytics.FragmentFirebaseAnalytics;
 import com.massivedisaster.adal.sample.feature.bus.FragmentA;
+import com.massivedisaster.adal.sample.feature.connectivity.FragmentConnectivityAware;
 import com.massivedisaster.adal.sample.feature.location.FragmentLocation;
 import com.massivedisaster.adal.sample.feature.network.FragmentNetworkRequest;
 import com.massivedisaster.adal.sample.feature.permissions.FragmentPermissions;
 import com.massivedisaster.adal.sample.feature.utils.FragmentUtils;
 
-import java.util.HashMap;
-import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class FragmentHome extends BaseFragment {
@@ -107,6 +106,7 @@ public class FragmentHome extends BaseFragment {
             put("Analytics", FragmentAnalytics.class);
             put("Firebase Analytics", FragmentFirebaseAnalytics.class);
             put("Utils", FragmentUtils.class);
+            put("Connectivity", FragmentConnectivityAware.class);
         }};
     }
 }
