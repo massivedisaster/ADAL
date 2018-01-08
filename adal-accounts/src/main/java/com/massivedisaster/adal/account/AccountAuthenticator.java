@@ -60,7 +60,7 @@ class AccountAuthenticator extends AbstractAccountAuthenticator {
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType, String authTokenType, String[] requiredFeatures,
                              Bundle options) throws NetworkErrorException {
 
-        if (AccountHelper.hasAccount(mContext)) {
+        if (AccountHelper.getCurrentAccount(mContext) != null) {
             final Bundle result = new Bundle();
             result.putInt(AccountManager.KEY_ERROR_CODE, ERROR_CODE_ONE_ACCOUNT_ALLOWED);
             result.putString(AccountManager.KEY_ERROR_MESSAGE, mContext.getString(R.string.error_account_only_one_allowed));
