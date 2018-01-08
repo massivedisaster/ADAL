@@ -108,9 +108,9 @@ public class FragmentAccounts extends BaseFragment {
     }
 
     private void getAccount() {
-        if (AccountHelper.hasAccount(getContext())) {
-            Account account = AccountHelper.getCurrentAccount(getContext());
-            Toast.makeText(getContext(), "Name: " + account.name + " \nPassword: " + AccountHelper.getAccountPassword(account) + " \ntoken: " + AccountHelper.getCurrentToken(getContext()), Toast.LENGTH_LONG).show();
+        Account account = AccountHelper.getCurrentAccount(getContext());
+        if (account != null) {
+            Toast.makeText(getContext(), "Name: " + account.name + " \nPassword: " + AccountHelper.getAccountPassword(account) + " \ntoken: " + AccountHelper.getCurrentToken(account, getContext()), Toast.LENGTH_LONG).show();
         } else {
             SnackBuilder.show(mBtnGetAccount, "No accounts", R.color.colorAccent);
         }
