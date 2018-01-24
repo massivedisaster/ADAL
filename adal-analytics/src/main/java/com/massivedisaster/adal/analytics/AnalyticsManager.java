@@ -190,7 +190,7 @@ public final class AnalyticsManager {
      * @param label      the label
      * @param screenName the screenName
      */
-    public void sendImpression(Product product, String label, String screenName) {
+    public void sendImpression(@NonNull Product product, @NonNull String label, @NonNull String screenName) {
         if (getTracker() == null || product == null) {
             return;
         }
