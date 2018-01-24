@@ -27,11 +27,15 @@ package com.massivedisaster.adal.analytics;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.analytics.ecommerce.Product;
+import com.google.android.gms.analytics.ecommerce.ProductAction;
+import com.google.android.gms.analytics.ecommerce.Promotion;
 
 /**
  * Google Analytics manager.
@@ -178,4 +182,109 @@ public final class AnalyticsManager {
 
         mTracker.send(builder.build());
     }
+
+    /**
+     * Send an product impression event
+     *
+     * @param product    the product
+     * @param label      the label
+     * @param screenName the screenName
+     */
+    public void sendImpression(@NonNull Product product, @NonNull String label, @NonNull String screenName) {
+        if (getTracker() == null || product == null) {
+            return;
+        }
+
+        HitBuilders.ScreenViewBuilder builder = new HitBuilders.ScreenViewBuilder()
+                .addImpression(product, label);
+
+        mTracker.setScreenName(screenName);
+        mTracker.send(builder.build());
+    }
+
+    /**
+     * Send an product action event
+     *
+     * @param action         the action
+     * @param product        the product
+     * @param impressionList impression list label
+     * @param screenName     the screenName
+     */
+    public void sendProduct(@NonNull ProductAction action, @Nullable Product product, @Nullable String impressionList, @NonNull String screenName) {
+        if (getTracker() == null) {
+            return;
+        }
+
+        HitBuilders.ScreenViewBuilder builder = new HitBuilders.ScreenViewBuilder();
+
+        if (impressionList != null) {
+            builder.addImpression(product, impressionList);
+        }
+
+        if (product != null) {
+            builder.addProduct(product);
+        }
+
+        builder.setProductAction(action);
+
+        mTracker.setScreenName(screenName);
+        mTracker.send(builder.build());
+    }
+
+    /**
+     * Send an promotion impression event
+     *
+     * @param promotion  the promotion
+     * @param screenName the screenName
+     */
+    public void sendPromotion(@NonNull Promotion promotion, @NonNull String screenName) {
+        if (getTracker() == null) {
+            return;
+        }
+
+        HitBuilders.ScreenViewBuilder builder = new HitBuilders.ScreenViewBuilder()
+                .addPromotion(promotion);
+
+        mTracker.setScreenName(screenName);
+        mTracker.send(builder.build());
+    }
+
+    /**
+     */
+    /**
+     * Send an promotion action event
+     *
+     * @param promotion       the promotion
+     * @param promotionAction the promotion action
+     * @param category        the category
+     * @param action          the action
+     * @param label           the label
+     * @param screenName      the screenName
+     */
+    public void sendPromotionAction(@NonNull Promotion promotion, @NonNull String promotionAction, @Nullable String category, @Nullable String action,
+                                    @Nullable String label, @NonNull String screenName) {
+        if (getTracker() == null) {
+            return;
+        }
+
+        HitBuilders.EventBuilder builder = new HitBuilders.EventBuilder()
+                .addPromotion(promotion)
+                .setPromotionAction(promotionAction);
+
+        if (category != null) {
+            builder.setCategory(category);
+        }
+
+        if (action != null) {
+            builder.setAction(action);
+        }
+
+        if (label != null) {
+            builder.setLabel(label);
+        }
+
+        mTracker.setScreenName(screenName);
+        mTracker.send(builder.build());
+    }
+
 }
