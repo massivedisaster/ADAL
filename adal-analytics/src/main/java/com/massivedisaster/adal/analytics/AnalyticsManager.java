@@ -184,6 +184,25 @@ public final class AnalyticsManager {
     }
 
     /**
+     * Send an product impression event
+     *
+     * @param product    the product
+     * @param label      the label
+     * @param screenName the screenName
+     */
+    public void sendImpression(Product product, String label, String screenName) {
+        if (getTracker() == null || product == null) {
+            return;
+        }
+
+        HitBuilders.ScreenViewBuilder builder = new HitBuilders.ScreenViewBuilder()
+                .addImpression(product, label);
+
+        mTracker.setScreenName(screenName);
+        mTracker.send(builder.build());
+    }
+
+    /**
      * Send an product action event
      *
      * @param action         the action
