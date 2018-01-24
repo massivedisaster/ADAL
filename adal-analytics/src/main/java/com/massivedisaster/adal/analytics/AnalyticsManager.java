@@ -184,37 +184,24 @@ public final class AnalyticsManager {
     }
 
     /**
-     * Send an product impression event
-     *
-     * @param product    the product
-     * @param label      the label
-     * @param screenName the screenName
-     */
-    public void sendImpression(Product product, String label, String screenName) {
-        if (getTracker() == null || product == null) {
-            return;
-        }
-
-        HitBuilders.ScreenViewBuilder builder = new HitBuilders.ScreenViewBuilder()
-                .addImpression(product, label);
-
-        mTracker.setScreenName(screenName);
-        mTracker.send(builder.build());
-    }
-
-    /**
      * Send an product action event
      *
-     * @param action     the action
-     * @param product    the product
-     * @param screenName the screenName
+     * @param action         the action
+     * @param product        the product
+     * @param impressionList impression list label
+     * @param screenName     the screenName
      */
-    public void sendProduct(@NonNull ProductAction action, @Nullable Product product, String screenName) {
+    public void sendProduct(@NonNull ProductAction action, @Nullable Product product, @Nullable String impressionList, @NonNull String screenName) {
         if (getTracker() == null) {
             return;
         }
 
         HitBuilders.ScreenViewBuilder builder = new HitBuilders.ScreenViewBuilder();
+
+        if (impressionList != null) {
+            builder.addImpression(product, impressionList);
+        }
+
         if (product != null) {
             builder.addProduct(product);
         }
@@ -231,7 +218,7 @@ public final class AnalyticsManager {
      * @param promotion  the promotion
      * @param screenName the screenName
      */
-    public void sendPromotion(@NonNull Promotion promotion, String screenName) {
+    public void sendPromotion(@NonNull Promotion promotion, @NonNull String screenName) {
         if (getTracker() == null) {
             return;
         }
@@ -244,13 +231,19 @@ public final class AnalyticsManager {
     }
 
     /**
+     */
+    /**
      * Send an promotion action event
      *
-     * @param promotion  the promotion
-     * @param screenName the screenName
+     * @param promotion       the promotion
+     * @param promotionAction the promotion action
+     * @param category        the category
+     * @param action          the action
+     * @param label           the label
+     * @param screenName      the screenName
      */
     public void sendPromotionAction(@NonNull Promotion promotion, @NonNull String promotionAction, @Nullable String category, @Nullable String action,
-                                    @Nullable String label, String screenName) {
+                                    @Nullable String label, @NonNull String screenName) {
         if (getTracker() == null) {
             return;
         }
