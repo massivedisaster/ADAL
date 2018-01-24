@@ -40,12 +40,12 @@ public class FragmentAnalytics extends BaseFragment {
           .setVariant("Black")
           .setPosition(1)
           .setCustomDimension(1, "Member");
-      AnalyticsManager.with(getContext()).sendImpression(product, "Search Results", "searchResults");
+      AnalyticsManager.with(getContext()).sendProduct(product, "Search Results", "searchResults");
       
       // Send product action (product can be null in this case)
       ProductAction productAction = new ProductAction(ProductAction.ACTION_CLICK)
           .setProductActionList("Search Results");
-      AnalyticsManager.with(getContext()).sendProduct(productAction, product, "searchResults");
+      AnalyticsManager.with(getContext()).sendProduct(productAction, product, null, "searchResults");
       
       // Send promotion
       Promotion promotion = new Promotion()
