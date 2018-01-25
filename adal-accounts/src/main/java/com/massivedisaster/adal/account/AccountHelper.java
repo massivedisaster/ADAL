@@ -174,8 +174,9 @@ public final class AccountHelper {
     }
 
     /**
-     * Verify if the application have an account and retrieve the account token.
+     * Retrieve the account token.
      *
+     * @param account The account account to take the token.
      * @param context The application context.
      * @return The account token.
      */
