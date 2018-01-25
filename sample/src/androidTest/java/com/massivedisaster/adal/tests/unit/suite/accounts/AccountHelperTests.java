@@ -35,8 +35,8 @@ import com.massivedisaster.adal.tests.utils.Constants;
 import org.junit.Test;
 
 import static android.os.SystemClock.sleep;
-import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
@@ -95,7 +95,8 @@ public class AccountHelperTests extends AbstractBaseTestSuite {
         AccountHelper.clearAccounts(context, new AccountHelper.OnAccountListener() {
             @Override
             public void onFinished() {
-                assertFalse(AccountHelper.getCurrentAccount(context) != null);
+                sleep(Constants.BASE_DELAY_SMALL);
+                assertNull(AccountHelper.getCurrentAccount(context));
             }
         });
     }
