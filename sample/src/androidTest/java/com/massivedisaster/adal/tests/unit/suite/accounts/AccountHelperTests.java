@@ -26,6 +26,7 @@
 package com.massivedisaster.adal.tests.unit.suite.accounts;
 
 import android.accounts.Account;
+import android.content.Context;
 
 import com.massivedisaster.adal.account.AccountHelper;
 import com.massivedisaster.adal.tests.unit.suite.base.AbstractBaseTestSuite;
@@ -34,6 +35,8 @@ import com.massivedisaster.adal.tests.utils.Constants;
 import org.junit.Test;
 
 import static android.os.SystemClock.sleep;
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
@@ -45,6 +48,8 @@ import static org.junit.Assert.assertEquals;
  * <b>Implemented tests:</b>
  * <p>
  * # <p>({@link #testAddAccount() testAddAccount} method)</p>
+ * # <p>({@link #testClearAccounts() testClearAccounts} method)</p>
+ * # <p>({@link #testRetrieveCurrentAccountName() testRetrieveCurrentAccountName} method)</p>
  * # <p>({@link #testRetrieveCurrentPassword() testRetrieveCurrentPassword} method)</p>
  * # <p>({@link #testRetrieveCurrentToken() testRetrieveCurrentToken} method)</p>
  */
@@ -80,7 +85,7 @@ public class AccountHelperTests extends AbstractBaseTestSuite {
      * <p>Adds an account and clear all accounts afterwards and test if there's no account
      * associated</p>
      */
-    /*@Test
+    @Test
     public void testClearAccounts() {
         sleep(Constants.BASE_DELAY_SMALL);
 
@@ -90,16 +95,16 @@ public class AccountHelperTests extends AbstractBaseTestSuite {
         AccountHelper.clearAccounts(context, new AccountHelper.OnAccountListener() {
             @Override
             public void onFinished() {
-                assertFalse(AccountHelper.hasAccount(context));
+                assertFalse(AccountHelper.getCurrentAccount(context) != null);
             }
         });
-    }*/
+    }
 
     /**
      * <p>Adds an account, retrieves the account name stored and test if the inserted account and
      * requested match</p>
      */
-    /*@Test
+    @Test
     public void testRetrieveCurrentAccountName() {
         sleep(Constants.BASE_DELAY_SMALL);
 
@@ -107,10 +112,12 @@ public class AccountHelperTests extends AbstractBaseTestSuite {
 
         Account account = AccountHelper.getCurrentAccount(getContext());
 
+        assertNotNull(account);
+
         String accountName = account.name;
 
         assertEquals(sAccountName, accountName);
-    }*/
+    }
 
     /**
      * <p>Adds an account, retrieves the account password stored and test if the inserted account
