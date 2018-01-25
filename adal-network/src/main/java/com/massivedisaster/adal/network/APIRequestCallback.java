@@ -25,6 +25,7 @@
 
 package com.massivedisaster.adal.network;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.util.Log;
@@ -189,9 +190,16 @@ public abstract class APIRequestCallback<T extends APIErrorListener> implements 
         onError(error, serverError);
     }
 
+    /**
+     * Verify if the device have internet connection.
+     *
+     * @param context the context.
+     * @return true if the device is connected to the internet.
+     */
+    @SuppressLint("MissingPermission")
     private boolean isNetworkConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        return cm.getActiveNetworkInfo() != null;
+        return cm != null && cm.getActiveNetworkInfo() != null;
     }
 }
