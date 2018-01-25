@@ -75,6 +75,7 @@ public class AccountHelperTests extends AbstractBaseTestSuite {
     @Test
     public void testAddAccount() {
         clearAccounts();
+        sleep(Constants.BASE_DELAY_SMALL);
 
         AccountHelper.addAccount(getContext(), sAccountName, sAccountPassword, sAccountToken);
 
@@ -95,10 +96,11 @@ public class AccountHelperTests extends AbstractBaseTestSuite {
         AccountHelper.clearAccounts(context, new AccountHelper.OnAccountListener() {
             @Override
             public void onFinished() {
-                sleep(Constants.BASE_DELAY_SMALL);
                 assertNull(AccountHelper.getCurrentAccount(context));
             }
         });
+
+        sleep(Constants.BASE_DELAY_SMALL);
     }
 
     /**
