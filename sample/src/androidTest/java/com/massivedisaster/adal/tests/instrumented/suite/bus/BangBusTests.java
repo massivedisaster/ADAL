@@ -67,9 +67,10 @@ public class BangBusTests extends AbstractBaseTestSuite {
 
     @Override
     protected void setup() {
-        Intent intent = ActivityFragmentManager.open(activityTestRule.getActivity(), ActivityToolbar.class, FragmentA.class).getIntent();
-
+        Intent intent = ActivityFragmentManager.open(getContext(), ActivityToolbar.class, FragmentA.class).getIntent();
         activityTestRule.launchActivity(intent);
+
+        unlock(activityTestRule.getActivity());
     }
 
     @Override
