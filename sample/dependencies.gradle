@@ -45,7 +45,7 @@ ext {
 
         /* SUPPORT */
         compile "com.android.support:appcompat-v7:$project.supportVersion"
-        compile "com.android.support:design:26.1.0"
+        compile "com.android.support:design:$project.supportVersion"
 
         /* ACTIVITY FRAGMENT MANAGER */
         compile "com.massivedisaster:activity-fragment-manager:$afmVersion"

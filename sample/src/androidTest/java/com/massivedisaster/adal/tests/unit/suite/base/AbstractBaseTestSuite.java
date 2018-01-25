@@ -25,9 +25,11 @@
 
 package com.massivedisaster.adal.tests.unit.suite.base;
 
+import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
+import android.view.WindowManager;
 
 import org.junit.After;
 import org.junit.Before;
@@ -59,7 +61,19 @@ public abstract class AbstractBaseTestSuite {
         Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
         mContext = instrumentation.getTargetContext()
                 .getApplicationContext();
+
         setup();
+    }
+
+    protected void unlock(final Activity activity) {
+        Runnable wakeUpDevice = new Runnable() {
+            public void run() {
+                activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON |
+                        WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
+                        WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            }
+        };
+        activity.runOnUiThread(wakeUpDevice);
     }
 
     /**
