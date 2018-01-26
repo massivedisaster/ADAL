@@ -40,8 +40,11 @@ public class FragmentAccounts extends BaseFragment {
     }
 
     private void getAccount() {
-        if (AccountHelper.hasAccount(getContext())) {
-            Account account = AccountHelper.getCurrentAccount(getContext());
+         Account account = AccountHelper.getCurrentAccount(getContext());
+        if (account != null) {
+            Toast.makeText(getContext(), "Name: " + account.name + " \nPassword: " + AccountHelper.getAccountPassword(account) + " \ntoken: " + AccountHelper.getCurrentToken(account, getContext()), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getContext(), "No account available" , Toast.LENGTH_LONG).show();
         }
     }
 }
