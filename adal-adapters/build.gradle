@@ -47,9 +47,9 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:recyclerview-v7:$project.supportVersion"
-    compile "com.android.support:appcompat-v7:$project.supportVersion"
-    compile project(path: ':adal-utils')
+    api "com.android.support:recyclerview-v7:$project.supportVersion"
+    api "com.android.support:appcompat-v7:$project.supportVersion"
+    api project(path: ':adal-utils')
 }
 
 publish {

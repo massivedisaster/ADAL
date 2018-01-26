@@ -57,8 +57,8 @@ android {
 
 dependencies {
     /* ANALYTICS */
-    compile "com.google.android.gms:play-services-analytics:$project.googlePlayServicesVersion"
-    compile "com.google.firebase:firebase-core:$project.firebaseVersion"
+    api "com.google.android.gms:play-services-analytics:$project.googlePlayServicesVersion"
+    api "com.google.firebase:firebase-core:$project.firebaseVersion"
 }
 
 publish {

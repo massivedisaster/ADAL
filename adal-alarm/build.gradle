@@ -47,7 +47,7 @@ android {
 }
 
 dependencies {
-    compile project(':adal-utils')
+    api project(':adal-utils')
 }
 
 publish {
