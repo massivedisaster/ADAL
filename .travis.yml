@@ -36,10 +36,10 @@ script:
 - chmod +x gradlew
 - "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
 branches:
-  except:
+  only:
   - master
   - develop
-  - fetaure/configure_feature
+  - fetaure/configure_travis
 cache:
   directories:
   - $HOME/.m2
