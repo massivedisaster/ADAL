@@ -50,17 +50,17 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    api fileTree(dir: 'libs', include: ['*.jar'])
 
     /* RETROFIT */
-    compile "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
-    compile "com.squareup.retrofit2:converter-gson:$project.retrofitVersion"
+    api "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
+    api "com.squareup.retrofit2:converter-gson:$project.retrofitVersion"
 
     /* OKHTTP */
-    compile "com.squareup.okhttp3:okhttp:$project.okHttpVersion"
-    compile "com.squareup.okhttp3:logging-interceptor:$project.okHttpVersion"
+    api "com.squareup.okhttp3:okhttp:$project.okHttpVersion"
+    api "com.squareup.okhttp3:logging-interceptor:$project.okHttpVersion"
 
-    compile project(':adal-utils')
+    api project(':adal-utils')
 }
 
 publish {

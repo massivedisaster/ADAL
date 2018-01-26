@@ -24,50 +24,45 @@
  */
 
 ext {
-    afmVersion = '0.4.4'
-    espressoVersion = '2.2.2'
-    jUnitVersion = '4.12'
-    mockitoVersion = '2.8.9'
-    glideVersion = '3.7.0'
 
     dependencies {
         /** GENERAL **/
 
-        compile fileTree(dir: 'libs', include: ['*.jar'])
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
 
         /** APP **/
 
         /* ACTIVITY FRAGMENT MANAGER */
-        compile "com.massivedisaster:activity-fragment-manager:$afmVersion"
+        implementation "com.massivedisaster:activity-fragment-manager:$project.afmVersion"
 
         /* ADAL */
-        compile project(':adal')
+        implementation project(':adal')
 
         /* SUPPORT */
-        compile "com.android.support:appcompat-v7:$project.supportVersion"
-        compile "com.android.support:design:$project.supportVersion"
+        implementation "com.android.support:appcompat-v7:$project.supportVersion"
+        implementation "com.android.support:design:$project.supportVersion"
 
         /* ACTIVITY FRAGMENT MANAGER */
-        compile "com.massivedisaster:activity-fragment-manager:$afmVersion"
+        implementation "com.massivedisaster:activity-fragment-manager:$project.afmVersion"
 
         /* ANALYTICS */
-        compile "com.google.android.gms:play-services-analytics:$project.googlePlayServicesVersion"
+        implementation "com.google.android.gms:play-services-analytics:$project.googlePlayServicesVersion"
 
         /* GLIDE */
-        compile "com.github.bumptech.glide:glide:$glideVersion"
+        implementation "com.github.bumptech.glide:glide:$project.glideVersion"
 
         /** TEST **/
 
         /* ESPRESSO */
-        androidTestCompile ("com.android.support.test.espresso:espresso-core:$espressoVersion") {
+        androidTestImplementation ("com.android.support.test.espresso:espresso-core:$project.espressoVersion") {
             exclude group: 'com.android.support', module: 'support-annotations'
         }
 
         /* JUNIT */
-        testCompile "junit:junit:$jUnitVersion"
+        testImplementation "junit:junit:$project.jUnitVersion"
 
         /* MOCKITO */
-        androidTestCompile "org.mockito:mockito-android:$mockitoVersion"
-        testCompile "org.mockito:mockito-core:$mockitoVersion"
+        androidTestImplementation "org.mockito:mockito-android:$project.mockitoVersion"
+        testImplementation "org.mockito:mockito-core:$project.mockitoVersion"
     }
 }
