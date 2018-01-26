@@ -48,8 +48,8 @@ android {
 
 
 dependencies {
-    compile "com.android.support:design:$project.supportVersion"
-    compile "com.google.android.gms:play-services-base:$project.googlePlayServicesVersion"
+    api "com.android.support:design:$project.supportVersion"
+    api "com.google.android.gms:play-services-base:$project.googlePlayServicesVersion"
 }
 
 publish {

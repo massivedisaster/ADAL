@@ -47,8 +47,8 @@ android {
 }
 
 dependencies {
-    compile project(":adal-permissions")
-    compile "com.google.android.gms:play-services-location:$project.googlePlayServicesVersion"
+    api project(":adal-permissions")
+    api "com.google.android.gms:play-services-location:$project.googlePlayServicesVersion"
 }
 
 publish {

@@ -47,8 +47,8 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:support-v4:$project.supportVersion"
-    compile project(':adal-utils')
+    api "com.android.support:support-v4:$project.supportVersion"
+    api project(':adal-utils')
 }
 
 publish {

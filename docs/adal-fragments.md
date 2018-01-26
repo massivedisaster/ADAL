@@ -9,7 +9,7 @@ Gradle:
 
 ```gradle
 dependencies {
-  compile 'com.massivedisaster.adal:adal-fragments:0.1.15'
+  implementation 'com.massivedisaster.adal:adal-fragments:0.1.15'
 }
 ```
 ### Usage

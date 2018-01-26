@@ -48,18 +48,18 @@ android {
 }
 
 dependencies {
-    compile project(':adal-location')
-    compile project(':adal-accounts')
-    compile project(':adal-adapters')
-    compile project(':adal-analytics')
-    compile project(':adal-bus')
-    compile project(':adal-fragments')
-    compile project(':adal-network')
-    compile project(':adal-utils')
-    compile project(':adal-permissions')
-    compile project(':adal-alarm')
-    compile project(':adal-application-state')
-    compile project(':adal-connectivity')
+    api project(':adal-location')
+    api project(':adal-accounts')
+    api project(':adal-adapters')
+    api project(':adal-analytics')
+    api project(':adal-bus')
+    api project(':adal-fragments')
+    api project(':adal-network')
+    api project(':adal-utils')
+    api project(':adal-permissions')
+    api project(':adal-alarm')
+    api project(':adal-application-state')
+    api project(':adal-connectivity')
 }
 
 publish {
