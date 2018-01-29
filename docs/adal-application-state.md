@@ -10,7 +10,7 @@ Gradle:
 
 ```gradle
 dependencies {
-  implementation 'com.massivedisaster.adal:adal-application-state:0.1.15'
+  implementation 'com.massivedisaster.adal:adal-application-state:0.1.16'
 }
 ```
 
