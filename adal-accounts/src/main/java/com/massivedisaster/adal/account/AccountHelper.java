@@ -31,20 +31,24 @@ import android.accounts.AccountManagerCallback;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 
 /**
  * Utility class for accounts manager.
  */
 public final class AccountHelper {
 
+    private static final String MISSING_PERMISSION = "MissingPermission";
     private static AccountManager sManager;
     private static int sDeletedAccounts;
-    private static final String MISSING_PERMISSION = "MissingPermission";
 
     /**
      * private constructor.
      */
-    private AccountHelper() { }
+    private AccountHelper() {
+    }
 
     /**
      * Initialize the AccountHelper
@@ -87,7 +91,7 @@ public final class AccountHelper {
     /**
      * Remove accounts from manager.
      *
-     * @param context The application context.
+     * @param context           The application context.
      * @param onAccountListener The listener to be called when process finished.
      */
     public static void clearAccounts(Context context, final OnAccountListener onAccountListener) {
@@ -122,7 +126,7 @@ public final class AccountHelper {
      * Remove accounts from manager.
      *
      * @param onAccountListener The listener to be called when process finished.
-     * @param accounts The array of accounts to be removed.
+     * @param accounts          The array of accounts to be removed.
      */
     @SuppressWarnings("deprecation")
     private static void removeAccounts(final OnAccountListener onAccountListener, final Account... accounts) {
@@ -138,31 +142,27 @@ public final class AccountHelper {
     }
 
     /**
-     * Verify if the application has account added.
+     * Verify if the application have a account and retrieve the account.
      *
      * @param context The application context.
-     * @return True if the application has a account added.
+     * @return The current account or null if there is no account.
      */
     @SuppressWarnings(MISSING_PERMISSION)
-    public static boolean hasAccount(Context context) {
-        validateAccountManager();
-        return sManager.getAccountsByType(context.getPackageName()).length > 0;
-    }
-
-    /**
-     * Verify if the application  have a account and retrieve the account
-     *
-     * @param context The application context.
-     * @return The current account.
-     */
-    @SuppressWarnings(MISSING_PERMISSION)
+    @Nullable
     public static Account getCurrentAccount(Context context) {
         validateAccountManager();
-        return sManager.getAccountsByType(context.getPackageName())[0];
+
+        final Account[] accounts = sManager.getAccountsByType(context.getPackageName());
+
+        if (accounts.length > 0) {
+            return accounts[0];
+        }
+
+        return null;
     }
 
     /**
-     * Verify if the application have an account and retrieve the account password
+     * Verify if the application have an account and retrieve the account password.
      *
      * @param account The account.
      * @return The user password.
@@ -174,15 +174,16 @@ public final class AccountHelper {
     }
 
     /**
-     * Verify if the application have an account and retrieve the account token
+     * Retrieve the account token.
      *
+     * @param account The account account to take the token.
      * @param context The application context.
      * @return The account token.
      */
     @SuppressWarnings(MISSING_PERMISSION)
-    public static String getCurrentToken(Context context) {
+    @Nullable
+    public static String getCurrentToken(@NonNull Account account, Context context) {
         validateAccountManager();
-        Account account = sManager.getAccountsByType(context.getPackageName())[0];
         return sManager.peekAuthToken(account, context.getPackageName());
     }
 
@@ -198,7 +199,33 @@ public final class AccountHelper {
     }
 
     /**
+     * Method to associate information to the user.
+     *
+     * @param account The account.
+     * @param key     Key of the information.
+     * @param value   The information to be associated.
+     */
+    public static void setUserData(@NonNull Account account, String key, String value) {
+        validateAccountManager();
+        sManager.setUserData(account, key, value);
+    }
+
+    /**
+     * Method to get previous associated information to the user.
+     *
+     * @param account The account.
+     * @param key     Key of the information.
+     * @return The information associated.
+     */
+    @Nullable
+    public static String getUserData(@NonNull Account account, String key) {
+        validateAccountManager();
+        return sManager.getUserData(account, key);
+    }
+
+    /**
      * Listener for modifications in manager.
+     *
      * @see #clearAccounts(Context, OnAccountListener)
      */
     public interface OnAccountListener {
@@ -207,6 +234,5 @@ public final class AccountHelper {
          * Called when finish modification to manager
          */
         void onFinished();
-
     }
 }

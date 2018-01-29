@@ -25,14 +25,15 @@
 
 package com.massivedisaster.adal.network;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.util.Log;
 
 import com.massivedisaster.adal.utils.LogUtils;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.net.UnknownHostException;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -164,8 +165,9 @@ public abstract class APIRequestCallback<T extends APIErrorListener> implements 
         if (t != null) {
             LogUtils.logErrorException(APIRequestCallback.class, t);
 
-            if ((t instanceof UnknownHostException) && t.getMessage() != null) {
+            if (!isNetworkConnected(mContext)) {
                 processError(new APIError(mContext.getString(R.string.error_network_no_connection)), true);
+
                 return;
             }
         }
@@ -186,5 +188,18 @@ public abstract class APIRequestCallback<T extends APIErrorListener> implements 
         }
 
         onError(error, serverError);
+    }
+
+    /**
+     * Verify if the device have internet connection.
+     *
+     * @param context the context.
+     * @return true if the device is connected to the internet.
+     */
+    @SuppressLint("MissingPermission")
+    private boolean isNetworkConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm != null && cm.getActiveNetworkInfo() != null;
     }
 }

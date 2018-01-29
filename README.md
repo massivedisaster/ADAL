@@ -12,19 +12,20 @@ Gradle:
 ```gradle
 dependencies {
   /* Include all modules */
-  compile 'com.massivedisaster.adal:adal:0.1.15'
+  implementation 'com.massivedisaster.adal:adal:0.1.16'
   /* Specific modules */
-  compile 'com.massivedisaster.adal:adal-accounts:0.1.15'
-  compile 'com.massivedisaster.adal:adal-adapters:0.1.15'
-  compile 'com.massivedisaster.adal:adal-alarm:0.1.15'
-  compile 'com.massivedisaster.adal:adal-analytics:0.1.15'
-  compile 'com.massivedisaster.adal:adal-application-state:0.1.15'
-  compile 'com.massivedisaster.adal:adal-bus:0.1.15'
-  compile 'com.massivedisaster.adal:adal-fragments:0.1.15'
-  compile 'com.massivedisaster.adal:adal-location:0.1.15'
-  compile 'com.massivedisaster.adal:adal-network:0.1.15'
-  compile 'com.massivedisaster.adal:adal-permissions:0.1.15'
-  compile 'com.massivedisaster.adal:adal-utils:0.1.15'
+  implementation 'com.massivedisaster.adal:adal-accounts:0.1.16'
+  implementation 'com.massivedisaster.adal:adal-adapters:0.1.16'
+  implementation 'com.massivedisaster.adal:adal-alarm:0.1.16'
+  implementation 'com.massivedisaster.adal:adal-analytics:0.1.16'
+  implementation 'com.massivedisaster.adal:adal-application-state:0.1.16'
+  implementation 'com.massivedisaster.adal:adal-bus:0.1.16'
+  implementation 'com.massivedisaster.adal:adal-fragments:0.1.16'
+  implementation 'com.massivedisaster.adal:adal-location:0.1.16'
+  implementation 'com.massivedisaster.adal:adal-network:0.1.16'
+  implementation 'com.massivedisaster.adal:adal-permissions:0.1.16'
+  implementation 'com.massivedisaster.adal:adal-utils:0.1.16'
+  implementation 'com.massivedisaster.adal:adal-connectivity:0.1.16'
 }
 ```
 
@@ -35,6 +36,7 @@ dependencies {
 - [adal-analytics](docs/adal-analytics.md)
 - [adal-application-state](docs/adal-application-state.md)
 - [adal-bus](docs/adal-bus.md)
+- [adal-connectivity](docs/adal-connectivity.md)
 - [adal-fragments](docs/adal-fragments.md)
 - [adal-location](docs/adal-location.md)
 - [adal-network](docs/adal-network.md)

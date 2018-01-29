@@ -227,7 +227,7 @@ public abstract class AbstractLoadMoreBaseAdapter<T> extends AbstractBaseAdapter
 
     /**
      * <p>Clears data set and reset loading variables</p>
-     */
+     */ 
     public void clear() {
         super.clear();
         mIsMoreDataAvailable = true;

@@ -49,21 +49,18 @@ android {
     }
 }
 
-def retrofitVersion = '2.3.0'
-def okHttpVersion = '3.8.0'
-
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    api fileTree(dir: 'libs', include: ['*.jar'])
 
     /* RETROFIT */
-    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    api "com.squareup.retrofit2:retrofit:$project.retrofitVersion"
+    api "com.squareup.retrofit2:converter-gson:$project.retrofitVersion"
 
     /* OKHTTP */
-    compile "com.squareup.okhttp3:okhttp:$okHttpVersion"
-    compile "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    api "com.squareup.okhttp3:okhttp:$project.okHttpVersion"
+    api "com.squareup.okhttp3:logging-interceptor:$project.okHttpVersion"
 
-    compile project(':adal-utils')
+    api project(':adal-utils')
 }
 
 publish {

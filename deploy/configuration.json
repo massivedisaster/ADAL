@@ -1,6 +1,6 @@
 {
     "basePath": "../",
-    "version": "0.1.15",
+    "version": "0.1.16",
     "extraTasks": [
         "updateReadme"
     ],
@@ -16,6 +16,7 @@
         "adal-location",
         "adal-network",
         "adal-permissions",
-        "adal-utils"
+        "adal-utils",
+        "adal-connectivity"
     ]
 }
