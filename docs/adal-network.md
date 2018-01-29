@@ -11,7 +11,7 @@ Gradle:
 
 ```gradle
 dependencies {
-  implementation 'com.massivedisaster.adal:adal-network:0.1.15'
+  implementation 'com.massivedisaster.adal:adal-network:0.1.16'
 }
 ```
 ### Usage
