@@ -12,7 +12,7 @@ Gradle:
 
 ```gradle
 dependencies {
-  implementation 'com.massivedisaster.adal:adal-analytics:0.1.15'
+  implementation 'com.massivedisaster.adal:adal-analytics:0.1.16'
 }
 
 // ADD THIS AT THE BOTTOM
