@@ -42,7 +42,7 @@ import static android.view.View.VISIBLE;
 
 /**
  * Base class for an Adapter
- * <p>
+ *
  * <p>Adapters provide a binding from an app-specific data set to views that are displayed
  * within a {@link RecyclerView}.</p>
  *
@@ -227,7 +227,7 @@ public abstract class AbstractLoadMoreBaseAdapter<T> extends AbstractBaseAdapter
 
     /**
      * <p>Clears data set and reset loading variables</p>
-     */ 
+     */
     public void clear() {
         super.clear();
         mIsMoreDataAvailable = true;
