@@ -15,7 +15,7 @@ Gradle:
 
 ```gradle
 dependencies {
-  implementation 'com.massivedisaster.adal:adal-utils:0.1.16'
+  implementation 'com.massivedisaster.adal:adal-utils:0.1.17'
 }
 ```
 ### Usage
