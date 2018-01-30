@@ -48,16 +48,7 @@ android {
         buildConfigField "long", "API_TIMEOUT", "30"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
-        release {
-            initWith release
-            debuggable false
-        }
-        debug {
-            initWith debug
-            debuggable true
-        }
-    }
+
     lintOptions {
         disable 'InvalidPackage'
     }
