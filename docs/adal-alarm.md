@@ -11,7 +11,7 @@ Gradle:
 
 ```gradle
 dependencies {
-  implementation 'com.massivedisaster.adal:adal-alarm:0.1.16'
+  implementation 'com.massivedisaster.adal:adal-alarm:0.1.17'
 }
 ```
 ### Usage
