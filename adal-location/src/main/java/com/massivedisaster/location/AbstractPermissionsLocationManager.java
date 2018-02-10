@@ -41,7 +41,7 @@ import com.massivedisaster.location.utils.LocationUtils;
  * ADAL by Carbon by BOLD
  * Created in 29/09/17 by the following authors:
  * <p>
- * Nuno Silva - {nunosilva@carbonbybold.com}
+ * Nuno Silva
  */
 public abstract class AbstractPermissionsLocationManager {
 
