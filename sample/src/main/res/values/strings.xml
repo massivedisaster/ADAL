@@ -83,4 +83,9 @@
     <string name="connectivity_device_online">.: Device is online! :.</string>
     <string name="connectivity_device_offline">.: Device is offline! :.</string>
     <string name="check_connectivity">Check Connectivity</string>
+    <string name="sample_dialogs">Dialogs</string>
+    <string name="open_dialog">Open Dialog</string>
+    <string name="open_dialog_fragment">Open Dialog Fragment</string>
+    <string name="dialog_test">Dialog Test</string>
+    <string name="dismiss">Dismiss</string>
 </resources>

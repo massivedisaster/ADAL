@@ -26,6 +26,7 @@ dependencies {
   implementation 'com.massivedisaster.adal:adal-permissions:0.1.17'
   implementation 'com.massivedisaster.adal:adal-utils:0.1.17'
   implementation 'com.massivedisaster.adal:adal-connectivity:0.1.17'
+  implementation 'com.massivedisaster.adal:adal-dialogs:0.1.17'
 }
 ```
 
@@ -42,6 +43,7 @@ dependencies {
 - [adal-network](docs/adal-network.md)
 - [adal-permissions](docs/adal-permissions.md)
 - [adal-utils](docs/adal-utils.md)
+- [adal-dialogs](docs/adal-dialogs.md)
 
 ### Contributing
 [CONTRIBUTING](CONTRIBUTING.md)

@@ -52,6 +52,7 @@ dependencies {
     api project(':adal-alarm')
     api project(':adal-application-state')
     api project(':adal-connectivity')
+    api project(':adal-dialogs')
 }
 
 publish {
