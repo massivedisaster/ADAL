@@ -1,7 +1,7 @@
 /*
  * ADAL - A set of Android libraries to help speed up Android development.
  *
- * Copyright (c) 2017 ADAL
+ * Copyright (c) 2018 ADAL
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,4 +23,33 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-include ':adal', ':sample', ':adal-accounts', ':adal-analytics', ':adal-utils', ':adal-network', ':adal-adapters', ':adal-bus', ':adal-fragments', ':adal-location', ':adal-permissions', ':adal-alarm', ':adal-application-state', ':adal-connectivity', ':adal-connectivity', ":adal-dialogs"
+package com.massivedisaster.adal.sample.feature.dialogs;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.view.View;
+
+import com.massivedisaster.adal.dialogs.BaseDialog;
+import com.massivedisaster.adal.sample.R;
+
+public class DialogTest extends BaseDialog {
+
+    DialogTest(@NonNull Context context) {
+        super(context);
+    }
+
+    @Override
+    protected int layoutToInflate() {
+        return R.layout.dialog_test;
+    }
+
+    @Override
+    protected void doOnCreated() {
+        findViewById(R.id.btnDismiss).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+    }
+}

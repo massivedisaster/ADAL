@@ -1,7 +1,7 @@
 /*
  * ADAL - A set of Android libraries to help speed up Android development.
  *
- * Copyright (c) 2017 ADAL
+ * Copyright (c) 2018 ADAL
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,4 +23,46 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-include ':adal', ':sample', ':adal-accounts', ':adal-analytics', ':adal-utils', ':adal-network', ':adal-adapters', ':adal-bus', ':adal-fragments', ':adal-location', ':adal-permissions', ':adal-alarm', ':adal-application-state', ':adal-connectivity', ':adal-connectivity', ":adal-dialogs"
+package com.massivedisaster.adal.dialogs;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+
+/**
+ * Abstract class for dialog fragments that do requests.
+ */
+public abstract class AbstractRequestDialogFragment extends BaseDialogFragment {
+
+    private final List<Call<?>> mLstCallbacks = new ArrayList<>();
+
+    /**
+     * Constructs {@link AbstractRequestDialogFragment}
+     *
+     * @param call the call.
+     * @param <U>  the call type.
+     * @return the call.
+     */
+    public <U> Call<U> addRequest(Call<U> call) {
+        mLstCallbacks.add(call);
+
+        return call;
+    }
+
+    /**
+     * Cancel all pending requests.
+     */
+    public void cancelAllRequests() {
+        for (Call<?> c : mLstCallbacks) {
+            c.cancel();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        cancelAllRequests();
+    }
+}
