@@ -23,4 +23,57 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-include ':adal', ':sample', ':adal-accounts', ':adal-analytics', ':adal-utils', ':adal-network', ':adal-adapters', ':adal-bus', ':adal-fragments', ':adal-location', ':adal-permissions', ':adal-alarm', ':adal-application-state', ':adal-connectivity', ':adal-connectivity', ":adal-dialogs"
+package com.massivedisaster.adal.dialogs;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+
+/**
+ * Abstract class for dialogs that do requests.
+ */
+public abstract class AbstractRequestDialog extends BaseDialog {
+
+    private final List<Call<?>> mLstCallbacks = new ArrayList<>();
+
+    /**
+     * RequestDialog Constructor.
+     *
+     * @param context The application context.
+     */
+    protected AbstractRequestDialog(@NonNull Context context) {
+        super(context);
+    }
+
+    /**
+     * Constructs {@link AbstractRequestDialog}
+     *
+     * @param call the call.
+     * @param <U>  the call type.
+     * @return the call.
+     */
+    public <U> Call<U> addRequest(Call<U> call) {
+        mLstCallbacks.add(call);
+
+        return call;
+    }
+
+    /**
+     * Cancel all pending requests.
+     */
+    public void cancelAllRequests() {
+        for (Call<?> c : mLstCallbacks) {
+            c.cancel();
+        }
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        cancelAllRequests();
+    }
+}

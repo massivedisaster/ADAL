@@ -44,6 +44,7 @@ import com.massivedisaster.adal.sample.feature.analytics.FragmentAnalytics;
 import com.massivedisaster.adal.sample.feature.analytics.FragmentFirebaseAnalytics;
 import com.massivedisaster.adal.sample.feature.bus.FragmentA;
 import com.massivedisaster.adal.sample.feature.connectivity.FragmentConnectivityAware;
+import com.massivedisaster.adal.sample.feature.dialogs.FragmentDialogs;
 import com.massivedisaster.adal.sample.feature.location.FragmentLocation;
 import com.massivedisaster.adal.sample.feature.network.FragmentNetworkRequest;
 import com.massivedisaster.adal.sample.feature.permissions.FragmentPermissions;
@@ -72,8 +73,8 @@ public class FragmentHome extends BaseFragment {
 
     @Override
     protected void doOnCreated() {
-        if (((AppCompatActivity)getActivity()).getSupportActionBar() != null) {
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        if (((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
 
         mRclItems = findViewById(R.id.rclItems);
@@ -107,6 +108,7 @@ public class FragmentHome extends BaseFragment {
             put("Firebase Analytics", FragmentFirebaseAnalytics.class);
             put("Utils", FragmentUtils.class);
             put("Connectivity", FragmentConnectivityAware.class);
+            put("Dialogs", FragmentDialogs.class);
         }};
     }
 }
