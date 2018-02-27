@@ -1,7 +1,7 @@
 /*
  * ADAL - A set of Android libraries to help speed up Android development.
  *
- * Copyright (c) 2017 ADAL
+ * Copyright (c) 2018 ADAL
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,41 +23,27 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
-apply plugin: 'pt.simdea.verifier'
-apply from: "$project.rootDir/quality/quality.gradle"
+package com.massivedisaster.adal.sample.feature.dialogs;
 
-buildscript {
-    repositories {
-        jcenter()
+import android.view.View;
+
+import com.massivedisaster.adal.dialogs.BaseDialogFragment;
+import com.massivedisaster.adal.sample.R;
+
+public class DialogFragmentTest extends BaseDialogFragment {
+
+    @Override
+    protected int layoutToInflate() {
+        return R.layout.dialog_test;
     }
-    dependencies {
-        classpath "com.google.gms:google-services:3.1.0"
+
+    @Override
+    protected void doOnCreated() {
+        findViewById(R.id.btnDismiss).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
     }
-}
-
-android {
-    compileSdkVersion project.compileSdkVersion.toInteger()
-    buildToolsVersion project.buildToolsVersion
-
-    defaultConfig {
-        minSdkVersion project.minSdkVersion.toInteger()
-    }
-}
-
-dependencies {
-    /* ANALYTICS */
-    api "com.google.android.gms:play-services-analytics:$project.googlePlayServicesVersion"
-    api "com.google.firebase:firebase-core:$project.firebaseVersion"
-}
-
-publish {
-    userOrg = userOrgBase
-    groupId = adalModuleBase
-    artifactId = 'adal-analytics'
-    publishVersion = libraryVersionString()
-    desc = 'ADAL analytics module'
-    website = websiteBase
-    licences = licensesBase
 }

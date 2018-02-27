@@ -1,7 +1,7 @@
 /*
  * ADAL - A set of Android libraries to help speed up Android development.
  *
- * Copyright (c) 2017 ADAL
+ * Copyright (c) 2018 ADAL
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,41 +23,46 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
-apply plugin: 'pt.simdea.verifier'
-apply from: "$project.rootDir/quality/quality.gradle"
+package com.massivedisaster.adal.dialogs;
 
-buildscript {
-    repositories {
-        jcenter()
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+
+/**
+ * Abstract class for dialog fragments that do requests.
+ */
+public abstract class AbstractRequestDialogFragment extends BaseDialogFragment {
+
+    private final List<Call<?>> mLstCallbacks = new ArrayList<>();
+
+    /**
+     * Constructs {@link AbstractRequestDialogFragment}
+     *
+     * @param call the call.
+     * @param <U>  the call type.
+     * @return the call.
+     */
+    public <U> Call<U> addRequest(Call<U> call) {
+        mLstCallbacks.add(call);
+
+        return call;
     }
-    dependencies {
-        classpath "com.google.gms:google-services:3.1.0"
+
+    /**
+     * Cancel all pending requests.
+     */
+    public void cancelAllRequests() {
+        for (Call<?> c : mLstCallbacks) {
+            c.cancel();
+        }
     }
-}
 
-android {
-    compileSdkVersion project.compileSdkVersion.toInteger()
-    buildToolsVersion project.buildToolsVersion
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
 
-    defaultConfig {
-        minSdkVersion project.minSdkVersion.toInteger()
+        cancelAllRequests();
     }
-}
-
-dependencies {
-    /* ANALYTICS */
-    api "com.google.android.gms:play-services-analytics:$project.googlePlayServicesVersion"
-    api "com.google.firebase:firebase-core:$project.firebaseVersion"
-}
-
-publish {
-    userOrg = userOrgBase
-    groupId = adalModuleBase
-    artifactId = 'adal-analytics'
-    publishVersion = libraryVersionString()
-    desc = 'ADAL analytics module'
-    website = websiteBase
-    licences = licensesBase
 }

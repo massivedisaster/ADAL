@@ -1,7 +1,7 @@
 /*
  * ADAL - A set of Android libraries to help speed up Android development.
  *
- * Copyright (c) 2017 ADAL
+ * Copyright (c) 2018 ADAL
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -28,15 +28,6 @@ apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'pt.simdea.verifier'
 apply from: "$project.rootDir/quality/quality.gradle"
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath "com.google.gms:google-services:3.1.0"
-    }
-}
-
 android {
     compileSdkVersion project.compileSdkVersion.toInteger()
     buildToolsVersion project.buildToolsVersion
@@ -44,20 +35,23 @@ android {
     defaultConfig {
         minSdkVersion project.minSdkVersion.toInteger()
     }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
 }
 
 dependencies {
-    /* ANALYTICS */
-    api "com.google.android.gms:play-services-analytics:$project.googlePlayServicesVersion"
-    api "com.google.firebase:firebase-core:$project.firebaseVersion"
+    api project(":adal-utils")
+    api project(":adal-network")
 }
 
 publish {
     userOrg = userOrgBase
     groupId = adalModuleBase
-    artifactId = 'adal-analytics'
+    artifactId = 'adal-dialogs'
     publishVersion = libraryVersionString()
-    desc = 'ADAL analytics module'
+    desc = 'ADAL dialogs module'
     website = websiteBase
     licences = licensesBase
 }

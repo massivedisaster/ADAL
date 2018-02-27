@@ -26,9 +26,6 @@
 ext {
 
     dependencies {
-        /** GENERAL **/
-
-        implementation fileTree(dir: 'libs', include: ['*.jar'])
 
         /** APP **/
 
@@ -41,12 +38,6 @@ ext {
         /* SUPPORT */
         implementation "com.android.support:appcompat-v7:$project.supportVersion"
         implementation "com.android.support:design:$project.supportVersion"
-
-        /* ACTIVITY FRAGMENT MANAGER */
-        implementation "com.massivedisaster:activity-fragment-manager:$project.afmVersion"
-
-        /* ANALYTICS */
-        implementation "com.google.android.gms:play-services-analytics:$project.googlePlayServicesVersion"
 
         /* GLIDE */
         implementation "com.github.bumptech.glide:glide:$project.glideVersion"
