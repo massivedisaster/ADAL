@@ -106,12 +106,12 @@ public abstract class APIRequestCallback<T extends APIErrorListener> implements 
                 LogUtils.logErrorException(APIRequestCallback.class, e);
             }
 
-            processError(new APIError(mContext.getString(R.string.error_network_general)), true);
+            processError(new APIError(response.code(), mContext.getString(R.string.error_network_general)), true);
             return;
         }
 
         if (response.body() == null && !response.isSuccessful()) {
-            processError(new APIError(mContext.getString(R.string.error_network_general)), true);
+            processError(new APIError(response.code(), mContext.getString(R.string.error_network_general)), true);
             return;
         }
 
