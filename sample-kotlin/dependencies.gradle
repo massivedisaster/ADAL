@@ -1,7 +1,7 @@
 /*
  * ADAL - A set of Android libraries to help speed up Android development.
  *
- * Copyright (c) 2017 ADAL
+ * Copyright (c) 2018 ADAL
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,4 +23,36 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-include ':adal', ':sample', ':adal-accounts', ':adal-analytics', ':adal-utils', ':adal-network', ':adal-adapters', ':adal-bus', ':adal-fragments', ':adal-location', ':adal-permissions', ':adal-alarm', ':adal-application-state', ':adal-connectivity', ':adal-connectivity', ':sample-kotlin', ":adal-dialogs"
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    /** APP **/
+
+    /* ACTIVITY FRAGMENT MANAGER */
+    implementation "com.massivedisaster:afm:0.0.1"
+
+    /* ADAL */
+    implementation project(':adal')
+
+    /* SUPPORT */
+    implementation "com.android.support:appcompat-v7:$project.supportVersion"
+    implementation "com.android.support:design:$project.supportVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    /* GLIDE */
+    implementation "com.github.bumptech.glide:glide:$project.glideVersion"
+
+    /** TEST **/
+
+    /* ESPRESSO */
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:$project.espressoVersion") {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+
+    /* JUNIT */
+    testImplementation "junit:junit:$project.jUnitVersion"
+
+    /* MOCKITO */
+    androidTestImplementation "org.mockito:mockito-android:$project.mockitoVersion"
+    testImplementation "org.mockito:mockito-core:$project.mockitoVersion"
+}

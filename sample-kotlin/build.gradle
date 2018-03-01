@@ -1,7 +1,7 @@
 /*
  * ADAL - A set of Android libraries to help speed up Android development.
  *
- * Copyright (c) 2017 ADAL
+ * Copyright (c) 2018 ADAL
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,4 +23,43 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-include ':adal', ':sample', ':adal-accounts', ':adal-analytics', ':adal-utils', ':adal-network', ':adal-adapters', ':adal-bus', ':adal-fragments', ':adal-location', ':adal-permissions', ':adal-alarm', ':adal-application-state', ':adal-connectivity', ':adal-connectivity', ':sample-kotlin', ":adal-dialogs"
+/**
+ * Added for adal-analytics
+ */
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.google.gms:google-services:3.1.0'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion project.compileSdkVersion.toInteger()
+    buildToolsVersion project.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion project.minSdkVersion.toInteger()
+        targetSdkVersion project.targetSdkVersion.toInteger()
+        buildConfigField "String", "API_BASE_URL", "\"https://jsonplaceholder.typicode.com/\""
+        buildConfigField "long", "API_TIMEOUT", "30"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+}
+
+
+apply from: 'dependencies.gradle'
+
+/**
+ * Added for adal-analytics
+ */
+apply plugin: 'com.google.gms.google-services'

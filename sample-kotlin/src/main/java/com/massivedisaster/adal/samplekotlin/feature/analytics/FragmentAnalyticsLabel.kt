@@ -1,7 +1,7 @@
 /*
  * ADAL - A set of Android libraries to help speed up Android development.
  *
- * Copyright (c) 2017 ADAL
+ * Copyright (c) 2018 ADAL
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,4 +23,38 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-include ':adal', ':sample', ':adal-accounts', ':adal-analytics', ':adal-utils', ':adal-network', ':adal-adapters', ':adal-bus', ':adal-fragments', ':adal-location', ':adal-permissions', ':adal-alarm', ':adal-application-state', ':adal-connectivity', ':adal-connectivity', ':sample-kotlin', ":adal-dialogs"
+package com.massivedisaster.adal.samplekotlin.feature.analytics
+
+import android.os.Bundle
+import android.widget.TextView
+import com.massivedisaster.adal.analytics.AnalyticsManager
+import com.massivedisaster.adal.fragment.BaseFragment
+import com.massivedisaster.adal.samplekotlin.R
+
+class FragmentAnalyticsLabel : BaseFragment() {
+
+    override fun getFromBundle(bundle: Bundle) {
+        // Intended.
+    }
+
+    override fun layoutToInflate(): Int {
+        return R.layout.fragment_analytics_label
+    }
+
+    override fun restoreInstanceState(savedInstanceState: Bundle?) {
+        // Intended.
+    }
+
+    override fun doOnCreated() {
+
+        val txtAnalyticsLabel = findViewById<TextView>(R.id.txtAnalyticsLabel)
+        txtAnalyticsLabel!!.setText(R.string.analytics_message_screen_label)
+
+        /*
+         * Send a screen with a label to GA
+         *
+         * The screen must have a formmatted string to put your label (see R.string.analytics_screen_label)
+         */
+        AnalyticsManager.with(context!!).sendScreen(R.string.analytics_screen_label, "MY LABEL")
+    }
+}

@@ -1,7 +1,7 @@
 /*
  * ADAL - A set of Android libraries to help speed up Android development.
  *
- * Copyright (c) 2017 ADAL
+ * Copyright (c) 2018 ADAL
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,4 +23,22 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-include ':adal', ':sample', ':adal-accounts', ':adal-analytics', ':adal-utils', ':adal-network', ':adal-adapters', ':adal-bus', ':adal-fragments', ':adal-location', ':adal-permissions', ':adal-alarm', ':adal-application-state', ':adal-connectivity', ':adal-connectivity', ':sample-kotlin', ":adal-dialogs"
+package com.massivedisaster.adal.samplekotlin.feature.network
+
+import com.massivedisaster.adal.adapter.AbstractLoadMoreBaseAdapter
+import com.massivedisaster.adal.adapter.BaseViewHolder
+import com.massivedisaster.adal.samplekotlin.R
+import com.massivedisaster.adal.samplekotlin.model.Post
+import java.util.*
+
+class AdapterPost : AbstractLoadMoreBaseAdapter<Post>(R.layout.adapter_post, R.layout.adapter_loading, ArrayList()) {
+
+    override fun bindItem(holder: BaseViewHolder, item: Post) {
+        holder.setText(R.id.txtTitle, item.mTitle)
+        holder.setText(R.id.txtBody, item.mBody)
+    }
+
+    override fun bindError(holder: BaseViewHolder, loadingError: Boolean) {
+
+    }
+}

@@ -1,7 +1,7 @@
 /*
  * ADAL - A set of Android libraries to help speed up Android development.
  *
- * Copyright (c) 2017 ADAL
+ * Copyright (c) 2018 ADAL
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,4 +23,35 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-include ':adal', ':sample', ':adal-accounts', ':adal-analytics', ':adal-utils', ':adal-network', ':adal-adapters', ':adal-bus', ':adal-fragments', ':adal-location', ':adal-permissions', ':adal-alarm', ':adal-application-state', ':adal-connectivity', ':adal-connectivity', ':sample-kotlin', ":adal-dialogs"
+package com.massivedisaster.adal.samplekotlin.network
+
+import com.massivedisaster.adal.network.APIRequestCallback
+import com.massivedisaster.adal.samplekotlin.model.Photo
+import com.massivedisaster.adal.samplekotlin.model.Post
+import retrofit2.Call
+
+class APIRequests {
+
+    companion object {
+        private fun getAdapter(): IRequests {
+            return RetrofitAdapter.getAccountAdapter()
+        }
+
+        fun getPosts(callObject: APIRequestCallback<ResponseList<Post>>): Call<ResponseList<Post>> {
+
+            val call = getAdapter().getPosts()
+            call.enqueue(callObject)
+
+            return call
+        }
+
+        fun getPhotos(callObject: APIRequestCallback<ResponseList<Photo>>): Call<ResponseList<Photo>> {
+
+            val call = getAdapter().getPhotos()
+            call.enqueue(callObject)
+
+            return call
+        }
+    }
+
+}

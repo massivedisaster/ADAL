@@ -1,7 +1,7 @@
 /*
  * ADAL - A set of Android libraries to help speed up Android development.
  *
- * Copyright (c) 2017 ADAL
+ * Copyright (c) 2018 ADAL
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,4 +23,37 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-include ':adal', ':sample', ':adal-accounts', ':adal-analytics', ':adal-utils', ':adal-network', ':adal-adapters', ':adal-bus', ':adal-fragments', ':adal-location', ':adal-permissions', ':adal-alarm', ':adal-application-state', ':adal-connectivity', ':adal-connectivity', ':sample-kotlin', ":adal-dialogs"
+package com.massivedisaster.adal.samplekotlin.app
+
+import android.app.Application
+import android.widget.Toast
+import com.massivedisaster.adal.applicationstate.ApplicationStateManager
+
+class App : Application(), ApplicationStateManager.BackAndForegroundListener {
+
+    var TAG: String = App::class.simpleName!!
+
+    lateinit var mApplicationStateManager: ApplicationStateManager
+
+    override fun onCreate() {
+        super.onCreate()
+        mApplicationStateManager = ApplicationStateManager(this)
+        registerActivityLifecycleCallbacks(mApplicationStateManager)
+    }
+
+    override fun onBackground() {
+        Toast.makeText(this, "onBackground called", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onForeground() {
+        Toast.makeText(this, "onForeground called", Toast.LENGTH_SHORT).show()
+    }
+
+    fun isBackground(): Boolean {
+        return mApplicationStateManager.isBackground
+    }
+
+    fun isForeground(): Boolean {
+        return mApplicationStateManager.isForeground
+    }
+}

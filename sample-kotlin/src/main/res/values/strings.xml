@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ ADAL - A set of Android libraries to help speed up Android development.
+  ~
+  ~ Copyright (c) 2017 ADAL
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining
+  ~ a copy of this software and associated documentation files (the
+  ~ "Software"), to deal in the Software without restriction, including
+  ~ without limitation the rights to use, copy, modify, merge, publish,
+  ~ distribute, sublicense, and/or sell copies of the Software, and to
+  ~ permit persons to whom the Software is furnished to do so, subject to
+  ~ the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be
+  ~ included in all copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  ~ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  ~ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  ~ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+  ~ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+  ~ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+  ~ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  -->
+
+<resources>
+
+    <string name="app_name">ADAL sample</string>
+
+    <string name="sample_location">Location</string>
+    <string name="sample_permission">Permission</string>
+    <string name="sample_accounts">Accounts</string>
+    <string name="sample_bangbus">Bangbus</string>
+    <string name="sample_network">Network</string>
+    <string name="sample_adapter">Adapter</string>
+    <string name="sample_analytics">Analytics</string>
+    <string name="sample_firebase_analytics">Firebase Analytics</string>
+    <string name="sample_utils">Utils</string>
+    <string name="sample_alarm">Alarm</string>
+
+    <string name="get_location">Get Location</string>
+    <string name="start_location_updates">Start Location Updates</string>
+    <string name="stop_location_updates">Stop Location Updates</string>
+    <string name="get_permissions">Get permissions</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="get_account_info">Get account info</string>
+    <string name="add_hardcoded_account">Add hardcoded account</string>
+    <string name="clear_account">Clear account</string>
+    <string name="send_bang_with_action">Send bang String with action</string>
+    <string name="send_bang_without_action">Send bang Integer without action</string>
+    <string name="subscribe_and_open_b">Subscribe and Open B</string>
+    <string name="unsubscribe_and_open_b">Unsubscribe and Open B</string>
+    <string name="loading">Loading...</string>
+
+    <string name="analytics_message_screen">A screen was sended to Google Analytics after this fragment are opened.</string>
+    <string name="analytics_new_fragment">Open a new fragment</string>
+    <string name="analytics_message_screen_label">A screen with a label was sended to Google Analytics after this fragment are opened.\n\nThe screen must have a formmatted string to put your label</string>
+    <string name="analytics_send_event">Send an event</string>
+    <string name="analytics_send_event_label">Send an event with label</string>
+    <string name="analytics_message_events">Go to Google Analytics Console to see this Event.</string>
+    <string name="analytics_edittext_hint">Label</string>
+    <string name="analytics_gender_title">Gender</string>
+    <string name="analytics_gender_male">Male</string>
+    <string name="analytics_gender_female">Female</string>
+    <string name="firebase_analytics_message_screen">A screen was sended to Firebase Analytics after this fragment are opened.</string>
+    <string name="firebase_analytics_message_screen_label">A screen with a label was sended to Firebase Analytics after this fragment are opened.\n\nThe screen must have a formmatted string to put your label</string>
+    <string name="firebase_analytics_message_events">Go to Firebase Analytics Console to see this Event.</string>
+    <string name="firebase_analytics_message_user_property">Go to Firebase Analytics Console to see this User Property.</string>
+
+    <string name="open_settings">Open Settings</string>
+    <string name="check_playservices_exists">Check if Google PlayServices Exists</string>
+    <string name="playservices_exists">Google Play Services exists</string>
+    <string name="playservices_dont_exists">Google Play Services don\'t exists</string>
+    <string name="open_dial">Open Dial</string>
+    <string name="open_email">Open Email</string>
+    <string name="send_email">Send Email</string>
+    <string name="add_alarm">Add Alarm</string>
+    <string name="remove_alarm">Remove Alarm</string>
+    <string name="try_again">Try Again</string>
+
+    <string name="connectivity_device_online">.: Device is online! :.</string>
+    <string name="connectivity_device_offline">.: Device is offline! :.</string>
+    <string name="check_connectivity">Check Connectivity</string>
+    <string name="sample_dialogs">Dialogs</string>
+    <string name="open_dialog">Open Dialog</string>
+    <string name="open_dialog_fragment">Open Dialog Fragment</string>
+    <string name="dialog_test">Dialog Test</string>
+    <string name="dismiss">Dismiss</string>
+</resources>

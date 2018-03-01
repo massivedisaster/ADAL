@@ -1,7 +1,7 @@
 /*
  * ADAL - A set of Android libraries to help speed up Android development.
  *
- * Copyright (c) 2017 ADAL
+ * Copyright (c) 2018 ADAL
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,4 +23,38 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-include ':adal', ':sample', ':adal-accounts', ':adal-analytics', ':adal-utils', ':adal-network', ':adal-adapters', ':adal-bus', ':adal-fragments', ':adal-location', ':adal-permissions', ':adal-alarm', ':adal-application-state', ':adal-connectivity', ':adal-connectivity', ':sample-kotlin', ":adal-dialogs"
+package com.massivedisaster.adal.samplekotlin.network
+
+import com.google.gson.GsonBuilder
+import com.massivedisaster.adal.samplekotlin.BuildConfig
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
+
+class RetrofitAdapter {
+
+    companion object {
+        fun getAccountAdapter(): IRequests {
+            return getRetrofit().create(IRequests::class.java)
+        }
+
+        private fun getRetrofit(): Retrofit {
+            val gson = GsonBuilder().create()
+
+            return Retrofit.Builder()
+                    .baseUrl(BuildConfig.API_BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .client(getOkHttpClient(BuildConfig.API_TIMEOUT))
+                    .build()
+        }
+
+        private fun getOkHttpClient(timeout: Long): OkHttpClient {
+            return OkHttpClient.Builder()
+                    .readTimeout(timeout, TimeUnit.SECONDS)
+                    .connectTimeout(timeout, TimeUnit.SECONDS)
+                    .build()
+        }
+    }
+
+}
