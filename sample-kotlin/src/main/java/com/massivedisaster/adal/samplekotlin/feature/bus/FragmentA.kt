@@ -35,9 +35,9 @@ import com.massivedisaster.adal.samplekotlin.base.activity.ActivityToolbar
 import com.massivedisaster.afm.ActivityCall
 
 class FragmentA : BaseFragment() {
-
-    val BANG_A: String = "BANG_A"
-
+    companion object {
+        val BANG_A: String = "BANG_A"
+    }
     private var mBangBus: BangBus? = null
     private var mBtnSubscribeOpenB: Button? = null
     private var mUnsubscribeBtnOpenB: Button? = null
@@ -47,9 +47,7 @@ class FragmentA : BaseFragment() {
         // Intended.
     }
 
-    override fun layoutToInflate(): Int {
-        return R.layout.fragment_a
-    }
+    override fun layoutToInflate(): Int = R.layout.fragment_a
 
     override fun restoreInstanceState(savedInstanceState: Bundle?) {
         // Intended.
@@ -65,7 +63,7 @@ class FragmentA : BaseFragment() {
         initialize()
     }
 
-    fun initialize() {
+    private fun initialize() {
         mBangBus = BangBus(activity)
         mBangBus!!.subscribe(this)
 

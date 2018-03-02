@@ -39,9 +39,7 @@ class FragmentUtils : BaseFragment() {
 
     override fun getFromBundle(bundle: Bundle) {}
 
-    override fun layoutToInflate(): Int {
-        return R.layout.fragment_utils
-    }
+    override fun layoutToInflate(): Int = R.layout.fragment_utils
 
     override fun restoreInstanceState(savedInstanceState: Bundle?) {}
 

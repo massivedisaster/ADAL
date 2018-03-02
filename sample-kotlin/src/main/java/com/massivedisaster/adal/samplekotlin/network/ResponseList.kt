@@ -31,11 +31,7 @@ class ResponseList<T> : APIResponseList<T>() {
     private val error: String? = null
     private val error_detail: String? = null
 
-    override fun getError(): String? {
-        return error
-    }
+    override fun getError(): String? = error
 
-    override fun getErrorCode(): Int {
-        return 0
-    }
+    override fun getErrorCode(): Int = 0
 }

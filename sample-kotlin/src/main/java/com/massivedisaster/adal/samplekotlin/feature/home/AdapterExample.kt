@@ -32,7 +32,7 @@ import com.massivedisaster.adal.samplekotlin.R
 import java.util.*
 import kotlin.reflect.KClass
 
-class AdapterExample(val lstItems: TreeMap<String, KClass<out Fragment>>) : AbstractLoadMoreBaseAdapter<String>(R.layout.adapter_example, ArrayList(lstItems.keys) as List<String>?) {
+class AdapterExample(private val lstItems: TreeMap<String, KClass<out Fragment>>) : AbstractLoadMoreBaseAdapter<String>(R.layout.adapter_example, ArrayList(lstItems.keys) as List<String>?) {
     override fun bindItem(holder: BaseViewHolder, item: String) {
         holder.setText(R.id.txtName, item)
     }

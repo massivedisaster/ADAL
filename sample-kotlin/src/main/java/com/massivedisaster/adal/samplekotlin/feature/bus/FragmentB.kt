@@ -43,9 +43,7 @@ class FragmentB : BaseFragment() {
         // Intended.
     }
 
-    override fun layoutToInflate(): Int {
-        return R.layout.fragment_b
-    }
+    override fun layoutToInflate(): Int = R.layout.fragment_b
 
     override fun restoreInstanceState(savedInstanceState: Bundle?) {
         // Intended.
@@ -58,11 +56,11 @@ class FragmentB : BaseFragment() {
         initialize()
     }
 
-    fun initialize() {
+    private fun initialize() {
         mBtnSendBangWithAction!!.setOnClickListener {
             BangBus
                     .with(context)
-                    .addAction(FragmentA::BANG_A.toString())
+                    .addAction(FragmentA.BANG_A)
                     .setParameter(BANG_MESSAGE_WITH_ACTION)
                     .bang()
 

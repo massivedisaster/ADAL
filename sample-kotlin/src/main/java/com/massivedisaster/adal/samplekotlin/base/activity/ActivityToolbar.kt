@@ -32,11 +32,9 @@ import com.massivedisaster.adal.samplekotlin.R
 import com.massivedisaster.afm.activity.BaseActivity
 
 class ActivityToolbar : BaseActivity() {
-    override fun layoutToInflate(): Int {
-        return R.layout.activity_toolbar
-    }
+    override fun layoutToInflate(): Int = R.layout.activity_toolbar
 
-    lateinit var mToolbar: Toolbar
+    private var mToolbar: Toolbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,17 +47,13 @@ class ActivityToolbar : BaseActivity() {
         }
     }
 
-    override fun getContainerViewId(): Int {
-        return R.id.frmContainer
-    }
+    override fun getContainerViewId(): Int = R.id.frmContainer
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId) {
             android.R.id.home -> {
                 onBackPressed()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
 }

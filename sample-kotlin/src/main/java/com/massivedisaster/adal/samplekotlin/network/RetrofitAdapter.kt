@@ -35,9 +35,7 @@ import java.util.concurrent.TimeUnit
 class RetrofitAdapter {
 
     companion object {
-        fun getAccountAdapter(): IRequests {
-            return getRetrofit().create(IRequests::class.java)
-        }
+        fun getAccountAdapter(): IRequests = getRetrofit().create(IRequests::class.java)
 
         private fun getRetrofit(): Retrofit {
             val gson = GsonBuilder().create()
@@ -49,12 +47,10 @@ class RetrofitAdapter {
                     .build()
         }
 
-        private fun getOkHttpClient(timeout: Long): OkHttpClient {
-            return OkHttpClient.Builder()
+        private fun getOkHttpClient(timeout: Long): OkHttpClient = OkHttpClient.Builder()
                     .readTimeout(timeout, TimeUnit.SECONDS)
                     .connectTimeout(timeout, TimeUnit.SECONDS)
                     .build()
-        }
     }
 
 }

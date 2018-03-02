@@ -45,9 +45,7 @@ class FragmentPermissions : BaseFragment() {
         // Intended.
     }
 
-    override fun layoutToInflate(): Int {
-        return R.layout.fragment_permissions
-    }
+    override fun layoutToInflate(): Int = R.layout.fragment_permissions
 
     override fun restoreInstanceState(savedInstanceState: Bundle?) {
 
@@ -62,7 +60,7 @@ class FragmentPermissions : BaseFragment() {
         initialize()
     }
 
-    fun initialize() {
+    private fun initialize() {
         mPermissionsManager = PermissionsManager(this)
 
         mBtnGetPermissions!!.setOnClickListener {

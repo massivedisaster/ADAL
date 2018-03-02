@@ -35,30 +35,26 @@ import com.massivedisaster.afm.ActivityCall
 
 class FragmentSplash : AbstractSplashFragment() {
     override fun getFromBundle(bundle: Bundle) {
-
+        //Intended
     }
 
-    override fun layoutToInflate(): Int {
-        return R.layout.fragment_splash_screen
-    }
+    override fun layoutToInflate(): Int = R.layout.fragment_splash_screen
 
     override fun restoreInstanceState(savedInstanceState: Bundle?) {
-
+        //Intended
     }
 
     override fun doOnCreated() {
-
+        //Intended
     }
 
     override fun onSplashStarted() {
         onSplashFinish(openHome())
     }
 
-    private fun openHome(): AbstractSplashFragment.OnFinishSplashScreen {
-        return OnFinishSplashScreen {
+    private fun openHome(): AbstractSplashFragment.OnFinishSplashScreen = OnFinishSplashScreen {
             ActivityCall.init(activity!!, ActivityToolbar::class, FragmentHome::class)
                     .build()
             activity!!.finish()
         }
-    }
 }

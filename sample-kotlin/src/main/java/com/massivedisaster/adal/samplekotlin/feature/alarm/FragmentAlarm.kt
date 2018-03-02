@@ -43,16 +43,14 @@ class FragmentAlarm : BaseFragment(), View.OnClickListener {
     private var mBtnRemoveAlarm: Button? = null
     private var mIntentAlarm: Intent? = null
 
-    override fun layoutToInflate(): Int {
-        return R.layout.fragment_alarm
-    }
+    override fun layoutToInflate(): Int = R.layout.fragment_alarm
 
     override fun getFromBundle(bundle: Bundle) {
-
+        //Intended
     }
 
     override fun restoreInstanceState(savedInstanceState: Bundle?) {
-
+        //Intended
     }
 
     override fun doOnCreated() {

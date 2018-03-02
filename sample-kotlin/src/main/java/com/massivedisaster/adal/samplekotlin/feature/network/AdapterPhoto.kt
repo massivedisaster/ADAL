@@ -36,7 +36,7 @@ import com.massivedisaster.adal.samplekotlin.model.Photo
 
 class AdapterPhoto : AbstractLoadMoreBaseAdapter<Photo>(R.layout.adapter_photo, R.layout.adapter_loading, ArrayList()) {
 
-    internal lateinit var mListener: View.OnClickListener
+    private var mListener: View.OnClickListener? = null
 
     override fun bindItem(holder: BaseViewHolder, item: Photo) {
         val imgThumbnail = holder.getView<ImageView>(R.id.imgThumbnail)

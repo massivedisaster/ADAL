@@ -56,9 +56,7 @@ class FragmentHome : BaseFragment() {
         // Intended.
     }
 
-    override fun layoutToInflate(): Int {
-        return R.layout.fragment_home
-    }
+    override fun layoutToInflate(): Int = R.layout.fragment_home
 
     override fun restoreInstanceState(savedInstanceState: Bundle?) {
         // Intended.

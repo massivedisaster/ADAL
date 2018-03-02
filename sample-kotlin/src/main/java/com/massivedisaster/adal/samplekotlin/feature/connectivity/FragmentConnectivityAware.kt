@@ -60,9 +60,7 @@ class FragmentConnectivityAware : BaseFragment(), View.OnClickListener {
         // Intended.
     }
 
-    override fun layoutToInflate(): Int {
-        return R.layout.fragment_connectivity_aware
-    }
+    override fun layoutToInflate(): Int = R.layout.fragment_connectivity_aware
 
     override fun restoreInstanceState(savedInstanceState: Bundle?) {
         // Intended.

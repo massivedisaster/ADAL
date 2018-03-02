@@ -14,7 +14,7 @@ dependencies {
 }
 ```
 ### Usage
-
+#### Java
 BaseDialog:
 ```java
 public class DialogTest extends BaseDialog {
@@ -57,6 +57,32 @@ public class DialogFragmentTest extends BaseDialogFragment {
                 dismiss();
             }
         });
+    }
+}
+```
+
+#### Kotlin
+BaseDialog:
+```kotlin
+class DialogTest(context: Context) : BaseDialog(context) {
+
+    override fun layoutToInflate(): Int = R.layout.dialog_test
+
+    override fun doOnCreated() {
+        findViewById<View>(R.id.btnDismiss)!!.setOnClickListener({ dismiss() })
+    }
+
+}
+```
+
+BaseDialogFragment:
+```kotlin
+class DialogFragmentTest : BaseDialogFragment() {
+
+    override fun layoutToInflate(): Int = R.layout.dialog_test
+
+    override fun doOnCreated() {
+        findViewById<View>(R.id.btnDismiss)!!.setOnClickListener { dismiss() }
     }
 }
 ```

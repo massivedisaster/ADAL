@@ -33,9 +33,7 @@ import retrofit2.Call
 class APIRequests {
 
     companion object {
-        private fun getAdapter(): IRequests {
-            return RetrofitAdapter.getAccountAdapter()
-        }
+        private fun getAdapter(): IRequests = RetrofitAdapter.getAccountAdapter()
 
         fun getPosts(callObject: APIRequestCallback<ResponseList<Post>>): Call<ResponseList<Post>> {
 

@@ -54,9 +54,7 @@ class FragmentLocation : BaseFragment() {
         // Intended.
     }
 
-    override fun layoutToInflate(): Int {
-        return R.layout.fragment_location
-    }
+    override fun layoutToInflate(): Int = R.layout.fragment_location
 
     override fun doOnCreated() {
         activity!!.setTitle(R.string.sample_location)
@@ -195,7 +193,5 @@ class FragmentLocation : BaseFragment() {
         })
     }
 
-    private fun getLocation(location: Location): String {
-        return "Location found " + location.latitude + ", " + location.longitude
-    }
+    private fun getLocation(location: Location): String = "Location found " + location.latitude + ", " + location.longitude
 }

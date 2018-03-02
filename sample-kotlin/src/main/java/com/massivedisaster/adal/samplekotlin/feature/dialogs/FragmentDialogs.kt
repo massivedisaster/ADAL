@@ -40,9 +40,7 @@ class FragmentDialogs : BaseFragment() {
         // Intended.
     }
 
-    override fun layoutToInflate(): Int {
-        return R.layout.fragment_dialogs
-    }
+    override fun layoutToInflate(): Int = R.layout.fragment_dialogs
 
     override fun restoreInstanceState(savedInstanceState: Bundle?) {
         // Intended.
@@ -58,17 +56,13 @@ class FragmentDialogs : BaseFragment() {
         mBtnOpenDialogFragment!!.setOnClickListener(openDialogFragment())
     }
 
-    private fun openDialog(): View.OnClickListener {
-        return View.OnClickListener {
+    private fun openDialog(): View.OnClickListener = View.OnClickListener {
             val dialog = DialogTest(context!!)
             dialog.show()
         }
-    }
 
-    private fun openDialogFragment(): View.OnClickListener {
-        return View.OnClickListener {
+    private fun openDialogFragment(): View.OnClickListener = View.OnClickListener {
             val dialogFragment = DialogFragmentTest()
             dialogFragment.show(fragmentManager, null)
         }
-    }
 }

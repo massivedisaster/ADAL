@@ -30,8 +30,6 @@ import com.massivedisaster.adal.samplekotlin.base.activity.ActivityFullScreen
 
 class ActivitySplashScreen : ActivityFullScreen() {
 
-    override fun getDefaultFragment(): Class<out Fragment> {
-        return FragmentSplash::class.java
-    }
+    override fun getDefaultFragment(): Class<out Fragment> = FragmentSplash::class.java
 
 }

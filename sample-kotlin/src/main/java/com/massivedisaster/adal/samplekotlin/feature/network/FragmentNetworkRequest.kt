@@ -51,9 +51,7 @@ class FragmentNetworkRequest : AbstractRequestFragment() {
         // Intended.
     }
 
-    override fun layoutToInflate(): Int {
-        return R.layout.fragment_network_request
-    }
+    override fun layoutToInflate(): Int = R.layout.fragment_network_request
 
     override fun restoreInstanceState(savedInstanceState: Bundle?) {
         // Intended.
@@ -86,7 +84,7 @@ class FragmentNetworkRequest : AbstractRequestFragment() {
     private fun request() {
 
         // Show the general loading if the adapter is empty
-        if (mAdapterPhoto!!.isEmpty()) {
+        if (mAdapterPhoto!!.isEmpty) {
             showLoading()
         }
 

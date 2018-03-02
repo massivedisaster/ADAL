@@ -43,9 +43,7 @@ class FragmentAccounts : BaseFragment() {
         // Intended.
     }
 
-    override fun layoutToInflate(): Int {
-        return R.layout.fragment_accounts
-    }
+    override fun layoutToInflate(): Int = R.layout.fragment_accounts
 
     override fun restoreInstanceState(savedInstanceState: Bundle?) {
         // Intended.
@@ -61,8 +59,7 @@ class FragmentAccounts : BaseFragment() {
         initialize()
     }
 
-    fun initialize() {
-
+    private fun initialize() {
         AccountHelper.initialize(activity)
 
         mBtnGetAccount!!.setOnClickListener { getAccount() }

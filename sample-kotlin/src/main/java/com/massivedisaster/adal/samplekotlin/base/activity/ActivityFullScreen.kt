@@ -29,11 +29,7 @@ import com.massivedisaster.adal.samplekotlin.R
 import com.massivedisaster.afm.activity.BaseActivity
 
 open class ActivityFullScreen : BaseActivity() {
-    override fun getContainerViewId(): Int {
-        return R.id.frmContainer
-    }
+    override fun getContainerViewId(): Int = R.id.frmContainer
 
-    override fun layoutToInflate(): Int {
-        return R.layout.activity_fullscreen
-    }
+    override fun layoutToInflate(): Int = R.layout.activity_fullscreen
 }

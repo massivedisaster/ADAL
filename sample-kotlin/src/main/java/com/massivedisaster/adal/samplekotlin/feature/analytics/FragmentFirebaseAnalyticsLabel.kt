@@ -37,9 +37,7 @@ class FragmentFirebaseAnalyticsLabel : BaseFragment() {
         // Intended.
     }
 
-    override fun layoutToInflate(): Int {
-        return R.layout.fragment_analytics_label
-    }
+    override fun layoutToInflate(): Int = R.layout.fragment_analytics_label
 
     override fun restoreInstanceState(savedInstanceState: Bundle?) {
         // Intended.

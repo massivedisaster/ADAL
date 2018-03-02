@@ -32,9 +32,7 @@ import com.massivedisaster.adal.samplekotlin.R
 
 class DialogTest(context: Context) : BaseDialog(context) {
 
-    override fun layoutToInflate(): Int {
-        return R.layout.dialog_test
-    }
+    override fun layoutToInflate(): Int = R.layout.dialog_test
 
     override fun doOnCreated() {
         findViewById<View>(R.id.btnDismiss)!!.setOnClickListener({ dismiss() })

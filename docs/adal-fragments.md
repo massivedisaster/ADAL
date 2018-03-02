@@ -13,7 +13,7 @@ dependencies {
 }
 ```
 ### Usage
-
+#### Java
 BaseFragment:
 ```java
 public class FragmentA extends BaseFragment {
@@ -53,7 +53,6 @@ public class FragmentSplash extends AbstractSplashFragment {
         };
     }
 }
-
 ```
 
 AbstractRequestFragment:
@@ -70,7 +69,48 @@ public class FragmentRequest extends AbstractRequestFragment {
         addRequest(...);
     }
 }
+```
 
+#### Kotlin
+BaseFragment:
+```kotlin
+class FragmentA : BaseFragment() {
+    override fun layoutToInflate(): Int = R.layout.fragment_a
+
+    override fun doOnCreated() {
+        activity!!.setTitle(R.string.sample_bangbus)
+    }
+}
+```
+
+AbstractSplashFragment:
+```kotlin
+class FragmentSplash : AbstractSplashFragment() {
+
+    override fun layoutToInflate(): Int = R.layout.fragment_splash_screen
+
+    override fun onSplashStarted() {
+        onSplashFinish(openHome())
+    }
+
+    private fun openHome(): AbstractSplashFragment.OnFinishSplashScreen = OnFinishSplashScreen {
+                ActivityCall.init(activity!!, ActivityToolbar::class, FragmentHome::class)
+                        .build()
+                activity!!.finish()
+            }
+}
+```
+
+AbstractRequestFragment:
+```kotlin
+class FragmentRequest : AbstractRequestFragment() {
+
+    override fun layoutToInflate(): Int = R.layout.fragment_network_request
+
+    override fun doOnCreated() {
+        addRequest(...)
+    }
+}
 ```
 
 ### Contributing

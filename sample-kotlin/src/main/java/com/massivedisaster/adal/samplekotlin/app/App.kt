@@ -33,7 +33,7 @@ class App : Application(), ApplicationStateManager.BackAndForegroundListener {
 
     var TAG: String = App::class.simpleName!!
 
-    lateinit var mApplicationStateManager: ApplicationStateManager
+    private var mApplicationStateManager: ApplicationStateManager? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -49,11 +49,7 @@ class App : Application(), ApplicationStateManager.BackAndForegroundListener {
         Toast.makeText(this, "onForeground called", Toast.LENGTH_SHORT).show()
     }
 
-    fun isBackground(): Boolean {
-        return mApplicationStateManager.isBackground
-    }
+    fun isBackground(): Boolean = mApplicationStateManager!!.isBackground
 
-    fun isForeground(): Boolean {
-        return mApplicationStateManager.isForeground
-    }
+    fun isForeground(): Boolean = mApplicationStateManager!!.isForeground
 }

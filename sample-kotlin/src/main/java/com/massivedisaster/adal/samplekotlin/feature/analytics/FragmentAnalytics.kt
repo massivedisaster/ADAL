@@ -35,13 +35,12 @@ import com.massivedisaster.adal.samplekotlin.base.activity.ActivityToolbar
 import com.massivedisaster.adal.utils.SnackBuilder
 import com.massivedisaster.afm.ActivityCall
 
+
 class FragmentAnalytics : BaseFragment() {
 
     private var mEdtAnalyticsEventLabel: AppCompatEditText? = null
 
-    override fun layoutToInflate(): Int {
-        return R.layout.fragment_analytics
-    }
+    override fun layoutToInflate(): Int = R.layout.fragment_analytics
 
     override fun doOnCreated() {
         activity!!.setTitle(R.string.sample_analytics)

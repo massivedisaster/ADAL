@@ -15,6 +15,7 @@ dependencies {
 }
 ```
 ### Usage
+#### Java
 ```java
 public class FragmentNetworkRequest extends AbstractRequestFragment {
 
@@ -58,6 +59,44 @@ public class FragmentNetworkRequest extends AbstractRequestFragment {
     }
 }
 ```
+
+#### Kotlin
+```kotlin
+class FragmentNetworkRequest : AbstractRequestFragment() {
+
+    private var mRclItems: RecyclerView? = null
+    private var mAdapterPost: AdapterPost? = null
+
+    override fun doOnCreated() {
+        mRclItems!!.layoutManager = LinearLayoutManager(context)
+
+        mAdapterPost = AdapterPost()
+        mAdapterPost!!.setOnLoadMoreListener({ request() })
+        mRclItems!!.adapter = mAdapterPost
+
+        request()
+    }
+
+    private fun request() {
+
+        // Show the general loading if the adapter is empty
+        if (mAdapterPost!!.isEmpty) {
+            showLoading()
+        }
+
+        addRequest(APIRequests.getPosts(object : APIRequestCallback<ResponseList<Post>>(context) {
+            override fun onSuccess(posts: ResponseList<Post>) {
+                mAdapterPost!!.addAll(posts)
+            }
+
+            override fun onError(error: APIError, isServerError: Boolean) {
+                showError(error.message)
+            }
+        }))
+    }
+}
+```
+
 ### Contributing
 [CONTRIBUTING](../CONTRIBUTING.md)
 

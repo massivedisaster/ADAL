@@ -41,9 +41,7 @@ class FragmentFirebaseAnalytics : BaseFragment() {
 
     private var mEdtAnalyticsEventLabel: AppCompatEditText? = null
 
-    override fun layoutToInflate(): Int {
-        return R.layout.fragment_firebase_analytics
-    }
+    override fun layoutToInflate(): Int = R.layout.fragment_firebase_analytics
 
     override fun doOnCreated() {
         activity!!.setTitle(R.string.sample_firebase_analytics)
