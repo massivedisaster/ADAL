@@ -33,8 +33,10 @@ import com.massivedisaster.adal.samplekotlin.R
 
 class FragmentB : BaseFragment() {
 
-    val BANG_MESSAGE_WITH_ACTION = "received bang with action"
-    val BANG_NUMBER_WITHOUT_NUMBER = 666
+    companion object {
+        val BANG_MESSAGE_WITH_ACTION = "received bang with action"
+        val BANG_NUMBER_WITHOUT_NUMBER = 666
+    }
 
     private var mBtnSendBangWithAction: Button? = null
     private var mBtnSendBangWithoutAction: Button? = null

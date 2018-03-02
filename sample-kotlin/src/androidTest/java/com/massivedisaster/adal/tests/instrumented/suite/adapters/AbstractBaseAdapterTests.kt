@@ -1,7 +1,7 @@
 /*
  * ADAL - A set of Android libraries to help speed up Android development.
  *
- * Copyright (c) 2017 ADAL
+ * Copyright (c) 2018 ADAL
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,7 +23,10 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.massivedisaster.adal.tests.instrumented.suite.fragments;
+package com.massivedisaster.adal.tests.instrumented.suite.adapters
 
-public class BaseFragmentTests {
+/**
+ * Created by andrer757 on 02-03-2018.
+ */
+class AbstractBaseAdapterTests {
 }
