@@ -42,7 +42,7 @@ import static android.view.View.VISIBLE;
 
 /**
  * Base class for an Adapter
- *
+ * <p>
  * <p>Adapters provide a binding from an app-specific data set to views that are displayed
  * within a {@link RecyclerView}.</p>
  *
@@ -52,12 +52,13 @@ public abstract class AbstractLoadMoreBaseAdapter<T> extends AbstractBaseAdapter
 
     public static final int VIEW_TYPE_ITEM = 0;
     public static final int VIEW_TYPE_LOAD = 1;
+    public static final int VIEW_TYPE_HEADER = 2;
 
     private static final int INVALID_RESOURCE_ID = -1;
 
     protected OnChildClickListener<T> mOnChildCLickListener;
     private OnLoadMoreListener mOnLoadMoreListener;
-    private int mResLayout, mResLoading;
+    private int mResLayout, mResLoading, mResHeader;
     private View mEmptyView;
     private final RecyclerView.AdapterDataObserver mDataObserver = new RecyclerView.AdapterDataObserver() {
         @Override
@@ -85,7 +86,7 @@ public abstract class AbstractLoadMoreBaseAdapter<T> extends AbstractBaseAdapter
      */
     public AbstractLoadMoreBaseAdapter(int resLayout, List<T> lstItems) {
         super();
-        init(resLayout, INVALID_RESOURCE_ID, lstItems);
+        init(resLayout, INVALID_RESOURCE_ID, INVALID_RESOURCE_ID, lstItems);
     }
 
     /**
@@ -97,7 +98,20 @@ public abstract class AbstractLoadMoreBaseAdapter<T> extends AbstractBaseAdapter
      */
     public AbstractLoadMoreBaseAdapter(int resLayout, int resLoading, List<T> lstItems) {
         super();
-        init(resLayout, resLoading, lstItems);
+        init(resLayout, resLoading, INVALID_RESOURCE_ID, lstItems);
+    }
+
+    /**
+     * The constructor of the adapter.
+     *
+     * @param resLayout  The layout resource id.
+     * @param resLoading The loading resource id.
+     * @param resHeader  The header resource id.
+     * @param lstItems   The list of items.
+     */
+    public AbstractLoadMoreBaseAdapter(int resLayout, int resLoading, int resHeader, List<T> lstItems) {
+        super();
+        init(resLayout, resLoading, resHeader, lstItems);
     }
 
     /**
@@ -105,18 +119,25 @@ public abstract class AbstractLoadMoreBaseAdapter<T> extends AbstractBaseAdapter
      *
      * @param resLayout  The layout resource id.
      * @param resLoading The loading resource id.
+     * @param resHeader  The header resource id.
      * @param data       The list of items.
      */
-    private void init(int resLayout, int resLoading, List<T> data) {
+    private void init(int resLayout, int resLoading, int resHeader, List<T> data) {
         mResLoading = resLoading;
         mResLayout = resLayout;
+        mResHeader = resHeader;
         mData = data;
     }
 
+
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == VIEW_TYPE_HEADER && hasHeaderLayout()) {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(mResHeader, parent, false);
 
-        if (viewType == VIEW_TYPE_LOAD && hasLoadingLayout()) {
+            return new BaseViewHolder(v);
+        } else if (viewType == VIEW_TYPE_LOAD && hasLoadingLayout()) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(mResLoading, parent, false);
 
@@ -146,7 +167,9 @@ public abstract class AbstractLoadMoreBaseAdapter<T> extends AbstractBaseAdapter
             mOnLoadMoreListener.onLoadMore();
         }
 
-        if (getItemViewType(position) == VIEW_TYPE_ITEM) {
+        if (getItemViewType(position) == VIEW_TYPE_HEADER) {
+            bindHeader(holder);
+        } else if (getItemViewType(position) == VIEW_TYPE_ITEM) {
             bindItem(holder, getItem(position));
         } else if (getItemViewType(position) == VIEW_TYPE_LOAD && hasLoadingLayout()) {
             bindError(holder, mIsLoadingError);
@@ -156,12 +179,18 @@ public abstract class AbstractLoadMoreBaseAdapter<T> extends AbstractBaseAdapter
     @Override
     @ViewType
     public int getItemViewType(int position) {
-        return position > mData.size() - 1 ? VIEW_TYPE_LOAD : VIEW_TYPE_ITEM;
+        if (position == 0 && hasHeaderLayout()) {
+            return VIEW_TYPE_HEADER;
+        } else if (position > mData.size() - 1) {
+            return VIEW_TYPE_LOAD;
+        } else {
+            return VIEW_TYPE_ITEM;
+        }
     }
 
     @Override
     public int getItemCount() {
-        return (mIsMoreDataAvailable && hasLoadingLayout()) ? mData.size() + 1 : mData.size();
+        return mData.size() + ((mIsMoreDataAvailable && hasLoadingLayout()) ? 1 : 0) + (hasHeaderLayout() ? 1 : 0);
     }
 
     /**
@@ -276,8 +305,18 @@ public abstract class AbstractLoadMoreBaseAdapter<T> extends AbstractBaseAdapter
         return mResLoading != INVALID_RESOURCE_ID;
     }
 
+
+    /**
+     * Validate if header layout is present.
+     *
+     * @return true if is present, false otherwise.
+     */
+    private boolean hasHeaderLayout() {
+        return mResHeader != INVALID_RESOURCE_ID;
+    }
+
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({VIEW_TYPE_ITEM, VIEW_TYPE_LOAD})
+    @IntDef({VIEW_TYPE_ITEM, VIEW_TYPE_LOAD, VIEW_TYPE_HEADER})
     @interface ViewType {
     }
 }
