@@ -88,4 +88,5 @@
     <string name="open_dialog_fragment">Open Dialog Fragment</string>
     <string name="dialog_test">Dialog Test</string>
     <string name="dismiss">Dismiss</string>
+    <string name="please_select_on_category_and_test_all_the_features">Please select on category and test all the features!</string>
 </resources>

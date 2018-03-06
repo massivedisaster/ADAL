@@ -56,6 +56,15 @@ public abstract class AbstractBaseAdapter<T> extends RecyclerView.Adapter<BaseVi
     protected abstract void bindError(BaseViewHolder holder, boolean loadingError);
 
     /**
+     * When header is binded.
+     *
+     * @param holder The view holder with header layout.
+     */
+    public void bindHeader(BaseViewHolder holder) {
+        // Intended.
+    }
+
+    /**
      * <p>Adds an item on a specific position of the data set</p>
      *
      * @param position specific position to add the item
