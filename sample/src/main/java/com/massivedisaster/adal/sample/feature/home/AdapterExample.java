@@ -38,7 +38,7 @@ import java.util.TreeMap;
 public class AdapterExample extends AbstractLoadMoreBaseAdapter<String> {
 
     public AdapterExample(TreeMap<String, Class<? extends Fragment>> lstItems) {
-        super(R.layout.adapter_example, new ArrayList<>(lstItems.keySet()));
+        super(R.layout.adapter_example,-1, R.layout.adapter_header, new ArrayList<>(lstItems.keySet()));
     }
 
     @Override
