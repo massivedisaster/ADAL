@@ -33,6 +33,6 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:gravity="center"
-        android:text="@string/please_select_on_category_and_test_all_the_features" />
+        android:text="@string/please_select_one_category_and_test_all_the_features" />
 
 </LinearLayout>
