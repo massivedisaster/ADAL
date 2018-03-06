@@ -11,7 +11,7 @@ Gradle:
 
 ```gradle
 dependencies {
-  implementation 'com.massivedisaster.adal:adal-permissions:0.1.18'
+  implementation 'com.massivedisaster.adal:adal-permissions:0.1.19'
 }
 ```
 

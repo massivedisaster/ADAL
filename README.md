@@ -12,21 +12,21 @@ Gradle:
 ```gradle
 dependencies {
   /* Include all modules */
-  implementation 'com.massivedisaster.adal:adal:0.1.18'
+  implementation 'com.massivedisaster.adal:adal:0.1.19'
   /* Specific modules */
-  implementation 'com.massivedisaster.adal:adal-accounts:0.1.18'
-  implementation 'com.massivedisaster.adal:adal-adapters:0.1.18'
-  implementation 'com.massivedisaster.adal:adal-alarm:0.1.18'
-  implementation 'com.massivedisaster.adal:adal-analytics:0.1.18'
-  implementation 'com.massivedisaster.adal:adal-application-state:0.1.18'
-  implementation 'com.massivedisaster.adal:adal-bus:0.1.18'
-  implementation 'com.massivedisaster.adal:adal-fragments:0.1.18'
-  implementation 'com.massivedisaster.adal:adal-location:0.1.18'
-  implementation 'com.massivedisaster.adal:adal-network:0.1.18'
-  implementation 'com.massivedisaster.adal:adal-permissions:0.1.18'
-  implementation 'com.massivedisaster.adal:adal-utils:0.1.18'
-  implementation 'com.massivedisaster.adal:adal-connectivity:0.1.18'
-  implementation 'com.massivedisaster.adal:adal-dialogs:0.1.18'
+  implementation 'com.massivedisaster.adal:adal-accounts:0.1.19'
+  implementation 'com.massivedisaster.adal:adal-adapters:0.1.19'
+  implementation 'com.massivedisaster.adal:adal-alarm:0.1.19'
+  implementation 'com.massivedisaster.adal:adal-analytics:0.1.19'
+  implementation 'com.massivedisaster.adal:adal-application-state:0.1.19'
+  implementation 'com.massivedisaster.adal:adal-bus:0.1.19'
+  implementation 'com.massivedisaster.adal:adal-fragments:0.1.19'
+  implementation 'com.massivedisaster.adal:adal-location:0.1.19'
+  implementation 'com.massivedisaster.adal:adal-network:0.1.19'
+  implementation 'com.massivedisaster.adal:adal-permissions:0.1.19'
+  implementation 'com.massivedisaster.adal:adal-utils:0.1.19'
+  implementation 'com.massivedisaster.adal:adal-connectivity:0.1.19'
+  implementation 'com.massivedisaster.adal:adal-dialogs:0.1.19'
 }
 ```
 
