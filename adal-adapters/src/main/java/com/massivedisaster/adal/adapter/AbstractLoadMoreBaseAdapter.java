@@ -106,6 +106,7 @@ public abstract class AbstractLoadMoreBaseAdapter<T> extends AbstractBaseAdapter
      *
      * @param resLayout  The layout resource id.
      * @param resLoading The loading resource id.
+     * @param resHeader  The header resource id.
      * @param lstItems   The list of items.
      */
     public AbstractLoadMoreBaseAdapter(int resLayout, int resLoading, int resHeader, List<T> lstItems) {
