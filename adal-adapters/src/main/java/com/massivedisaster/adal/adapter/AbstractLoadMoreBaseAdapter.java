@@ -152,7 +152,7 @@ public abstract class AbstractLoadMoreBaseAdapter<T> extends AbstractBaseAdapter
                 baseViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
                         int position = baseViewHolder.getAdapterPosition();
-                        mOnChildCLickListener.onChildClick(v, mData.get(position), position);
+                        mOnChildCLickListener.onChildClick(v, getItem(position - (hasHeaderLayout() ? 1 : 0)), position);
                     }
                 });
             }
@@ -170,7 +170,7 @@ public abstract class AbstractLoadMoreBaseAdapter<T> extends AbstractBaseAdapter
         if (getItemViewType(position) == VIEW_TYPE_HEADER) {
             bindHeader(holder);
         } else if (getItemViewType(position) == VIEW_TYPE_ITEM) {
-            bindItem(holder, getItem(position));
+            bindItem(holder, getItem(position - (hasHeaderLayout() ? 1 : 0)));
         } else if (getItemViewType(position) == VIEW_TYPE_LOAD && hasLoadingLayout()) {
             bindError(holder, mIsLoadingError);
         }
@@ -181,7 +181,7 @@ public abstract class AbstractLoadMoreBaseAdapter<T> extends AbstractBaseAdapter
     public int getItemViewType(int position) {
         if (position == 0 && hasHeaderLayout()) {
             return VIEW_TYPE_HEADER;
-        } else if (position > mData.size() - 1) {
+        } else if (mIsMoreDataAvailable && hasLoadingLayout() && position > mData.size() + (hasHeaderLayout() ? 1 : 0) - 1) {
             return VIEW_TYPE_LOAD;
         } else {
             return VIEW_TYPE_ITEM;
