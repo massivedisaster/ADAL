@@ -45,6 +45,16 @@ public final class KeyboardUtils {
     }
 
     /**
+     * Show the keyboard
+     *
+     * @param context  the context
+     */
+    private static void show(Context context) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, HIDE_SOFT_INPUT_FLAGS_NONE);
+    }
+
+    /**
      * Hide keyboard
      *
      * @param activity the visible activity
