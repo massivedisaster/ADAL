@@ -174,6 +174,18 @@ public final class AccountHelper {
     }
 
     /**
+     * Change the account password.
+     *
+     * @param account  The account.
+     * @param password The new password.
+     */
+    @SuppressWarnings(MISSING_PERMISSION)
+    public static void setAccountPassword(Account account, String password) {
+        validateAccountManager();
+        sManager.setPassword(account, password);
+    }
+
+    /**
      * Retrieve the account token.
      *
      * @param account The account account to take the token.
