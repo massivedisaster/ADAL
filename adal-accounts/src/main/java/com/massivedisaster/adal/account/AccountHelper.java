@@ -80,7 +80,6 @@ public final class AccountHelper {
      * @param password The account password.
      * @param token    The account token.
      */
-    @SuppressWarnings(MISSING_PERMISSION)
     public static void onFinished(String name, Context context, String password, String token) {
         Account account = new Account(name, context.getPackageName());
 
@@ -147,7 +146,6 @@ public final class AccountHelper {
      * @param context The application context.
      * @return The current account or null if there is no account.
      */
-    @SuppressWarnings(MISSING_PERMISSION)
     @Nullable
     public static Account getCurrentAccount(Context context) {
         validateAccountManager();
@@ -167,7 +165,6 @@ public final class AccountHelper {
      * @param account The account.
      * @return The user password.
      */
-    @SuppressWarnings(MISSING_PERMISSION)
     public static String getAccountPassword(Account account) {
         validateAccountManager();
         return sManager.getPassword(account);
@@ -179,7 +176,6 @@ public final class AccountHelper {
      * @param account  The account.
      * @param password The new password.
      */
-    @SuppressWarnings(MISSING_PERMISSION)
     public static void setAccountPassword(Account account, String password) {
         validateAccountManager();
         sManager.setPassword(account, password);
@@ -192,7 +188,6 @@ public final class AccountHelper {
      * @param context The application context.
      * @return The account token.
      */
-    @SuppressWarnings(MISSING_PERMISSION)
     @Nullable
     public static String getCurrentToken(@NonNull Account account, Context context) {
         validateAccountManager();
