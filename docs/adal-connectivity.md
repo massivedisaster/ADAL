@@ -7,7 +7,7 @@ Gradle:
 
 ```gradle
 dependencies {
-  implementation 'com.massivedisaster.adal:adal-connectivity:0.1.19'
+  implementation 'com.massivedisaster.adal:adal-connectivity:0.1.20'
 }
 ```
 ### Usage

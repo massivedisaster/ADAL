@@ -30,7 +30,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +41,7 @@ import com.massivedisaster.adal.utils.KeyboardUtils;
 /**
  * Base class for dialogs.
  */
-public class BaseDialogFragment extends DialogFragment {
+public class BaseDialogFragment extends AppCompatDialogFragment {
 
     private static final int INVALID_RESOURCE_ID = -1;
 
