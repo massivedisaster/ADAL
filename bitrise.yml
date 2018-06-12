@@ -14,8 +14,9 @@ workflows:
             # fail if any commands fails and debug log
             set -ex            
 
-            # build script
-            ./build.sh -v diagnostic 
+            # build script            
+            chmod +x gradlew
+            "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
     - deploy-to-bitrise-io@1.3.6: {}
 app:
   envs:
