@@ -1,0 +1,22 @@
+---
+format_version: 1.4.0
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+
+project_type: xamarin
+
+workflows:
+  ci:
+    steps:
+    - script@1.1.4:
+        inputs:
+        - content: |-
+            #!/bin/bash
+            # fail if any commands fails and debug log
+            set -ex            
+
+            # build script
+            ./build.sh -v diagnostic 
+    - deploy-to-bitrise-io@1.3.6: {}
+app:
+  envs:
+  - BITRISE_DEPLOY_DIR: artifacts
