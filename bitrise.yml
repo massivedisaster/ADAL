@@ -16,5 +16,5 @@ workflows:
 
             # build script            
             chmod +x gradlew
-            ./gradlew clean build connectedCheck -PdisablePreDex --stacktrace
+            ./gradlew clean build check -PdisablePreDex --stacktrace
     - deploy-to-bitrise-io@1.3.6: {}
