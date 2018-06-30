@@ -1,10 +1,10 @@
 # ADAL
-[![Build Status](https://travis-ci.org/massivedisaster/ADAL.svg?branch=master)](https://travis-ci.org/massivedisaster/ADAL)
+[![Build Status](https://app.bitrise.io/app/7b9c36a201ad928c/status.svg?token=WB8QF4HmPMELWU4wHu_MKw&branch=master)](https://app.bitrise.io/app/7b9c36a201ad928c)
 [![API](https://img.shields.io/badge/API-16%2B-green.svg?style=flat)](https://android-arsenal.com/api?level=16)
 [ ![Download](https://api.bintray.com/packages/massivedisaster/maven/adal/images/download.svg) ](https://bintray.com/massivedisaster/maven/adal/_latestVersion)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ADAL%20--%20Android%20Development%20Accelaration%20Library-yellow.svg?style=flat)](https://android-arsenal.com/details/1/5939)
 
-Android Development Accelaration Library
+Android Development Acceleration Library
 
 ### Download
 Gradle:
