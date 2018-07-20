@@ -195,6 +195,18 @@ public final class AccountHelper {
     }
 
     /**
+     * Retrieve the account token.
+     *
+     * @param account The account account to take the token.
+     * @param context The application context.
+     * @param token   The new token for account.
+     */
+    public static void setCurrentToken(@NonNull Account account, Context context, String token) {
+        validateAccountManager();
+        sManager.setAuthToken(account, context.getPackageName(), token);
+    }
+
+    /**
      * Verify if manager was initialized.
      *
      * @throws ExceptionInInitializerError if <var>sManager</var> is null
