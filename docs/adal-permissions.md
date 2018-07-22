@@ -16,6 +16,7 @@ dependencies {
 ```
 
 ### Usage
+#### Java
 ```java
 public class FragmentPermissions extends BaseFragment {
 
@@ -52,8 +53,41 @@ public class FragmentPermissions extends BaseFragment {
         mPermissionsManager.onPermissionResult(requestCode);
     }
 }
-
 ```
+
+#### Kotlin
+```kotlin
+class FragmentPermissions : BaseFragment() {
+
+    private var mPermissionsManager: PermissionsManager? = null
+
+    override fun doOnCreated() {
+        mPermissionsManager = PermissionsManager(this)
+        requestPermissions()
+    }
+
+    private fun requestPermissions() {
+        mPermissionsManager!!.requestPermissions(object : PermissionsManager.OnPermissionsListener {
+            override fun onGranted() {
+                // Granted.
+            }
+
+            override fun onDenied(neverAskMeAgain: Boolean) {
+                // Denied.
+
+                if (neverAskMeAgain) {
+                    // User clicked nerver ask me again.
+                }
+            }
+        }, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.WRITE_CALENDAR)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        mPermissionsManager!!.onPermissionResult(requestCode)
+    }
+}
+```
+
 ### Contributing
 [CONTRIBUTING](../CONTRIBUTING.md)
 

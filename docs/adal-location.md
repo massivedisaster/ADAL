@@ -15,6 +15,7 @@ dependencies {
 ```
 
 ### Usage
+#### Java
 ```java
 public class FragmentLocation extends BaseFragment {
 
@@ -123,6 +124,107 @@ public class FragmentLocation extends BaseFragment {
 
     private void stopLocationUpdates() {
         mLocationManager.stopRequestLocation();
+    }
+}
+```
+
+#### Kotlin
+```kotlin
+class FragmentLocation : BaseFragment() {
+    private var mLocationManager: LocationManager? = null
+    
+    override fun doOnCreated() {
+        getLocation()
+    }
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mLocationManager = LocationManager()
+        mLocationManager!!.onCreate(this)
+    }
+    
+    override fun onDestroy() {
+        mLocationManager!!.onDestroy()
+        super.onDestroy()
+    }
+    
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        mLocationManager!!.onRequestPermissionsResult(requestCode, permissions, *grantResults)
+    }
+    
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        super.onActivityResult(requestCode, resultCode, data)
+        mLocationManager!!.onActivityResult(requestCode, resultCode)
+    }
+    
+    private fun getLocation() {
+        mLocationManager!!.requestSingleLocation(true, object : OnLocationManager {
+        
+            override fun onLocationFound(location: Location, isLastKnowLocation: Boolean) {
+                // Use location here.
+            }
+    
+            override fun onLocationError(locationError: LocationError) {
+                when (locationError) {
+                    LocationError.DISABLED -> {}
+                    LocationError.TIMEOUT -> {}
+                    else -> {}
+                }
+            }
+    
+            override fun onPermissionsDenied() {
+                // Permissions denied.
+            }
+    
+            override fun onProviderEnabled() {
+                // Provider enabled.
+            }
+    
+            override fun onProviderDisabled() {
+                // Provider disabled.
+            }
+            
+            override fun onStopRequestUpdate() {
+            
+            }
+        })
+    }
+    
+    private fun getLocationUpdates() {
+        mLocationManager!!.requestLocationUpdates(object : OnLocationManager {
+        
+            override fun onLocationFound(location: Location, isLastKnowLocation: Boolean) {
+                // Use location here.
+            }
+    
+            override fun onLocationError(locationError: LocationError) {
+                when (locationError) {
+                    LocationError.DISABLED -> {}
+                    LocationError.TIMEOUT -> {}
+                    else -> {}
+                }
+            }
+    
+            override fun onPermissionsDenied() {
+                // Permissions denied.
+            }
+    
+            override fun onProviderEnabled() {
+                // Provider enabled.
+            }
+    
+            override fun onProviderDisabled() {
+                // Provider disabled.
+            }
+            
+            override fun onStopRequestUpdate() {
+            
+            }
+        })
+    }
+    
+    private fun stopLocationUpdates() {
+        mLocationManager!!.stopRequestLocation();
     }
 }
 ```

@@ -19,6 +19,7 @@ dependencies {
 }
 ```
 ### Usage
+#### Java
 ```java
 // Open settings
 AppUtils.openAppSettings(getActivity());
@@ -31,6 +32,21 @@ AppUtils.openDial(getActivity(), "00351910000000");
 
 // Open Email
 AppUtils.openEmail(getActivity(), getString(R.string.send_email), "teste@teste.com", "teste2@teste.com");
+```
+
+#### Kotlin
+```kotlin
+// Open settings
+AppUtils.openAppSettings(activity)
+
+// Check if Google Play Services exists
+AppUtils.checkPlayServicesExists(activity)
+
+// Open Dial
+AppUtils.openDial(activity, "00351910000000")
+
+// Open Email
+AppUtils.openEmail(activity, getString(R.string.send_email), "teste@teste.com", "teste2@teste.com")
 ```
 
 ### Contributing

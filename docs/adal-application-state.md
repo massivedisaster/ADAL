@@ -15,6 +15,7 @@ dependencies {
 ```
 
 ### Usage
+#### Java
 ```java
 public class App extends Application implements ApplicationStateManager.BackAndForegroundListener {
 
@@ -62,6 +63,47 @@ application.registerActivityLifecycleCallbacks(new ApplicationStateManager() {
         doOnActivityPaused(activity);
     }
 });
+```
+
+#### Kotlin
+```kotlin
+class App : Application(), ApplicationStateManager.BackAndForegroundListener {
+
+   var TAG: String = App::class.simpleName!!
+    private var mApplicationStateManager: ApplicationStateManager? = null
+
+    override fun onCreate() {
+        super.onCreate()
+        mApplicationStateManager = ApplicationStateManager(this)
+        registerActivityLifecycleCallbacks(mApplicationStateManager)
+    }
+
+    override fun onBackground() {
+        Log.d(TAG, "onBackground")
+    }
+
+    override fun onForeground() {
+        Log.d(TAG, "onForeground")
+    }
+
+    fun isBackground(): Boolean = mApplicationStateManager!!.isBackground
+    
+    fun isForeground(): Boolean = mApplicationStateManager!!.isForeground
+}
+```
+
+Another way of using `ApplicationStateManager` with a `context` reference.
+```kotlin
+val application = context.getApplicationContext() as Application
+application.registerActivityLifecycleCallbacks(object : ApplicationStateManager() {
+    override fun onActivityResumed(activity: Activity) {
+        doOnActivityResumed(activity)
+    }
+
+    override fun onActivityPaused(activity: Activity) {
+        doOnActivityPaused(activity)
+    }
+})
 ```
 
 ### Contributing
